@@ -42,7 +42,7 @@ rplaysound = (function(a1) -- rplaysound
 u10.playsound(S_ReplicatedStorage_2.Sounds[a1], u9.hrp, nil, nil, true)
 local SoundEvent = {
     [1] = "repsound",
-    [1] = a1
+    [2] = a1
 }
 u5:FireServer(SoundEvent)
 end)
@@ -528,15 +528,44 @@ if table.find(BossHPTable, pgui.EInterface.EnemyHP.BG.Meter.HPTxt.Text) then
     end
 end)
 
+local Event = u5
+
+function depleteheat(amount)
+	local A_2 = {
+		[1] = {
+		[1] = "evade",
+		[3] = false,
+		[4] = true
+	}
+}
+	for i = 1, amount , 1 do
+		Event:FireServer(A_2)
+	end
+end
+
+function addheat(amount)
+	local A_3 =  {
+		[1] = "heat", 
+		[2] = game:GetService("ReplicatedStorage").Moves.Taunt
+	}
+
+	for i = 1, amount, 1 do
+		Event:FireServer(A_3)
+	end
+end
+
+
+
 
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
-
-	 for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+			
+for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+	if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
 		Stun(enemy)
-	    end
-	end
+      end
+end
+depleteheat(100)
 Notify("FEEL THE HEAT!!!")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
@@ -551,7 +580,11 @@ Notify("FEEL THE HEAT!!!")
     v.Name = "Invulnerable"
 
     char.HumanoidRootPart.Anchored = true
-    task.wait(3)
+    addheat(20)
+    task.wait(1.5)
+    addheat(40)
+    task.wait(1.5)
+    addheat(40)
     anim:Stop()
     game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge):Play()
     task.wait(0.25)
@@ -624,9 +657,9 @@ local interf = pgui.Interface
 
 local cframe = plr.Character.LowerTorso.CFrame
 if hasReloaded == false then
-interf.Client.Disabled = true
-task.wait()
-interf.Client.Disabled = false
+	interf.Client.Disabled = true
+	task.wait()
+	interf.Client.Disabled = false
 end
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
