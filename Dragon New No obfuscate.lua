@@ -36,7 +36,7 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 rplaysound = (function(a1) -- rplaysound
 u10.playsound(S_ReplicatedStorage_2.Sounds[a1], u9.hrp, nil, nil, true)
