@@ -560,11 +560,6 @@ end
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
 			
-for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-	if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
-		Stun(enemy)
-      end
-end
 depleteheat(100)
 Notify("FEEL THE HEAT!!!")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
