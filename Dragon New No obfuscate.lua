@@ -451,6 +451,16 @@ local IsBoss = false
 local HPCorrect = Instance.new("BoolValue", workspace)
 local AlreadyFeltHeat = Instance.new("BoolValue", workspace)
 
+local bossheatmode
+char.ChildAdded:Connect(function(v)
+  if v.Name == 'InBattle' then
+  for i,bool in workspace.Bots:GetDescendants() do
+  	if bool.Name == 'HeatMode' and bool.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+		bossheatmode = bool
+          end
+       end
+    end
+end)
 local BossHPTable = {
      "1000/3000",
      "1000/4200",
@@ -557,8 +567,8 @@ end
 
 
 
-CanFeelHeat.Changed:Connect(function()
-if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
+bossheatmode.Changed:Connect(function()
+if bossheatmode.Value == true and AlreadyFeltHeat.Value == false then
 			
 depleteheat(100)
 Notify("FEEL THE HEAT!!!")
