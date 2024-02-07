@@ -224,13 +224,29 @@ local Player = game.Players.LocalPlayer
 local Rep = game.ReplicatedStorage
 local Char = Player.Character
 local Main = Player.PlayerGui.Interface.Battle.Main
-    
+
+local function fetchRandom(instance)
+	    local instancechildren = instance:GetChildren()
+	    local random = instancechildren[math.random(1, #instancechildren)]
+	    return random
+	end
+
+vpSound = (function(a1) -- PlaySound
+u10.playsound(a1, u9.hrp, nil, nil, true)
+local SoundEvent = {
+    [1] = "repsound",
+    [2] = a1
+}
+u5:FireServer(SoundEvent)
+end)
+
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") then
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
         Anim:AdjustSpeed(1)
         Anim:Play()
+	vpSound(fetchRandom(Rep.Voices.Kiryu.Taunt))
         task.wait(1)
         PlaySound("MassiveSlap")
         task.wait(2)
@@ -336,21 +352,6 @@ elseif status.Health.Value <= 1 then
 end
 
 plr.Status.Health.Changed:Connect(HealthChanged)
-
-local function fetchRandom(instance)
-	    local instancechildren = instance:GetChildren()
-	    local random = instancechildren[math.random(1, #instancechildren)]
-	    return random
-	end
-
-vpSound = (function(a1) -- PlaySound
-u10.playsound(a1, u9.hrp, nil, nil, true)
-local SoundEvent = {
-    [1] = "repsound",
-    [2] = a1
-}
-u5:FireServer(SoundEvent)
-end)
 
 local receivedsound = fetchRandom(RPS.Voices.Kiryu.Rage)
 RDS.Changed:Connect(function()
