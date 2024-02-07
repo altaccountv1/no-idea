@@ -184,7 +184,8 @@ moves.BRCounter2.Name = "FakeBRCounter2"
         HSize.Value = 2
     end
 end
-
+moves[Dragon.Strike2.Value].ComboAt = 0.5
+moves[Dragon.Strike2.Value].AniSpeed = 1.25
 moves.TigerDrop.Anim.AnimationId = "rbxassetid://12120052426"
 
 -- FUNCTIONS -- 
