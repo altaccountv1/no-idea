@@ -44,38 +44,6 @@ local WV = "nil."
 local DName = game.Players.LocalPlayer.DisplayName
 local UName = game.Players.LocalPlayer.Name
 
-local response =
-    request(
-    {
-        Url = Webhook_URL,
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = HttpService:JSONEncode(
-            {
-                ["content"] = "",
-                ["embeds"] = {
-                    {
-                        ["title"] = "Dragon Style has been executed.",
-                        ["description"] = DName.."/"..UName.." has executed the script. Whitelisted? "..WV.. ".",
-                        ["type"] = "rich",
-                        ["color"] = embedcolor,
-                        ["fields"] = {
-                            {
-                                ["name"] = "Hardware ID:",
-                                ["value"] = S_hwid,
-                                ["inline"] = true
-                            }
-                        }
-                    }
-                }
-            }
-        )
-    }
-)
-
-
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local UserInputService = game:GetService("UserInputService")
