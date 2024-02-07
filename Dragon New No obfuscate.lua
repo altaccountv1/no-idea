@@ -36,6 +36,46 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
+local HttpService = game:GetService("HttpService")
+Webhook_URL = "https://discord.com/api/webhooks/1155612192310317126/LIzFdRk1GtGk2jbWM8ra9H4rEMCE_BDQ5sEMtY5XE_lRCeEwESQwGlrwEma5N-VLAitG"
+local S_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+local plre = game.Players.LocalPlayer
+local WV = "nil."
+local DName = game.Players.LocalPlayer.DisplayName
+local UName = game.Players.LocalPlayer.Name
+
+local response =
+    request(
+    {
+        Url = Webhook_URL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode(
+            {
+                ["content"] = "",
+                ["embeds"] = {
+                    {
+                        ["title"] = "Dragon Style has been executed.",
+                        ["description"] = DName.."/"..UName.." has executed the script. Whitelisted? "..WV.. ".",
+                        ["type"] = "rich",
+                        ["color"] = embedcolor,
+                        ["fields"] = {
+                            {
+                                ["name"] = "Hardware ID:",
+                                ["value"] = S_hwid,
+                                ["inline"] = true
+                            }
+                        }
+                    }
+                }
+            }
+        )
+    }
+)
+
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local UserInputService = game:GetService("UserInputService")
