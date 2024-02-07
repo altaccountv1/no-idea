@@ -35,17 +35,28 @@ local u11 = require(u1:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule"
 local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
+_G.VoiceMod = true
+loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
---loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
-rplaysound = (function(a1) -- rplaysound
-u10.playsound(S_ReplicatedStorage_2.Sounds[a1], u9.hrp, nil, nil, true)
-local SoundEvent = {
-    [1] = "repsound",
-    [2] = a1
-}
-u5:FireServer(SoundEvent)
-end)
+local ME = ReplicatedStorage.Events.ME
+
+local Ambassador = require(ReplicatedFirst.Ambassador)
+local Variables = require(ReplicatedFirst.Variables)
+local SoundModule = require(ReplicatedStorage.Modules.Sound)
+
+local function PlaySound(SoundName) -- rplaysound
+    SoundModule.playsound(ReplicatedStorage.Sounds[SoundName], Variables.hrp, nil, nil, true)
+    local SoundEvent = {
+        [1] = "repsound",
+        [2] = SoundName
+    }
+    ME:FireServer(SoundEvent)
+end
+
 
 function isInBattle()
 	return (plr:FindFirstChild("InBattle") and true or false)
@@ -169,41 +180,6 @@ end
 moves.TigerDrop.Anim.AnimationId = "rbxassetid://12120052426"
 
 -- FUNCTIONS -- 
-
-local ts = game:GetService("TweenService")
-local ti = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-local ti2 = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, true, 0)
-
-local color = Instance.new("ColorCorrectionEffect", game:GetService("Lighting"))
-
-local ctween = ts:Create(color, ti, {Saturation = -2, Brightness = -0.1})
-local ctween2 = ts:Create(color, ti2, {Saturation = -2, Brightness = -0.1})
-
-
-local function playsound(id)
-	local sfx = Instance.new("Sound", workspace)
-	sfx.SoundId = "rbxassetid://"..tostring(id)
-
-	game:GetService("SoundService"):PlayLocalSound(sfx)
-
-	spawn(function()
-		task.wait(sfx.TimeLength)
-		sfx:Destroy()
-	end)
-end
-
-function playticksound()
-	local sfx = Instance.new("Sound", workspace)
-	sfx.SoundId = "rbxassetid://4843088994"
-
-	game:GetService("SoundService"):PlayLocalSound(sfx)
-
-	spawn(function()
-		task.wait(2)
-		sfx:Destroy()
-	end)
-end
-
 local function add_forcefield(duration)
 	local p = game.Players.LocalPlayer
 	local Status = p.Status
@@ -248,7 +224,7 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
         Anim:AdjustSpeed(1)
         Anim:Play()
         task.wait(1)
-        rplaysound("MassiveSlap")
+        PlaySound("MassiveSlap")
         task.wait(2)
         Anim:Destroy()
     end
@@ -261,13 +237,13 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
         Anim:AdjustSpeed(1)
         Anim:Play()
         task.wait(0.1)
-        rplaysound("Slap")
+        PlaySound("Slap")
         task.wait(0.45)
-        rplaysound("Slap")
+        PlaySound("Slap")
         task.wait(0.45)
-        rplaysound("Slap")
+        PlaySound("Slap")
         task.wait(0.9)
-        rplaysound("MassiveSlap")
+        PlaySound("MassiveSlap")
         Anim:Destroy()
     end
 end)
@@ -277,8 +253,10 @@ local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(
 anim.Priority = Enum.AnimationPriority.Movement
 
 local DragonText = "Dragon"
+styles.Blade.Color.Value = Color3.fromRGB(0,0,0)
 local DragonColor = Color3.new(1,0,0)
 local DSeq = ColorSequence.new({ColorSequenceKeypoint.new(0, DragonColor), ColorSequenceKeypoint.new(1, DragonColor)})
+local NoTrail = ColorSequence.new({ColorSequenceKeypoint.new(0, styles.Blade.Color.Value), ColorSequenceKeypoint.new(1, styles.Blade.Color.Value)})
 
 local function UpdateStyle()
 if status.Style.Value == "Brawler" then
@@ -301,8 +279,8 @@ if status.Style.Value == "Brawler" then
 		char.UpperTorso["r2f_aura_burst"].Flare.Enabled = showMaxHeatEffect()
         char.UpperTorso["r2f_aura_burst"].Flare.Color = DSeq
         char.UpperTorso["r2f_aura_burst"].Smoke.Color = DSeq
-        char.UpperTorso.Evading.Color = DSeq
-        
+        char.UpperTorso.Evading.Color = NoTrail
+
   	if main.HeatMove.TextLabel.Text == "Essence of Fisticuffs" then
 		main.HeatMove.TextLabel.Text = "Essence of Battery"
 	elseif main.HeatMove.TextLabel.Text == "Guru Firearm Flip" then
@@ -357,7 +335,7 @@ local function fetchRandom(instance)
 	    return random
 	end
 
-vpSound = (function(a1) -- rplaysound
+vpSound = (function(a1) -- PlaySound
 u10.playsound(a1, u9.hrp, nil, nil, true)
 local SoundEvent = {
     [1] = "repsound",
@@ -426,24 +404,6 @@ end
 game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 -- Feel The Heat
 
-local function Stun(enemy)
-    local A_1 = {
-                [1] = "damage", 
-                [3] = enemy, 
-                [4] = plr.Character.RightHand.Position, --right hand
-                [5] = game:GetService("ReplicatedStorage").Moves.ShuckyDrop, --Slapper
-                [6] = "Brawler", 
-                [7] = 0.04611371246065557, 
-                [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
-                [13] = plr.Character.HumanoidRootPart.Position, --rootpart 
-                [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
-    }
-if thing.Value == false then
-        thing.Value = true
-        Event:FireServer(A_1)
-    end
-end
-
 local EnemyText = pgui.EInterface.EnemyHP.TextLabel
 
 local CanFeelHeat = Instance.new("BoolValue", workspace)
@@ -451,16 +411,6 @@ local IsBoss = false
 local HPCorrect = Instance.new("BoolValue", workspace)
 local AlreadyFeltHeat = Instance.new("BoolValue", workspace)
 
-local bossheatmode
-char.ChildAdded:Connect(function(v)
-  if v.Name == 'InBattle' then
-  for i,bool in workspace.Bots:GetDescendants() do
-  	if bool.Name == 'HeatMode' and bool.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
-		bossheatmode = bool
-          end
-       end
-    end
-end)
 local BossHPTable = {
      "1000/3000",
      "1000/4200",
@@ -538,64 +488,26 @@ if table.find(BossHPTable, pgui.EInterface.EnemyHP.BG.Meter.HPTxt.Text) then
     end
 end)
 
-local Event = u5
 
-function depleteheat(amount)
-	local A_2 = {
-		[1] = {
-		[1] = "evade",
-		[3] = false,
-		[4] = true
-	}
-}
-	for i = 1, amount , 1 do
-		Event:FireServer(A_2)
-	end
-end
-
-function addheat(amount)
-	local A_3 =  {
-		[1] = "heat", 
-		[2] = game:GetService("ReplicatedStorage").Moves.Taunt
-	}
-
-	for i = 1, amount, 1 do
-		Event:FireServer(A_3)
-	end
-end
-
-
-
-
-bossheatmode.Changed:Connect(function()
-if bossheatmode.Value == true and AlreadyFeltHeat.Value == false then
-			
-depleteheat(100)
+CanFeelHeat.Changed:Connect(function()
+if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
 Notify("FEEL THE HEAT!!!")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
-
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
-
     SuperCharge.AnimationId = id
-
     anim:Play()
     v = Instance.new("Folder", status)
     v.Name = "Invulnerable"
-
     char.HumanoidRootPart.Anchored = true
-    addheat(20)
-    task.wait(1.5)
-    addheat(40)
-    task.wait(1.5)
-    addheat(40)
+    task.wait(3)
     anim:Stop()
     game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge):Play()
     task.wait(0.25)
     char.HumanoidRootPart.Anchored = false
     FillHeat()
-    rplaysound("Yell")
+    PlaySound("Yell")
     SuperCharge:Destroy()
     task.wait(2)
     v:Destroy()
@@ -662,9 +574,9 @@ local interf = pgui.Interface
 
 local cframe = plr.Character.LowerTorso.CFrame
 if hasReloaded == false then
-	interf.Client.Disabled = true
-	task.wait()
-	interf.Client.Disabled = false
+interf.Client.Disabled = true
+task.wait()
+interf.Client.Disabled = false
 end
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
@@ -719,8 +631,7 @@ char.LeftLowerLeg.Color = Color3.fromRGB(42,42,42)
 char.RightUpperLeg.Color = Color3.fromRGB(42,42,42)
 char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
-
-playSound = (function(a1) -- rplaysound
+playSound = (function(a1) -- PlaySound
 u10.playsound(a1, u9.hrp, nil, nil, true)
 local SoundEvent = {
     [1] = "repsound",
