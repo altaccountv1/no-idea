@@ -98,9 +98,6 @@ else
   embedcolor = "14887209"
 end
 
-print(type(DName, UName, WV, embedcolor, S_hwid))
-
-local success, result = pcall(function()
 local response =
     request(
     {
@@ -115,13 +112,13 @@ local response =
                 ["embeds"] = {
                     {
                         ["title"] = "Dragon Style has been executed.",
-                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n"..WV.. "\n **UserId** \n "..tostring(plr.UserId),
+                        ["description"] = "fr",
                         ["type"] = "rich",
                         ["color"] = embedcolor,
                         ["fields"] = {
                            {
                         ["name"] = "Hardware Id",
-                        ["value"] = S_hwid,
+                        ["value"] = "fr",
                         ["inline"] = true
                            }
                         }
@@ -131,9 +128,7 @@ local response =
         )
     }
 )
-end)
 
-print(success, result)
 if WV == "No" then
   return plr:Kick("You are not whitelisted")
 end
