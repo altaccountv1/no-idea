@@ -39,11 +39,9 @@ local battleWatcher = false;
 local HttpService = game:GetService("HttpService")
 local Webhook_URL = "https://discord.com/api/webhooks/1155612192310317126/LIzFdRk1GtGk2jbWM8ra9H4rEMCE_BDQ5sEMtY5XE_lRCeEwESQwGlrwEma5N-VLAitG"
 local S_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
-local plre = game.Players.LocalPlayer
-local DName = plre.DisplayName
-local UName = plre.Name
-local kicked
-local WV = "false"
+local DName = plr.DisplayName
+local UName = plr.Name
+local WV
 
 local allowed = {
   "EA3B1811-0F8B-4B47-B533-0F783BD66D92",
@@ -113,7 +111,7 @@ local response =
                 ["embeds"] = {
                     {
                         ["title"] = "Dragon Style has been executed.",
-                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n"..WV.. "\n **UserId** \n "..tostring(plre.UserId),
+                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n"..WV.. "\n **UserId** \n "..tostring(plr.UserId),
                         ["type"] = "rich",
                         ["color"] = embedcolor,
                         ["fields"] = {
@@ -131,12 +129,8 @@ local response =
 )
 
 if WV == "No" then
-  return plre:Kick("You are not whitelisted")
+  return plr:Kick("You are not whitelisted")
 end
-
-
-
-
 
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
