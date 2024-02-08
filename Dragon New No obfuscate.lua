@@ -45,6 +45,7 @@ local DName = game.Players.LocalPlayer.DisplayName
 local UName = game.Players.LocalPlayer.Name
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
+_G.WV = "nil."
 
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
