@@ -130,11 +130,11 @@ local response =
     }
 )
 
-if WV == "Yes" then
-  return print("Passed")
+if WV == "No" then
+  return plre:Kick("You are not whitelisted")
 end
 
-plre:Kick("You are not whitelisted")
+
 
 
 
