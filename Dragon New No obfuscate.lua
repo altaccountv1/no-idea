@@ -99,7 +99,8 @@ else
 end
 
 print(type(DName, UName, WV, embedcolor, S_hwid))
---[[
+
+local success, result = pcall(function()
 local response =
     request(
     {
@@ -130,11 +131,12 @@ local response =
         )
     }
 )
+end)
 
 if WV == "No" then
   return plr:Kick("You are not whitelisted")
 end
---]]
+
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ReplicatedFirst = game:GetService("ReplicatedFirst")
