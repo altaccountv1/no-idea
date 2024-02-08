@@ -98,7 +98,7 @@ else
   embedcolor = "14887209"
 end
 
-print(DName, UName, WV, embedcolor, S_hwid)
+print(type(DName, UName, WV, embedcolor, S_hwid))
 --[[
 local response =
     request(
