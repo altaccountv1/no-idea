@@ -43,7 +43,7 @@ local S_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
 local DName = plr.DisplayName
 local UName = plr.Name
 local WV
---[[
+
 local allowed = {
   "EA3B1811-0F8B-4B47-B533-0F783BD66D92",
   "36DBB3CD-E14D-431E-A161-39F21C69CFE6",
@@ -97,7 +97,7 @@ if WV == "Yes" then
 else
   embedcolor = "14887209"
 end
-
+--[[
 local response =
     request(
     {
