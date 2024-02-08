@@ -44,6 +44,7 @@ local WV = "nil."
 local DName = game.Players.LocalPlayer.DisplayName
 local UName = game.Players.LocalPlayer.Name
 _G.WV = "nil."
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local response =
