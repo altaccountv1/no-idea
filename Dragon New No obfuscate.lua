@@ -61,7 +61,7 @@ local response =
                 ["embeds"] = {
                     {
                         ["title"] = "Dragon Style has been executed.",
-                        ["description"] = DName.."/"..UName.." has executed the script. Whitelisted? ".._G.WV.. ".",
+                        ["description"] = tostring(DName.."/"..UName.." has executed the script. Whitelisted? ".._G.WV.. "."),
                         ["type"] = "rich",
                         ["color"] = embedcolor,
                         ["fields"] = {
