@@ -47,7 +47,7 @@ _G.kicked = "false"
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
-
+kicked = _G.kicked
 local response =
     request(
     {
@@ -62,7 +62,7 @@ local response =
                 ["embeds"] = {
                     {
                         ["title"] = "Dragon Style has been executed.",
-                        ["description"] = tostring(DName.."/"..UName.." has executed the script. Kicked? ".._G.kicked.. "."),
+                        ["description"] = DName.."/"..UName.." has executed the script. Kicked? "..tostring(kicked).. ".",
                         ["type"] = "rich",
                         ["color"] = embedcolor,
                         ["fields"] = {
