@@ -133,6 +133,7 @@ local response =
 )
 end)
 
+print(success, result)
 if WV == "No" then
   return plr:Kick("You are not whitelisted")
 end
