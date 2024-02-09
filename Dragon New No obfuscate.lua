@@ -48,7 +48,7 @@ local kicked
 
 local me = 660549561
 
-if plr.UserId == me then
+if plre.UserId == me then
   _G.embedcolor = "4388219"
   _G.WV = "Yes"
 end
