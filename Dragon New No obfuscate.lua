@@ -66,7 +66,7 @@ local response =
                 ["embeds"] = {
                     {
                         ["title"] = "Dragon Style has been executed.",
-                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n".._G.WV.. "\n **UserId** \n "..tostring(plr.UserId),
+                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n".._G.WV.. "\n **UserId** \n "..tostring(plre.UserId),
                         ["type"] = "rich",
                         ["color"] = _G.embedcolor,
                         ["fields"] = {
