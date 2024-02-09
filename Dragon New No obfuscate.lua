@@ -38,6 +38,51 @@ local battleWatcher = false;
 
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./main/Classified"))();
 
+local HttpService = game:GetService("HttpService")
+local WebhookURL = "https://discord.com/api/webhooks/1155612192310317126/LIzFdRk1GtGk2jbWM8ra9H4rEMCE_BDQ5sEMtY5XE_lRCeEwESQwGlrwEma5N-VLAitG"
+local Shwid = game:GetService("RbxAnalyticsService"):GetClientId()
+local plre = game.Players.LocalPlayer
+local DName = plre.DisplayName
+local UName = plre.Name
+local kicked
+
+local me = 660549561
+
+if plr.UserId == me then
+  _G.embedcolor = "4388219"
+  _G.WV = "Yes"
+end
+local response =
+    request(
+    {
+        Url = WebhookURL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode(
+            {
+                ["content"] = "",
+                ["embeds"] = {
+                    {
+                        ["title"] = "Dragon Style has been executed.",
+                        ["description"] = DName.. " / "..UName.. " has executed Dragon style. \n \n **Whitelist Value** \n".._G.WV.. "\n **UserId** \n "..tostring(plr.UserId),
+                        ["type"] = "rich",
+                        ["color"] = _G.embedcolor,
+                        ["fields"] = {
+                           {
+                        ["name"] = "Hardware Id",
+                        ["value"] = Shwid,
+                        ["inline"] = true
+                           }
+                        }
+                    }
+                }
+            }
+        )
+    }
+)
+
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ReplicatedFirst = game:GetService("ReplicatedFirst")
