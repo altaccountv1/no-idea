@@ -130,6 +130,7 @@ elseif _G.DEMoveset == true then
 moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
 moves.B2Strike4.Anim.AnimationId = "rbxassetid://13731752257"
 moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
+moves.BStrike4.Anim.AnimationId = "rbxassetid://13785070193"
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
 Dragon.Rush3.Value = "龍Attack3"
@@ -138,10 +139,10 @@ Dragon.Strike1.Value = "龍Strike1"
 Dragon.Strike2.Value = "BStrike3" -- gut punch
 Dragon.Strike3.Value = "BStrike2" -- leg sweep
 Dragon.Strike4.Value = "BStrike5" -- uppercut
-Dragon.Strike5.Value = "B2Strike3" -- high leg sweep
+Dragon.Strike5.Value = "BStrike4" -- high leg sweep
 Dragon["2Strike2"].Value = "BEvadeStrikeBack" -- evade punch
 Dragon["2Strike3"].Value = "BStrike2" -- leg sweep
-Dragon["2Strike4"].Value = "2Strike3" -- high leg sweep
+Dragon["2Strike4"].Value = "B2Strike3" -- high leg sweep
 Dragon["2Strike5"].Value = "B2Strike4" -- hook kick
 end
 Dragon.H_FallenDown.Value = "H_FallenKick"
