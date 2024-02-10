@@ -76,6 +76,14 @@ function hasWeaponInHand()
 	return (plr.Character:FindFirstChild("Holding") and true or false)
 end
 
+function IsInPvp()
+    if plr:FindFirstChild("PvPed") then
+        return true
+    else
+        return false
+    end
+end
+
 local function Notify(text)
 	game.Players.LocalPlayer.PlayerGui["Notify"]:Fire(text)
 end
@@ -164,6 +172,7 @@ wn.Value = '15'
 if namesChanged == false then
     moves.Taunt.Name = "FakeTaunt"
     moves.DragonTaunt.Name = "Taunt"
+if not IsInPvp() then
 moves.BRCounter2.Name = "FakeBRCounter2"
     moves["龍TigerDrop"].Name = "BRCounter2"
     moves["BRCounter2"].AniSpeed.Value = 0.75
@@ -172,6 +181,7 @@ moves.BRCounter2.Name = "FakeBRCounter2"
         HSize = Instance.new("NumberValue", moves.BRCounter2)
         HSize.Name = "HSize"
         HSize.Value = 2
+        end
     end
 end
 
