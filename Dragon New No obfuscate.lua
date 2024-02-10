@@ -127,7 +127,7 @@ Dragon["2Strike3"].Value = "龍2Strike2"
 Dragon["2Strike4"].Value = "龍2Strike3"
 Dragon["2Strike5"].Value = "龍2Strike4"
 elseif _G.DEMoveset == true then
-moves.BStrike3.Anim.AnimationId = "rbxassetid://13785068836"
+moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
 moves.B2Strike4.Anim.AnimationId = "rbxassetid://13731752257"
 moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
 Dragon.Rush1.Value = "龍Attack1"
