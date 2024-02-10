@@ -112,6 +112,7 @@ Dragon.VisualName.Value = "Dragon"
 Dragon.Speed.Value = 1.5
 Dragon.Color.Value = Color3.fromRGB(255,0,0)
 Dragon.Idle.AnimationId = "rbxassetid://12120045620"
+if _G.DEMoveset == false or _G.DEMoveset == nil then
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
 Dragon.Rush3.Value = "龍Attack3"
@@ -125,6 +126,24 @@ Dragon["2Strike2"].Value = "龍2Strike1"
 Dragon["2Strike3"].Value = "龍2Strike2"
 Dragon["2Strike4"].Value = "龍2Strike3"
 Dragon["2Strike5"].Value = "龍2Strike4"
+elseif _G.DEMoveset == true then
+moves.BStrike3.Anim.AnimationId = "rbxassetid://13785068836"
+moves.B2Strike4.Anim.AnimationId = "rbxassetid://13731752257"
+moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
+Dragon.Rush1.Value = "龍Attack1"
+Dragon.Rush2.Value = "龍Attack2"
+Dragon.Rush3.Value = "龍Attack3"
+Dragon.Rush4.Value = "BAttack3"
+Dragon.Strike1.Value = "龍Strike1"
+Dragon.Strike2.Value = "BStrike3" -- gut punch
+Dragon.Strike3.Value = "BStrike2" -- leg sweep
+Dragon.Strike4.Value = "BStrike5" -- uppercut
+Dragon.Strike5.Value = "B2Strike3" -- high leg sweep
+Dragon["2Strike2"].Value = "BEvadeStrikeBack" -- evade punch
+Dragon["2Strike3"].Value = "BStrike2" -- leg sweep
+Dragon["2Strike4"].Value = "2Strike3" -- high leg sweep
+Dragon["2Strike5"].Value = "B2Strike4" -- hook kick
+end
 Dragon.H_FallenDown.Value = "H_FallenKick"
 Dragon.H_CounterSoloAllFront.Value = "H_TSpinCounterFront"
 Dragon.H_CounterSoloAllBack.Value = "H_TSpinCounterBack"
