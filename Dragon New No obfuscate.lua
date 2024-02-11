@@ -393,7 +393,6 @@ if RDS.Value == true then
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
     vpSound(receivedsound)
-    Notify("Red Dragon Spirit Activated")
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
