@@ -132,6 +132,7 @@ moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
 moves.BStrike4.Anim.AnimationId = "rbxassetid://13785070193"
 moves["龍Strike5"].Anim.AnimationId = "rbxassetid://13731752257"
 moves["龍Strike5"]:WaitForChild("AniSpeed").Value = 1.5
+moves["龍Strike5"]:WaitForChild("MoveForward").Value = 12
 moves.BStrike5:WaitForChild("ComboAt").Value = 0.6
 moves.BStrike4:WaitForChild("ComboAt").Value = 0.75
 Dragon.Rush1.Value = "龍Attack1"
