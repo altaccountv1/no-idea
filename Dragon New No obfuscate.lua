@@ -559,6 +559,7 @@ end
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     depleteHeat(6)
+    task.wait()
     Notify("FEEL THE HEAT!!!")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
@@ -572,6 +573,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     fillHeat(2)
     task.wait(1.5)
     fillHeat(2)
+    task.wait(1.5)
     anim:Stop()
     game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge):Play()
     task.wait(0.25)
