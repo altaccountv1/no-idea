@@ -134,7 +134,7 @@ moves["龍Strike5"].Anim.AnimationId = "rbxassetid://13731752257"
 moves["龍Strike5"]:WaitForChild("AniSpeed").Value = 1.5
 moves["龍Strike5"]:WaitForChild("MoveForward").Value = 12
 moves.BStrike5:WaitForChild("ComboAt").Value = 0.6
-moves.BStrike4:WaitForChild("ComboAt").Value = 0.75
+moves.BStrike4:WaitForChild("ComboAt").Value = 0.6
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
 Dragon.Rush3.Value = "龍Attack3"
@@ -280,7 +280,7 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Essence of Sumo Slapping " then
+    if Main.HeatMove.TextLabel.Text == "Essence of Sumo Slapping " and not char:FindFirstChild("BeingHeated") then
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
         Anim:AdjustSpeed(1)
@@ -371,8 +371,6 @@ if status.Health.Value <= 150 then
     RDS.Value = true
 elseif status.Health.Value >= 150 then
     RDS.Value = false
-elseif status.Health.Value <= 1 then
-    RDS.Value = false
     end
 end
 
@@ -387,7 +385,7 @@ if RDS.Value == true then
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
-elseif RDS.Value == false then
+elseif RDS.Value == false or not status:FindFirstChild("ANGRY") then
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
 			end
@@ -416,6 +414,8 @@ end
 
 local function AutoSlap()
     if RDS.Value == true or status:FindFirstChild("ANGRY") then
+	local invul = Instance.new("Folder",status)
+	invul.Name = "Invulnerable"
         for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
             if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
                 if enemy.Parent.AttackBegan.Value == true then
