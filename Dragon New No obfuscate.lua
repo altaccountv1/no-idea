@@ -376,9 +376,15 @@ end
 
 plr.Status.Health.Changed:Connect(HealthChanged)
 
+status.ChildAdded:Connect(function(child)
+if child.Name == "ANGRY" then
+	RDS.Value = true
+    end
+end)
+
 local receivedsound = fetchRandom(RPS.Voices.Kiryu.Rage)
 RDS.Changed:Connect(function()
-if RDS.Value == true or status:FindFirstChild("ANGRY") then
+if RDS.Value == true then
     FillHeat()
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
@@ -415,7 +421,7 @@ if thing.Value == false then
 end
 
 local function AutoSlap()
-    if RDS.Value == true or status:FindFirstChild("ANGRY") then
+    if RDS.Value == true then
         for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
             if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
                 if enemy.Parent.AttackBegan.Value == true then
