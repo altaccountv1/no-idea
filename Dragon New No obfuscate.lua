@@ -137,6 +137,7 @@ Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
 Dragon.Rush3.Value = "龍Attack3"
 Dragon.Rush4.Value = "BAttack3"
+Dragon.GrabStrike.Value = "T_CounterQuickstep"
 Dragon.Strike1.Value = "龍Strike1"
 Dragon.Strike2.Value = "BStrike3" -- gut punch
 Dragon.Strike3.Value = "BStrike2" -- leg sweep
