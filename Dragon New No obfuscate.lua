@@ -397,12 +397,12 @@ if RDS.Value == true then
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
-elseif RDS.Value == false or not status:FindFirstChild("ANGRY") then
+    end
+else 
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
-			end
-		end
 	end
+    end
 end)
 thing = Instance.new("BoolValue", workspace)
 local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
