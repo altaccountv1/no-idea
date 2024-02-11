@@ -532,10 +532,35 @@ if table.find(BossHPTable, pgui.EInterface.EnemyHP.BG.Meter.HPTxt.Text) then
     end
 end)
 
+local A_1 =  {
+	[1] = "heat", 
+	[2] = game:GetService("ReplicatedStorage").Moves.Taunt
+}
+
+local A_2 = {
+[1] = {
+	[1] = "evade",
+	[3] = false,
+	[4] = true
+	}
+}
+
+local function fillHeat(howmany)
+	for i = 1, howmany, 1 do
+		ME:FireServer(A_1)
+	end
+end
+
+local function depleteHeat(howmany)
+	for i = 1, howmany, 1 do
+		ME:FireServer(A_2)
+	end
+end
 
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
-Notify("FEEL THE HEAT!!!")
+    depleteheat(6)
+    Notify("FEEL THE HEAT!!!")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
     local id = "rbxassetid://10928237540"
@@ -545,12 +570,14 @@ Notify("FEEL THE HEAT!!!")
     v = Instance.new("Folder", status)
     v.Name = "Invulnerable"
     char.HumanoidRootPart.Anchored = true
-    task.wait(3)
+    fillHeat(2)
+    task.wait(1.5)
+    fillHeat(2)
     anim:Stop()
     game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge):Play()
     task.wait(0.25)
     char.HumanoidRootPart.Anchored = false
-    FillHeat()
+    fillheat(2)
     PlaySound("Yell")
     SuperCharge:Destroy()
     task.wait(2)
@@ -600,7 +627,7 @@ if status.Style.Value == "Brawler" then
 end)
 
 status.RedDragonSpirit.Changed:Connect(function()
-if status.Style.Value == "Brawler" then
+if status.RedDragonSpirit.Value == true then
 	local id = "rbxassetid://10928237540"
 			local anim = Instance.new("Animation")
 			anim.AnimationId = id
