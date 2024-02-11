@@ -381,7 +381,11 @@ if child.Name == "ANGRY" then
 	RDS.Value = true
     end
 end)
-
+status.ChildRemoved:Connect(function(child)
+    if child.Name == "ANGRY" then
+	RDS.Value = false
+    end
+end)
 local receivedsound = fetchRandom(RPS.Voices.Kiryu.Rage)
 RDS.Changed:Connect(function()
 if RDS.Value == true then
