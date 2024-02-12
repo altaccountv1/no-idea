@@ -98,9 +98,9 @@ local cubindable = Instance.new("BindableFunction")
 
 function cubindable.OnInvoke(response)
     if resonse == "Yes" then
-	_G.VoiceMod = true
+	_G.CustomMorphSkin = true
     else
-	_G.VoiceMod = false
+	_G.CustomMorphSkin = false
     end
 end
 
@@ -114,6 +114,7 @@ StarterGui:SetCore("SendNotification", {
     Button2 = "No"
 })
 end
+
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ReplicatedFirst = game:GetService("ReplicatedFirst")
