@@ -56,6 +56,43 @@ StarterGui:SetCore("SendNotification", {
     Button2 = "No"
 })
 
+local mobindable = Instance.new("BindableFunction")
+
+function mobindable.OnInvoke(response)
+    if resonse == "Yes" then
+	_G.MorphMod = true
+    else
+	_G.MorphMod = false
+    end
+end
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Morph mod",
+    Text = "Would you like the kiryu morph?",
+    Duration = 5,
+    Callback = mobindable,
+    Button1 = "Yes",
+    Button2 = "No"
+})
+
+local vobindable = Instance.new("BindableFunction")
+
+function vobindable.OnInvoke(response)
+    if resonse == "Yes" then
+	_G.VoiceMod = true
+    else
+	_G.VoiceMod = false
+    end
+end
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Voice mod",
+    Text = "Would you like the kiryu voice mod?",
+    Duration = 5,
+    Callback = vobindable,
+    Button1 = "Yes",
+    Button2 = "No"
+})
 
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
