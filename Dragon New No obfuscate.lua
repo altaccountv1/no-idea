@@ -36,6 +36,22 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
+local function waitFor(bindable, maxTime, invoked)
+    local o = os.clock() + maxTime
+    
+    local called = false
+    bindable.OnInvoke = function(...)
+        called = true
+        return invoked(...)
+    end
+    
+    while not called or os.clock() < o do
+        task.wait()
+    end
+    
+    return called
+end
+
 _G.DEMoveset = false
 _G.MorphMod = false
 _G.VoiceMod = false
@@ -44,13 +60,13 @@ _G.CustomMorphSkin = false
 local StarterGui = game:GetService("StarterGui") -- not sure why you used CoreGui
 local debindable = Instance.new("BindableFunction")
 
-function debindable.OnInvoke(response)
+waitFor(debindable, 3, function(response)
     if resonse == "Yes" then
 	_G.DEMoveset = true
     else
 	_G.DEMoveset = false
     end
-end
+end)
 
 StarterGui:SetCore("SendNotification", {
     Title = "Custom moveset",
@@ -61,16 +77,15 @@ StarterGui:SetCore("SendNotification", {
     Button2 = "No"
 })
 
-debindable.OnInvoke:Wait()
 local mobindable = Instance.new("BindableFunction")
 
-function mobindable.OnInvoke(response)
-    if resonse == "Yes" then
+waitFor(mobindable, 3, function(response)
+   if resonse == "Yes" then
 	_G.MorphMod = true
     else
 	_G.MorphMod = false
     end
-end
+end)
 
 StarterGui:SetCore("SendNotification", {
     Title = "Morph mod",
@@ -81,16 +96,15 @@ StarterGui:SetCore("SendNotification", {
     Button2 = "No"
 })
 
-mobindable.OnInvoke:Wait()
 local vobindable = Instance.new("BindableFunction")
 
-function vobindable.OnInvoke(response)
-    if resonse == "Yes" then
+waitFor(vobindable, 3, function(response)
+   if resonse == "Yes" then
 	_G.VoiceMod = true
     else
 	_G.VoiceMod = false
     end
-end
+end)
 
 StarterGui:SetCore("SendNotification", {
     Title = "Voice mod",
@@ -100,7 +114,6 @@ StarterGui:SetCore("SendNotification", {
     Button1 = "Yes",
     Button2 = "No"
 })
-vobindable.OnInvoke:Wait()
 
 
 local UserInputService = game:GetService("UserInputService")
