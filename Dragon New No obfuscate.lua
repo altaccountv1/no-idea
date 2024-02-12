@@ -36,6 +36,11 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
+_G.DEMoveset = false
+_G.MorphMod = false
+_G.VoiceMod = false
+_G.CustomMorphSkin = false
+
 local StarterGui = game:GetService("StarterGui") -- not sure why you used CoreGui
 local debindable = Instance.new("BindableFunction")
 
@@ -56,6 +61,7 @@ StarterGui:SetCore("SendNotification", {
     Button2 = "No"
 })
 
+debindable.OnInvoke:Wait()
 local mobindable = Instance.new("BindableFunction")
 
 function mobindable.OnInvoke(response)
@@ -75,6 +81,7 @@ StarterGui:SetCore("SendNotification", {
     Button2 = "No"
 })
 
+mobindable.OnInvoke:Wait()
 local vobindable = Instance.new("BindableFunction")
 
 function vobindable.OnInvoke(response)
@@ -93,6 +100,8 @@ StarterGui:SetCore("SendNotification", {
     Button1 = "Yes",
     Button2 = "No"
 })
+vobindable.OnInvoke:Wait()
+
 
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
