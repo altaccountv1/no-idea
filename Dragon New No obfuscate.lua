@@ -36,6 +36,84 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
+local StarterGui = game:GetService("StarterGui") -- not sure why you used CoreGui
+local debindable = Instance.new("BindableFunction")
+
+function debindable.OnInvoke(response)
+    if resonse == "Yes" then
+	_G.DEMoveset = true
+    else
+	_G.DEMoveset = false
+    end
+end
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Custom moveset",
+    Text = "Would you like the dragon engine moveset?",
+    Duration = 5,
+    Callback = debindable,
+    Button1 = "Yes",
+    Button2 = "No"
+})
+
+local mobindable = Instance.new("BindableFunction")
+
+function mobindable.OnInvoke(response)
+    if resonse == "Yes" then
+	_G.MorphMod = true
+    else
+	_G.MorphMod = false
+    end
+end
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Morph mod",
+    Text = "Would you like the kiryu morph?",
+    Duration = 5,
+    Callback = mobindable,
+    Button1 = "Yes",
+    Button2 = "No"
+})
+
+local vobindable = Instance.new("BindableFunction")
+
+function vobindable.OnInvoke(response)
+    if resonse == "Yes" then
+	_G.VoiceMod = true
+    else
+	_G.VoiceMod = false
+    end
+end
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Morph mod",
+    Text = "Would you like the kiryu morph?",
+    Duration = 5,
+    Callback = vobindable,
+    Button1 = "Yes",
+    Button2 = "No"
+})
+
+local cubindable = Instance.new("BindableFunction")
+
+function cubindable.OnInvoke(response)
+    if resonse == "Yes" then
+	_G.VoiceMod = true
+    else
+	_G.VoiceMod = false
+    end
+end
+
+if _G.MorphMod == true
+StarterGui:SetCore("SendNotification", {
+    Title = "Custom skin",
+    Text = "Would you like the custom skin for the morph",
+    Duration = 5,
+    Callback = cubindable,
+    Button1 = "Yes",
+    Button2 = "No"
+})
+end
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ReplicatedFirst = game:GetService("ReplicatedFirst")
@@ -658,14 +736,6 @@ local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = b
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
 local characterToChangeTo = "Kiryu Morph"
-
-if sentNotifs == false then
-game.StarterGui:SetCore("SendNotification",{
-    Title = styleToChangeTo.." style loaded!";
-    Text = styleToChangeTo.." style has replaced "..styleToChange..".";
-    Button1 = "OK!";
-})
-end
 
 if _G.MorphMod == true then
 _G.Morph = "Legendary Dragon"          
