@@ -85,7 +85,7 @@ function IsInPvp()
 end
 
 local function Notify(text)
-	game.Players.LocalPlayer.PlayerGui["Notify"]:Fire(text)
+    game.Players.LocalPlayer.PlayerGui["Notify"]:Fire(text)
 end
 
 local namesChanged = false
@@ -138,7 +138,7 @@ moves.BStrike4:WaitForChild("ComboAt").Value = 0.6
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
 Dragon.Rush3.Value = "龍Attack3"
-Dragon.Rush4.Value = "BAttack3"
+Dragon.Rush4.Value = "BAttack1"
 Dragon.GrabStrike.Value = "T_CounterQuickstep"
 Dragon.Strike1.Value = "龍Strike1"
 Dragon.Strike2.Value = "BStrike3" -- gut punch
@@ -155,6 +155,10 @@ Dragon.H_CounterSoloAllFront.Value = "H_TSpinCounterFront"
 Dragon.H_CounterSoloAllBack.Value = "H_TSpinCounterBack"
 Dragon.H_CounterSoloAllLeft.Value = "H_TSpinCounterLeft"
 Dragon.H_CounterSoloAllRight.Value = "H_TSpinCounterRight"
+rush.VisualName.Value = "Rush"
+beast.VisualName.Value = "Beast"
+beast.Strike2 = "DashAttack"
+beast.Strike4 = "DerekCharge"
 -- New Values --
 r4 = Instance.new("StringValue", Dragon)
 r4.Name = "H_Running4"
@@ -197,6 +201,7 @@ wn.Value = '15'
 if namesChanged == false then
     moves.Taunt.Name = "FakeTaunt"
     moves.DragonTaunt.Name = "Taunt"
+    moves.Taunt.Anim.AnimationId = "rbxassetid://10928237540"
 if not IsInPvp() then
 moves.BRCounter2.Name = "FakeBRCounter2"
     moves["龍TigerDrop"].Name = "BRCounter2"
@@ -537,11 +542,11 @@ local A_1 =  {
 }
 
 local A_2 = {
-[1] = {
-	[1] = "evade",
-	[3] = false,
-	[4] = true
-	}
+  [1] = {
+    [1] = "evade",
+    [3] = false,
+    [4] = true
+  }
 }
 
 local function fillHeat(howmany)
@@ -612,20 +617,6 @@ if not battleWatcher then
 		end
 	end
 end
-
--- Style Change Animation --
-status.Style.Changed:Connect(function()
-if status.Style.Value == "Brawler" then
-	local id = "rbxassetid://10928237540"
-			local anim = Instance.new("Animation")
-			anim.AnimationId = id
-
-			game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim):Play()
-
-			task.wait(5)
-            anim:Destroy()
-	end
-end)
 
 status.RedDragonSpirit.Changed:Connect(function()
 if status.RedDragonSpirit.Value == true then
