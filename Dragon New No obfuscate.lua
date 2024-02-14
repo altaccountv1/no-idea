@@ -157,8 +157,8 @@ Dragon.H_CounterSoloAllLeft.Value = "H_TSpinCounterLeft"
 Dragon.H_CounterSoloAllRight.Value = "H_TSpinCounterRight"
 rush.VisualName.Value = "Rush"
 beast.VisualName.Value = "Beast"
-beast.Strike2 = "DashAttack"
-beast.Strike4 = "DerekCharge"
+beast.Strike2.Value = "DashAttack"
+beast.Strike4.Value = "DerekCharge"
 -- New Values --
 r4 = Instance.new("StringValue", Dragon)
 r4.Name = "H_Running4"
