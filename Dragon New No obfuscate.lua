@@ -480,71 +480,25 @@ local IsBoss = false
 local HPCorrect = Instance.new("BoolValue", workspace)
 local AlreadyFeltHeat = Instance.new("BoolValue", workspace)
 
-local BossHPTable = {
-     "1000/3000",
-     "1000/4200",
-     "1000/1200",
-     "999/3000",
-     "999/4200",
-     "999/1200",
-     "998/3000",
-     "998/4200",
-     "998/1200",
-     "997/3000",
-     "997/4200",
-     "997/1200",
-     "996/3000",
-     "996/4200",
-     "996/1200",
-     "995/3000",
-     "995/4200",
-     "995/1200",
-     "994/3000",
-     "994/4200",
-     "994/1200",
-     "993/3000",
-     "993/4200",
-     "993/1200",
-     "992/3000",
-     "992/4200",
-     "992/1200",
-     "991/3000",
-     "991/4200",
-     "991/1200",
-     "990/1200",
-     "990/3000",
-     "990/4200",
-     "989/3000",
-     "989/4200",
-     "989/1200",
-     "988/3000",
-     "988/4200",
-     "988/1200",
-     "987/3000",
-     "987/4200",
-     "987/1200",
-     "986/3000",
-     "986/4200",
-     "986/1200",
-     "985/3000",
-     "985/4200",
-     "985/1200",
-     "984/3000",
-     "984/4200",
-     "984/1200",
-     "983/3000",
-     "983/4200",
-     "983/1200",
-     "982/3000",
-     "982/4200",
-     "982/1200",
-     "981/3000",
-     "981/4200",
-     "981/1200",
-     "980/3000",
-     "980/4200",
-     "980/1200"
-}
+local BossHPTableURL = "https://raw.githubusercontent.com/altaccountv1/mc-mods/main/BossHPTable.lua"
+
+local function loadBossHPTable()
+    local response = game:HttpGet(BossHPTableURL)
+    local chunk = loadstring(response)
+    if chunk then
+        local success, result = pcall(chunk)
+        if success then
+            return result
+        else
+            warn("Error executing BossHPTable: " .. result)
+        end
+    else
+        warn("Failed to load BossHPTable from URL: " .. BossHPTableURL)
+    end
+    return nil
+end
+
+local BossHPTable = loadBossHPTable()
 
 local CanFeelHeat = Instance.new("BoolValue", workspace)
 local HPCorrect = Instance.new("BoolValue", workspace)
