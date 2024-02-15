@@ -435,7 +435,7 @@ local function Stun(enemy)
                 [1] = "damage", 
                 [3] = enemy, 
                 [4] = plr.Character.RightHand.Position, --right hand
-                [5] = game:GetService("ReplicatedStorage").Moves.ShuckyStun, --Slapper
+                [5] = game:GetService("ReplicatedStorage").Moves.ShuckyDrop, --Slapper
                 [6] = "Brawler", 
                 [7] = 0.04611371246065557, 
                 [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
@@ -487,6 +487,7 @@ local function StunEnemy()
         end
     end
 end
+
 feelingheat.Changed:Connect(StunEnemy)
 game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 -- Feel The Heat
@@ -602,7 +603,7 @@ end
 
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
-    feelingheat.Value == true
+    feelingheat.Value = true
     depleteHeat(6)
     task.wait()
     Notify("FEEL THE HEAT!!!")
