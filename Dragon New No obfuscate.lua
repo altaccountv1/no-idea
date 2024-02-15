@@ -473,14 +473,12 @@ local function AutoSlap()
 end
 
 local function PvpAutoSlap()
-  if IsInPvp() then
     if RDS.Value == true then
 	for i,player in pairs(game.Players:GetPlayers()) do
-	    if player ~= plr then
-		if (plr.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude < 10 then
+	    if player.Name ~= plr.Name then
+		if (plr.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude < 15 then
 		    Slap(player.Character.HumanoidRootPart)
-		    end
-	        end
+		end
 	    end
         end
     end
