@@ -584,9 +584,7 @@ end
 
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
-    if char.LockedOn.Value then
-	Stun(char.LockedOn.Value)
-    end
+Stun(char.LockedOn.Value)
     depleteHeat(6)
     task.wait()
     Notify("FEEL THE HEAT!!!")
