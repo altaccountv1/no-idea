@@ -473,19 +473,15 @@ local function AutoSlap()
 end
 
 local function PvpAutoSlap()
+  if IsInPvp() then
     if RDS.Value == true then
-	for i,player in pairs(game.Players:GetPlayers()) do
-	    if player.Name ~= plr.Name then
-		if (player.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude < 15 then
-		    Slap(player.Character.HumanoidRootPart)
-		end
-	    end
-        end
+	Slap(char.LockedOn.Value
+	end
     end
 end
 
-    game:GetService("RunService").RenderStepped:Connect(PvpAutoSlap)
-    game:GetService("RunService").RenderStepped:Connect(AutoSlap)
+game:GetService("RunService").RenderStepped:Connect(PvpAutoSlap)
+game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 -- Feel The Heat
 
 local EnemyText = pgui.EInterface.EnemyHP.TextLabel
