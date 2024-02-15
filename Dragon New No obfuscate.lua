@@ -126,7 +126,7 @@ Dragon["2Strike2"].Value = "龍2Strike1"
 Dragon["2Strike3"].Value = "龍2Strike2"
 Dragon["2Strike4"].Value = "龍2Strike3"
 Dragon["2Strike5"].Value = "龍2Strike4"
-elseif _G.DEMoveset == true then
+else
 moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
 moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
 moves.BStrike4.Anim.AnimationId = "rbxassetid://13785070193"
@@ -135,6 +135,7 @@ moves["龍Strike5"]:WaitForChild("AniSpeed").Value = 1.5
 moves["龍Strike5"]:WaitForChild("MoveForward").Value = 12
 moves.BStrike5:WaitForChild("ComboAt").Value = 0.6
 moves.BStrike4:WaitForChild("ComboAt").Value = 0.6
+moves.BStrike4.AniSpeed.Value = moves.B2Strike3.AniSpeed.Value
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
 Dragon.Rush3.Value = "龍Attack3"
@@ -191,7 +192,7 @@ er.Name = "H_EvadedR"
 er.Value = 'H_FastFootworkRight'
 sf = Instance.new("StringValue", Dragon)
 sf.Name = "H_StanceFallen"
-sf.Value = "H_FallenBeatdown"
+sf.Value = "H_FallenProne"
 -- Sumo Slap Move Values
 moves["H_FastFootworkBack"].Closest.Value = '30'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
@@ -314,7 +315,7 @@ local NoTrail = ColorSequence.new({ColorSequenceKeypoint.new(0, styles.Blade.Col
 
 local function UpdateStyle()
 if status.Style.Value == "Brawler" then
-		char.HumanoidRootPart.Fire_Main.Color = DSeq
+	char.HumanoidRootPart.Fire_Main.Color = DSeq
         char.HumanoidRootPart.Fire_Secondary.Color = DSeq
         char.HumanoidRootPart.Fire_Main.Rate = status.Heat.Value >= 100 and 115 or status.Heat.Value >= 75 and 85 or 80
         char.HumanoidRootPart.Fire_Secondary.Rate = status.Heat.Value >= 100 and 90 or status.Heat.Value >= 75 and 80 or 70
@@ -330,7 +331,7 @@ if status.Style.Value == "Brawler" then
         char.UpperTorso["r2f_aura_burst"].Lines1.Color = DSeq
         char.UpperTorso["r2f_aura_burst"].Lines2.Color = DSeq
        	char.UpperTorso["r2f_aura_burst"].Lines1.Enabled = showMaxHeatEffect()
-		char.UpperTorso["r2f_aura_burst"].Flare.Enabled = showMaxHeatEffect()
+	char.UpperTorso["r2f_aura_burst"].Flare.Enabled = showMaxHeatEffect()
         char.UpperTorso["r2f_aura_burst"].Flare.Color = DSeq
         char.UpperTorso["r2f_aura_burst"].Smoke.Color = DSeq
         char.UpperTorso.Evading.Color = NoTrail
@@ -364,11 +365,11 @@ end)
 -- Red Dragon Spirit --
 
 if not status:FindFirstChild("RedDragonSpirit") then
-RDS = Instance.new("BoolValue", status)
-RDS.Value = false 
-RDS.Name = "RedDragonSpirit"
+    RDS = Instance.new("BoolValue", status)
+    RDS.Value = false 
+    RDS.Name = "RedDragonSpirit"
 else
-RDS = status.RedDragonSpirit
+    RDS = status.RedDragonSpirit
 end
 
 local function HealthChanged()
@@ -408,6 +409,7 @@ else
 	end
     end
 end)
+local feelingheat = Instance.new("BoolValue", workspace)
 thing = Instance.new("BoolValue", workspace)
 local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
 local function Slap(enemy)
@@ -416,6 +418,24 @@ local function Slap(enemy)
                 [3] = enemy, 
                 [4] = plr.Character.RightHand.Position, --right hand
                 [5] = game:GetService("ReplicatedStorage").Moves.Slapper, --Slapper
+                [6] = "Brawler", 
+                [7] = 0.04611371246065557, 
+                [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
+                [13] = plr.Character.HumanoidRootPart.Position, --rootpart 
+                [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
+    }
+if thing.Value == false then
+        thing.Value = true
+        Event:FireServer(A_1)
+    end
+end
+
+local function Stun(enemy)
+    local A_1 = {
+                [1] = "damage", 
+                [3] = enemy, 
+                [4] = plr.Character.RightHand.Position, --right hand
+                [5] = game:GetService("ReplicatedStorage").Moves.ShuckyStun, --Slapper
                 [6] = "Brawler", 
                 [7] = 0.04611371246065557, 
                 [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
@@ -448,7 +468,26 @@ local function AutoSlap()
     end
 end
 
-
+local function StunEnemy()
+    if feelingheat.Value == true then
+        for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+                if enemy.Parent.AttackBegan.Value == true then
+                    enemy.Parent.AttackBegan.Value = false
+                    thing.Value = false
+                    Slap(enemy)
+                end
+                if enemy.Parent.TookAim.Value == true then
+                    enemy.Parent.TookAim.Value = false
+                    wait(0.6)
+                    thing.Value = false                
+                    Slap(enemy)
+                end
+            end
+        end
+    end
+end
+feelingheat.Changed:Connect(StunEnemy)
 game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 -- Feel The Heat
 
@@ -563,6 +602,7 @@ end
 
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
+    feelingheat.Value == true
     depleteHeat(6)
     task.wait()
     Notify("FEEL THE HEAT!!!")
@@ -589,6 +629,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     task.wait(2)
     v:Destroy()
     AlreadyFeltHeat.Value = true
+    feelingheat.Value = false
     end
 end)
 
