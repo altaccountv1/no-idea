@@ -55,7 +55,6 @@ local function PlaySound(SoundName) -- rplaysound
     ME:FireServer(SoundEvent)
 end
 
-local testing = true
 function isInBattle()
 	return (plr:FindFirstChild("InBattle") and true or false)
 end
@@ -102,7 +101,7 @@ if alreadyRunning then
     sentNotifs = true
 end
  
- 
+ Notify("Dragon loading")
 alreadyRunning = Instance.new("BoolValue")
 alreadyRunning.Parent = status
 alreadyRunning.Value = true
@@ -473,7 +472,7 @@ local function AutoSlap()
 end
 
 local function PvpAutoSlap()
-  if IsInPvp() and testing then
+  if IsInPvp() then
     if RDS.Value == true then
 	Slap(char.LockedOn.Value
 	end
