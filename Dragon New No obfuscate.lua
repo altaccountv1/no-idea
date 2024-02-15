@@ -474,7 +474,7 @@ local function PvpAutoSlap()
     if RDS.Value == true then
 	for i,player in game.Players:GetPlayers() do
 	    if player ~= plr then
-		if (player.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude < 10 then
+		if (plr.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude < 10 then
 		    Slap(player.Character.HumanoidRootPart)
 		end
 	    end
@@ -482,9 +482,9 @@ local function PvpAutoSlap()
     end
 end
 if IsInPvp() then
-    game:GetService("RunService").RenderStepped:Connect(AutoSlap)
-else
     game:GetService("RunService").RenderStepped:Connect(PvpAutoSlap)
+else
+    game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 end
 -- Feel The Heat
 
