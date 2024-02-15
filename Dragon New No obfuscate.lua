@@ -451,7 +451,7 @@ if thing.Value == false then
 end
 
 local function AutoSlap()
-    if not IsInPvp()
+    if not IsInPvp() then
     if RDS.Value == true then
         for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
             if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
