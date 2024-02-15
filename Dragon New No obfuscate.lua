@@ -480,25 +480,77 @@ local IsBoss = false
 local HPCorrect = Instance.new("BoolValue", workspace)
 local AlreadyFeltHeat = Instance.new("BoolValue", workspace)
 
-local BossHPTableURL = "https://raw.githubusercontent.com/altaccountv1/mc-mods/main/BossHPTable.lua"
-
-local function loadBossHPTable()
-    local response = game:HttpGet(BossHPTableURL)
-    local chunk = loadstring(response)
-    if chunk then
-        local success, result = pcall(chunk)
-        if success then
-            return result
-        else
-            warn("Error executing BossHPTable: " .. result)
-        end
-    else
-        warn("Failed to load BossHPTable from URL: " .. BossHPTableURL)
-    end
-    return nil
-end
-
-local BossHPTable = loadBossHPTable()
+local BossHPTable = {
+    "1100/3000",
+    "1100/4200",
+    "1100/1200",
+    "1099/3000",
+    "1099/4200",
+    "1099/1200",
+    "1098/3000",
+    "1098/4200",
+    "1098/1200",
+    "1097/3000",
+    "1097/4200",
+    "1097/1200",
+    "1096/3000",
+    "1096/4200",
+    "1096/1200",
+    "1095/3000",
+    "1095/4200",
+    "1095/1200",
+    "1094/3000",
+    "1094/4200",
+    "1094/1200",
+    "1093/3000",
+    "1093/4200",
+    "1093/1200",
+    "1092/3000",
+    "1092/4200",
+    "1092/1200",
+    "1091/3000",
+    "1091/4200",
+    "1091/1200",
+    "1090/3000",
+    "1090/4200",
+    "1090/1200",
+    "1000/3000",
+    "1000/4200",
+    "1000/1200",
+    "999/3000",
+    "999/4200",
+    "999/1200",
+    "998/3000",
+    "998/4200",
+    "998/1200",
+    "997/3000",
+    "997/4200",
+    "997/1200",
+    "996/3000",
+    "996/4200",
+    "996/1200",
+    "995/3000",
+    "995/4200",
+    "995/1200",
+    "994/3000",
+    "994/4200",
+    "994/1200",
+    "993/3000",
+    "993/4200",
+    "993/1200",
+    "992/3000",
+    "992/4200",
+    "992/1200",
+    "991/3000",
+    "991/4200",
+    "991/1200",
+    "990/3000",
+    "990/4200",
+    "990/1200",
+    "900/3000",
+    "900/4200",
+    "900/1200"
+}
 
 local CanFeelHeat = Instance.new("BoolValue", workspace)
 local HPCorrect = Instance.new("BoolValue", workspace)
