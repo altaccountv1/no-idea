@@ -451,6 +451,7 @@ if thing.Value == false then
 end
 
 local function AutoSlap()
+    if not IsInPvp()
     if RDS.Value == true then
         for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
             if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
@@ -464,6 +465,7 @@ local function AutoSlap()
                     wait(0.6)
                     thing.Value = false                
                     Slap(enemy)
+		    end
                 end
             end
         end
@@ -471,21 +473,21 @@ local function AutoSlap()
 end
 
 local function PvpAutoSlap()
+  if IsInPvp() then
     if RDS.Value == true then
-	for i,player in game.Players:GetPlayers() do
+	for i,player in pairs(game.Players:GetPlayers()) do
 	    if player ~= plr then
 		if (plr.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude < 10 then
 		    Slap(player.Character.HumanoidRootPart)
-		end
+		    end
+	        end
 	    end
-	end
+        end
     end
 end
-if IsInPvp() then
+
     game:GetService("RunService").RenderStepped:Connect(PvpAutoSlap)
-else
     game:GetService("RunService").RenderStepped:Connect(AutoSlap)
-end
 -- Feel The Heat
 
 local EnemyText = pgui.EInterface.EnemyHP.TextLabel
