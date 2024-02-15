@@ -410,6 +410,7 @@ else
     end
 end)
 local feelingheat = Instance.new("BoolValue", workspace)
+feelingheat.Value = false
 thing = Instance.new("BoolValue", workspace)
 local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
 local function Slap(enemy)
@@ -488,6 +489,15 @@ local function StunEnemy()
     end
 end
 
+local function StunEnemy()
+    if feelingheat.Value == true then
+	for i,enemy in workspace.Bots.AI:GetDescendants() do
+	    if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+		Stun(enemy)
+	    end
+	end
+    end
+end
 feelingheat.Changed:Connect(StunEnemy)
 game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 -- Feel The Heat
