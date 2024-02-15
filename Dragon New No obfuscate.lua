@@ -55,7 +55,7 @@ local function PlaySound(SoundName) -- rplaysound
     ME:FireServer(SoundEvent)
 end
 
-
+local testing = true
 function isInBattle()
 	return (plr:FindFirstChild("InBattle") and true or false)
 end
@@ -473,7 +473,7 @@ local function AutoSlap()
 end
 
 local function PvpAutoSlap()
-  if IsInPvp() then
+  if IsInPvp() and testing then
     if RDS.Value == true then
 	Slap(char.LockedOn.Value
 	end
