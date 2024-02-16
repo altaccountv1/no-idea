@@ -84,6 +84,7 @@ local function IsInPvp()
 	return true
     else
         return false
+    end
 end
 local namesChanged = false
 local hasReloaded = false
