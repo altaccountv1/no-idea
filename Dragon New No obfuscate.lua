@@ -470,16 +470,6 @@ local function AutoSlap()
         end
     end
 end
-
-local function PvpAutoSlap()
-  if IsInPvp() then
-    if RDS.Value == true then
-	Slap(char.LockedOn.Value
-	end
-    end
-end
-
-game:GetService("RunService").RenderStepped:Connect(PvpAutoSlap)
 game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 -- Feel The Heat
 
