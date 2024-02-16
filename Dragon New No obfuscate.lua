@@ -79,13 +79,6 @@ local function Notify(text)
     game.Players.LocalPlayer.PlayerGui["Notify"]:Fire(text)
 end
 
-local function IsInPvp()
-    if plr:FindFirstChild("PvPed") then
-	return true
-    else
-        return false
-    end
-end
 local namesChanged = false
 local hasReloaded = false
 local sentNotifs = false
@@ -201,7 +194,7 @@ if namesChanged == false then
     moves.Taunt.Name = "FakeTaunt"
     moves.DragonTaunt.Name = "Taunt"
     moves.Taunt.Anim.AnimationId = "rbxassetid://10928237540"
-if not IsInPvp() then
+if not plr:FindFirstChild("PvPed") then
 moves.BRCounter2.Name = "FakeBRCounter2"
     moves["龍TigerDrop"].Name = "BRCounter2"
     moves["BRCounter2"].AniSpeed.Value = 0.75
