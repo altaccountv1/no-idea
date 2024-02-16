@@ -79,6 +79,12 @@ local function Notify(text)
     game.Players.LocalPlayer.PlayerGui["Notify"]:Fire(text)
 end
 
+local function IsInPvp()
+    if plr:FindFirstChild("PvPed") then
+	return true
+    else
+        return false
+end
 local namesChanged = false
 local hasReloaded = false
 local sentNotifs = false
