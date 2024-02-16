@@ -75,14 +75,6 @@ function hasWeaponInHand()
 	return (plr.Character:FindFirstChild("Holding") and true or false)
 end
 
-function IsInPvp()
-    if plr:FindFirstChild("PvPed") then
-        return true
-    else
-        return false
-    end
-end
-
 local function Notify(text)
     game.Players.LocalPlayer.PlayerGui["Notify"]:Fire(text)
 end
@@ -450,7 +442,6 @@ if thing.Value == false then
 end
 
 local function AutoSlap()
-    if not IsInPvp() then
     if RDS.Value == true then
         for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
             if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
@@ -464,7 +455,6 @@ local function AutoSlap()
                     wait(0.6)
                     thing.Value = false                
                     Slap(enemy)
-		    end
                 end
             end
         end
