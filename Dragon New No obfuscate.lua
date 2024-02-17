@@ -84,7 +84,7 @@ function IsInPvp()
     end
 end
 
-local function send(Text,Sound,Color) --text function, sounds: tp, buzz, Gong, HeatDepleted
+local function Notify(Text,Sound,Color) --text function, sounds: tp, buzz, Gong, HeatDepleted
 	local Text1 = string.upper(Text)
 	if Sound then
 		pgui.Notify:Fire(Text,Sound)
