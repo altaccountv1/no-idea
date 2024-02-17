@@ -331,7 +331,7 @@ end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Head Press: Supine" and not char:FindFirstChild("BeingHeated") then
-        local anim = char.Humanoid:LoadAnimation(moves.H_FallenStomp)
+        local anim = char.Humanoid:LoadAnimation(moves.H_FallenStomp.Anim)
 	anim.Priority = Enum.AnimationPriority.Action4
 	anim:Play()
 	PlaySound("heavypunch8")
