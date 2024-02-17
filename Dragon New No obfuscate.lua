@@ -168,7 +168,7 @@ Dragon["2Strike3"].Value = "BStrike2" -- leg sweep
 Dragon["2Strike4"].Value = "B2Strike3" -- high leg sweep
 Dragon["2Strike5"].Value = "龍Strike5" -- hook kick
 end
-Dragon.H_FallenDown.Value = "H_FallenKick"
+Dragon.H_FallenDown.Value = "H_FallenProne"
 Dragon.H_CounterSoloAllFront.Value = "H_TSpinCounterFront"
 Dragon.H_CounterSoloAllBack.Value = "H_TSpinCounterBack"
 Dragon.H_CounterSoloAllLeft.Value = "H_TSpinCounterLeft"
@@ -209,7 +209,7 @@ er.Name = "H_EvadedR"
 er.Value = 'H_FastFootworkRight'
 sf = Instance.new("StringValue", Dragon)
 sf.Name = "H_StanceFallen"
-sf.Value = "H_FallenProne"
+sf.Value = "H_FallenStomp"
 -- Sumo Slap Move Values
 moves["H_FastFootworkBack"].Closest.Value = '30'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
@@ -274,6 +274,31 @@ local function FillHeat()
 	end
 end
 
+function UseHeatAction(HeatAction, Style, Bots)
+	local args = {
+		[1] = {
+			[1] = "heatmove",
+			[2] = game:GetService("ReplicatedStorage").Moves[HeatAction],
+			[3] = {
+
+			},
+			[4] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,
+			[5] = Style
+		}
+	}
+
+	for i,v in pairs(Bots) do
+		table.insert(args[1][3], {
+			[1] = v,
+			[2] = 10.49982091806829,
+			[3] = false,
+			[4] = Vector3.new(0.854888916015625, -0.499908447265625, -3.08367919921875)
+		})
+	end
+
+	game:GetService("ReplicatedStorage").Events.ME:FireServer(unpack(args))
+end
+
 
 -- Ultimate Essence and Essence of Sumo Slapping --
 
@@ -330,18 +355,17 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Essence of Head Press: Supine" and not char:FindFirstChild("BeingHeated") then
-        local anim = char.Humanoid:LoadAnimation(moves.H_FallenStomp.Anim)
-	anim.Priority = Enum.AnimationPriority.Action4
-	anim:Play()
-	PlaySound("heavypunch8")
-	anim.Ended:Wait()
-	local anim = char.Humanoid:LoadAnimation(moves.H_FallenKick)
-	anim.Priority = Enum.AnimationPriority.Action4
-	anim:Play()
-	anim:AdjustSpeed(0.75)
+    if Main.HeatMove.TextLabel.Text == "Essence of Stomping" and not char:FindFirstChild("BeingHeated") then
+	char.ChildRemoved:Connect(function(v)
+	    if v.Name == "Heated" then
+		if status.Heat.Value >= 50 then
+		    UseHeatAction("H_FallenKick", "Brawler", {char.LockedOn.Value})
+		end
+	    end
+        end)
     end
 end)
+
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
 anim.Priority = Enum.AnimationPriority.Movement
