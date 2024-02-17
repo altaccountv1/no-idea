@@ -237,6 +237,10 @@ moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
 moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
 moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
 moves.ShuckyDrop.SF.Value = 0.1
+whenattack = Instance.new("Folder", moves.ShuckyDrop)
+whenattack.Name = "WhenAttacking"
+counter = Instance.new("Folder", moves.ShuckyDrop)
+counter.Name = "CounterAttack" 
 
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 
