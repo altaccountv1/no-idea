@@ -872,9 +872,11 @@ abilFolder["Finishing Hold"].Prompt.Value = "Get in Stance with LOCK ON and whil
 abilFolder["Ultimate Essence"].Prompt.Value = "Get in Stance with LOCK ON and with Full Heat, HEAVY ATTACK"
 abilFolder["Ultimate Essence"].Description.Value = "The Ultimate Komaki Ability. Gain the Power to destroy every type of enemy."
 
-local startsound = Instance.new("Sound")
-startsound.SoundId = "rbxassetid://9085027122"
-game:GetService("SoundService"):PlayLocalSound(startsound)
-Notify("Dragon style loaded",nil,Color3.fromRGB(255,255,255))
-startsound.Ended:Wait()
-startsound:Destroy()
+if hasReloaded == false then
+	local startsound = Instance.new("Sound")
+	startsound.SoundId = "rbxassetid://9085027122"
+	game:GetService("SoundService"):PlayLocalSound(startsound)
+	Notify("Dragon style loaded",nil,Color3.fromRGB(255,255,255))
+	startsound.Ended:Wait()
+	startsound:Destroy()
+end
