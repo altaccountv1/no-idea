@@ -222,7 +222,7 @@ if not IsInPvp() then
 moves.BRCounter2.Name = "FakeBRCounter2"
     moves["龍TigerDrop"].Name = "BRCounter2"
     moves["BRCounter2"].AniSpeed.Value = 0.75
-    moves["TigerDrop"].AniSpeed.Value = 0.75
+    moves["CounterHook"].AniSpeed.Value = 0.75
     if not moves.BRCounter2:FindFirstChild("HSize") then
         HSize = Instance.new("NumberValue", moves.BRCounter2)
         HSize.Name = "HSize"
