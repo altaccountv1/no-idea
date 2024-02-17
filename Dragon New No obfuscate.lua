@@ -222,7 +222,7 @@ if not IsInPvp() then
 moves.BRCounter2.Name = "FakeBRCounter2"
     moves["龍TigerDrop"].Name = "BRCounter2"
     moves["BRCounter2"].AniSpeed.Value = 0.75
-    moves["CounterHook"].AniSpeed.Value = 0.75
+    moves["TigerDrop"].AniSpeed.Value = 0.75
     if not moves.BRCounter2:FindFirstChild("HSize") then
         HSize = Instance.new("NumberValue", moves.BRCounter2)
         HSize.Name = "HSize"
@@ -488,7 +488,7 @@ end
 local function PVPSlap()
 	if IsInPvp() then
 		if RDS.Value == true then
-			for i,player in pairs(game.Players:GetPlayers()) do
+			for i,player in game.Players:GetPlayers() do
 				if player ~= plr then
 					opponent = player
 					if (char.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 20 then
@@ -550,7 +550,9 @@ end
 
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
- Stun(char.LockedOn.Value)
+    if char.LockedOn.Value then
+        Stun(char.LockedOn.Value)
+    end
     depleteHeat(6)
     task.wait()
     Notify("FEEL THE HEAT!!!")
@@ -583,10 +585,13 @@ end)
 
 
 local function OnBattleStart()
-    AlreadyFeltHeat.Value = false
+if AlreadyFeltHeat.Value == true then
+AlreadyFeltHeat.Value = false
+    end
 end
 local function OnBattleEnd()
-    AlreadyFeltHeat.Value = true
+if AlreadyFeltHeat.Value == false then
+AlreadyFeltHeat.Value = true
 end
 
 if not battleWatcher then
