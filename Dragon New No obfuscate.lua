@@ -354,18 +354,6 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
-Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Essence of Stomping" and not char:FindFirstChild("BeingHeated") then
-	Main.HeatMove.TextLabel.Text = "Essence of Stomping "
-	char.ChildRemoved:Connect(function(v)
-	    if v.Name == "Heated" then
-		if status.Heat.Value >= 50 then
-		    UseHeatAction("H_FallenKick", "Brawler", {char.LockedOn.Value})
-		end
-	    end
-        end)
-    end
-end)
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
@@ -463,7 +451,7 @@ cc.Name = "dragon tint"
 local tweenService = game:GetService("TweenService")
 local ts1 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
     Contrast = 0.3,
-    TintColor = styles[status.Style.Value].Color.Value
+    TintColor = Color3.new(1,0.5,0.5)
 })
 
 local ts2 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Contrast = 0, TintColor = Color3.new(1,1,1)})
@@ -559,9 +547,9 @@ local function PVPSlap()
 		if RDS.Value == true then
 			for i,player in game.Players:GetPlayers() do
 				if player ~= plr then
-					opponent = player
+					local opponent = player
 					if (char.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 20 then
-						Slap(player.Character.HumanoidRootPart)
+						Slap(opponent.Character.HumanoidRootPart)
 					end
 				end
 			end
@@ -643,8 +631,11 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge):Play()
     task.wait(0.25)
     char.HumanoidRootPart.Anchored = false
-    fillHeat(2)
+    fillHeat(4)
     PlaySound("Yell")
+    UseHeatAction("H_FastFootworkFront", "Brawler", {char.LockedOn.Value})
+    task.wait(3.25)
+    UseHeatAction("H_FastFootworkRight", "Brawler", {char.LockedOn.Value})
     SuperCharge:Destroy()
     task.wait(2)
     v:Destroy()
