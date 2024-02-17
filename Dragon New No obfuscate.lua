@@ -585,13 +585,10 @@ end)
 
 
 local function OnBattleStart()
-if AlreadyFeltHeat.Value == true then
-AlreadyFeltHeat.Value = false
-    end
+    AlreadyFeltHeat.Value = false
 end
 local function OnBattleEnd()
-if AlreadyFeltHeat.Value == false then
-AlreadyFeltHeat.Value = true
+    AlreadyFeltHeat.Value = true
 end
 
 if not battleWatcher then
