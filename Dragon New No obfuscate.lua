@@ -356,6 +356,7 @@ end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" and not char:FindFirstChild("BeingHeated") then
+	Main.HeatMove.TextLabel.Text = "Essence of Stomping "
 	char.ChildRemoved:Connect(function(v)
 	    if v.Name == "Heated" then
 		if status.Heat.Value >= 50 then
