@@ -123,9 +123,10 @@ alreadyRunning.Value = true
 alreadyRunning.Name = "Dragon Style"
 
 Dragon.VisualName.Value = "Dragon"
-Dragon.Speed.Value = 1.5
+Dragon.Speed.Value = 1.25
 Dragon.Color.Value = Color3.fromRGB(255,0,0)
 Dragon.Idle.AnimationId = "rbxassetid://12120045620"
+Dragon.StanceStrike.Value = "CounterHook"
 if _G.DEMoveset == false or _G.DEMoveset == nil then
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
@@ -230,7 +231,7 @@ moves.BRCounter2.Name = "FakeBRCounter2"
     end
 end
 
-moves.TigerDrop.Anim.AnimationId = "rbxassetid://12120052426"
+moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 
 -- FUNCTIONS -- 
 local function add_forcefield(duration)
@@ -633,14 +634,14 @@ interf.Client.Disabled = false
 end
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
-moves.TigerDrop.Anim.AnimationId = "rbxassetid://12338275115"
+moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
 
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
 local characterToChangeTo = "Kiryu Morph"
 
-if _G.MorphMod == true then
+if _G.MorphMod == true and not hasReloaded then
 _G.Morph = "Legendary Dragon"          
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 if not sentNotifs then
