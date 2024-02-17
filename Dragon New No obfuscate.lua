@@ -96,6 +96,7 @@ local function Notify(Text,Sound,Color) --text function, sounds: tp, buzz, Gong,
 			if v.Name == "XPEx" and v.Text == Text1 then
 				v.Text = Text
 				v.TextColor3 = Color
+				v.Font = Enum.Font.RobotoMono
 			end
 		end
 	end
@@ -550,12 +551,13 @@ end
 
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
+    AlreadyFeltHeat.Value = true
     if char.LockedOn.Value then
         Stun(char.LockedOn.Value)
     end
     depleteHeat(6)
     task.wait()
-    Notify("FEEL THE HEAT!!!")
+    Notify("Feel the heat!!", "HeatDepleted")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
     local id = "rbxassetid://10928237540"
@@ -578,37 +580,11 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     SuperCharge:Destroy()
     task.wait(2)
     v:Destroy()
-    AlreadyFeltHeat.Value = true
     feelingheat.Value = false
+    AlreadyFeltHeat.Value = false
     end
 end)
-
-
-local function OnBattleStart()
-if AlreadyFeltHeat.Value == true then
-AlreadyFeltHeat.Value = false
-    end
-end
-local function OnBattleEnd()
-if AlreadyFeltHeat.Value == false then
-AlreadyFeltHeat.Value = true
-end
-
-if not battleWatcher then
-		battleWatcher = true
-		while true do
-			repeat task.wait() until isInBattle()
-			coroutine.wrap(function()
-				onBattleStart()
-			end)()
-			repeat task.wait() until not isInBattle()
-			coroutine.wrap(function()
-				onBattleEnd()
-			end)()
-		end
-	end
-end
-
+		
 status.RedDragonSpirit.Changed:Connect(function()
 if status.RedDragonSpirit.Value == true then
 	local id = "rbxassetid://10928237540"
