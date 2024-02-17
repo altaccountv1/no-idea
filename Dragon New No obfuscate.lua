@@ -488,7 +488,7 @@ end
 local function PVPSlap()
 	if IsInPvp() then
 		if RDS.Value == true then
-			for i,player in game.Players:GetPlayers() do
+			for i,player in pairs(game.Players:GetPlayers()) do
 				if player ~= plr then
 					opponent = player
 					if (char.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 20 then
