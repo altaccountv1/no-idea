@@ -437,14 +437,14 @@ local function Animation()
     end)
 end
 
-local receivedsound = fetchRandom(RPS.Voices.Kiryu.Rage)
+sounds.Yell.Value = fetchRandom(RPS.Voices.Kiryu.Rage).Value
 RDS.Changed:Connect(function()
 if RDS.Value == true then
     Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
-    vpSound(receivedsound)
+    PlaySound("Yell")
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
