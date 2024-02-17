@@ -418,9 +418,29 @@ status.ChildRemoved:Connect(function(child)
 	RDS.Value = false
     end
 end)
+
+local cc = Instance.new("ColorCorrectionEffect", game.Lighting)
+cc.Name = "dragon tint"
+
+local tweenService = game:GetService("TweenService")
+local ts1 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+    Contrast = 0.3,
+    TintColor = Color3.new(1,0.5,0.5)
+})
+
+local ts2 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Contrast = 0, TintColor = Color3.new(1,1,1)})
+
+local function Animation()
+    ts1:Play()
+    ts1.Completed:Once(function()
+        ts2:Play()
+    end)
+end
+
 local receivedsound = fetchRandom(RPS.Voices.Kiryu.Rage)
 RDS.Changed:Connect(function()
 if RDS.Value == true then
+    Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
