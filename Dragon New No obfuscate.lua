@@ -635,6 +635,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     PlaySound("Yell")
     UseHeatAction("H_FastFootworkFront", "Brawler", {char.LockedOn.Value})
     task.wait(3.25)
+    fillHeat(6)
     UseHeatAction("H_FastFootworkRight", "Brawler", {char.LockedOn.Value})
     SuperCharge:Destroy()
     task.wait(2)
