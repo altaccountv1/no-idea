@@ -85,20 +85,7 @@ function IsInPvp()
 end
 
 local function Notify(Text,Sound,Color) --text function, sounds: tp, buzz, Gong, HeatDepleted
-	local text1 = string.upper(Text)
-	if Sound then
-		pgui.Notify:Fire(Text,Sound)
-	else
-		pgui.Notify:Fire(Text)
-	end
-	if Color then
-		for i,v in pairs(pgui.NotifyUI.Awards:GetChildren()) do
-			if v.Name == "XPEx" and v.Text == Text then
-				v.Text = Text
-				v.TextColor3 = Color
-			end
-		end
-	end
+	pgui.Notify:Fire(Text,Sound)
 end
 
 
