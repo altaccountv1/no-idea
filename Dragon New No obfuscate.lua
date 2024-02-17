@@ -329,6 +329,19 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
+Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
+    if Main.HeatMove.TextLabel.Text == "Essence of Head Press: Supine" and not char:FindFirstChild("BeingHeated") then
+        local anim = char.Humanoid:LoadAnimation(moves.H_FallenStomp)
+	anim.Priority = Enum.AnimationPriority.Action4
+	anim:Play()
+	PlaySound("heavypunch8")
+	anim.Ended:Wait()
+	local anim = char.Humanoid:LoadAnimation(moves.H_FallenKick)
+	anim.Priority = Enum.AnimationPriority.Action4
+	anim:Play()
+	anim:AdjustSpeed(0.75)
+    end
+end)
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
 anim.Priority = Enum.AnimationPriority.Movement
