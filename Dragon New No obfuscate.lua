@@ -55,7 +55,7 @@ local function PlaySound(SoundName) -- rplaysound
     ME:FireServer(SoundEvent)
 end
 
-
+char.Head:FindFirstChild("HeavyYell"):Destroy()
 function isInBattle()
 	return (plr:FindFirstChild("InBattle") and true or false)
 end
@@ -425,7 +425,7 @@ cc.Name = "dragon tint"
 local tweenService = game:GetService("TweenService")
 local ts1 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
     Contrast = 0.3,
-    TintColor = Color3.new(1,0.5,0.5)
+    TintColor = styles[status.Style.Value].Color.Value
 })
 
 local ts2 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Contrast = 0, TintColor = Color3.new(1,1,1)})
