@@ -128,6 +128,7 @@ Dragon.Speed.Value = 1.25
 Dragon.Color.Value = Color3.fromRGB(255,0,0)
 Dragon.Idle.AnimationId = "rbxassetid://12120045620"
 Dragon.StanceStrike.Value = "CounterHook"
+Dragon.BlockStrike.Value = "ShuckyDrop"
 if _G.DEMoveset == false or _G.DEMoveset == nil then
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
@@ -231,6 +232,11 @@ moves.BRCounter2.Name = "FakeBRCounter2"
         end
     end
 end
+
+moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
+moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
+moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
+moves.ShuckyDrop.SF.Value = moves.GuruStumble.ForceSF.Value
 
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 
