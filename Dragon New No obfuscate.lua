@@ -236,7 +236,7 @@ end
 moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
 moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
 moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
-moves.ShuckyDrop.SF.Value = moves.GuruStumble.ForceSF.Value
+moves.ShuckyDrop.SF.Value = moves.GuruStumble.SF.Value
 
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 
