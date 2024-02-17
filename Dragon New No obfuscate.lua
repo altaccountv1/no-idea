@@ -84,9 +84,23 @@ function IsInPvp()
     end
 end
 
-local function Notify(text)
-    game.Players.LocalPlayer.PlayerGui["Notify"]:Fire(text)
+local function Notify(Text,Sound,Color) --text function, sounds: tp, buzz, Gong, HeatDepleted
+	local text1 = string.upper(Text)
+	if Sound then
+		pgui.Notify:Fire(Text,Sound)
+	else
+		pgui.Notify:Fire(text)
+	end
+	if Color then
+		for i,v in pairs(pgui.NotifyUI.Awards:GetChildren()) do
+			if v.Name == "XPEx" and v.Text == Text then
+				v.Text = Text
+				v.TextColor3 = NotifColor
+			end
+		end
+	end
 end
+
 
 local namesChanged = false
 local hasReloaded = false
@@ -94,9 +108,9 @@ local sentNotifs = false
 
 local alreadyRunning = status:FindFirstChild("Dragon Style")
 if alreadyRunning then
-	Notify("Dragon Style is already loaded")
+    Notify("Dragon Style is already loaded", "buzz", Color3.fromRGB(255,255,255))
     task.wait(2)
-    Notify("Have an error, report it to me.")
+    Notify("If you have an error, report it to me.", "HeatDepleted", Color3.fromRGB(255,255,255))
     namesChanged = true
     hasReloaded = true
     sentNotifs = true
@@ -629,7 +643,7 @@ local characterToChangeTo = "Kiryu Morph"
 if _G.MorphMod == true then
 _G.Morph = "Legendary Dragon"          
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
-if sentNotifs then
+if not sentNotifs then
 game.StarterGui:SetCore("SendNotification",{
     Title = characterToChange.." Is Invisible";
     Text = characterToChangeTo.."Has Replaced "..characterToChange..".";
@@ -857,3 +871,10 @@ abilFolder["Finishing Hold"].Description.Value = "Make a sudden move towards the
 abilFolder["Finishing Hold"].Prompt.Value = "Get in Stance with LOCK ON and whilst distanced, HEAVY ATTACK."
 abilFolder["Ultimate Essence"].Prompt.Value = "Get in Stance with LOCK ON and with Full Heat, HEAVY ATTACK"
 abilFolder["Ultimate Essence"].Description.Value = "The Ultimate Komaki Ability. Gain the Power to destroy every type of enemy."
+
+local startsound = Instance.new("Sound",)
+startsound.SoundId = "rbxassetid://9085027122"
+game:GetService("SoundService"):PlayLocalSound(startsound)
+Notify("Dragon style loaded",nil,Color3.fromRGB(255,255,255))
+startsound.Ended:Wait()
+startsound:Destroy()
