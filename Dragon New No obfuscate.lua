@@ -630,10 +630,10 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     anim:Stop()
     local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
     anim:Play()
+    PlaySound("Yell")
     anim.Ended:Wait()
     char.HumanoidRootPart.Anchored = false
     fillHeat(4)
-    PlaySound("Yell")
     UseHeatAction("H_FastFootworkFront", "Brawler", {char.LockedOn.Value})
     task.wait(2)
     fillHeat(6)
