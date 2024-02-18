@@ -555,7 +555,7 @@ local function AutoSlap()
     end
 end
 
-local function PVPSlap(plr)
+local function PVPSlap()
     if not IsInPvp() then
         if RDS.Value == false then
             local char = plr.Character
