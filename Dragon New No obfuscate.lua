@@ -478,6 +478,15 @@ if RDS.Value == true then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
     end
+elseif status:FindFirstChild("ANGRY") then
+    Animation()
+    FillHeat()
+    local invul = Instance.new("Folder",status)
+    invul.Name = "Invulnerable" 
+    if not status:FindFirstChild("Invulnerable") then
+	local invul = Instance.new("Folder",status)
+	invul.Name = "Invulnerable"
+    end
 else 
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
@@ -546,20 +555,33 @@ local function AutoSlap()
     end
 end
 
-local function PVPSlap()
-	if IsInPvp() then
-		if RDS.Value == true then
-			for i,player in game.Players:GetPlayers() do
-				if player ~= plr then
-					local opponent = player
-					if (char.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 20 then
-						Slap(opponent.Character.HumanoidRootPart)
-					end
-				end
-			end
-		end
-	end
+local function PVPSlap(plr)
+    if IsInPvp() then
+        if RDS.Value == true then
+            local char = plr.Character
+            if char then
+                local rootPart = char:FindFirstChild("HumanoidRootPart")
+                if rootPart then
+                    for i, player in ipairs(game.Players:GetPlayers()) do
+                        if player ~= plr then
+                            local opponentChar = player.Character
+                            if opponentChar then
+                                local opponentRootPart = opponentChar:FindFirstChild("HumanoidRootPart")
+                                if opponentRootPart then
+                                    local distance = (rootPart.Position - opponentRootPart.Position).Magnitude
+                                    if distance <= 15 then
+                                        Slap(opponentRootPart)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
+
 game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 game:GetService("RunService").RenderStepped:Connect(PVPSlap)
 -- Feel The Heat
@@ -631,7 +653,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     Notify("Feel the heat!!", "HeatDepleted")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
-    local id = "http://www.roblox.com/asset/?id=10478338114"
+    local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
     anim:Play()
@@ -648,7 +670,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     anim.Looped = false
     PlaySound("Yell")
     fillHeat(6)
-    anim.Ended:Wait()
+    task.wait(1)
     char.HumanoidRootPart.Anchored = false
     if whichfinisher == "Kicks" then
 	UseHeatAction("H_Relentless", "Brawler", {char.LockedOn.Value})
