@@ -131,6 +131,7 @@ Dragon.Color.Value = Color3.fromRGB(255,0,0)
 Dragon.Idle.AnimationId = "rbxassetid://12120045620"
 Dragon.StanceStrike.Value = "CounterHook"
 Dragon.BlockStrike.Value = "ShuckyDrop"
+Dragon.EvadeStrikeB.Value = "TigerDrop"
 if _G.DEMoveset == false or _G.DEMoveset == nil then
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
@@ -217,9 +218,6 @@ moves["H_FastFootworkBack"].Closest.Value = '30'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
 wn.Value = '15'
-ps = Instance.new("StringValue", Rush)
-ps.Name = "EvadeStrikeB"
-ps.Value = "TigerDrop"
 moves.TigerDrop.MoveForward.Value += 5
 -- Other Move Values --
 if namesChanged == false then
@@ -634,6 +632,9 @@ end
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     AlreadyFeltHeat.Value = true
+    if doingHact() then
+	task.wait(4)
+    end
     if char.LockedOn.Value then
         Stun(char.LockedOn.Value)
     end
@@ -650,7 +651,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     Notify("Feel the heat!!", "HeatDepleted")
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
-    local id = "rbxassetid://10928237540"
+    local id = "http://www.roblox.com/asset/?id=10478338114"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
     anim:Play()
