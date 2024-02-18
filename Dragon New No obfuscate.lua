@@ -657,7 +657,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     task.wait(4)
     fillHeat(6)
     UseHeatAction("H_Whirl", "Brawler", {char.LockedOn.Value})
-    task.wait(1.75)
+    task.wait(2.5)
     fillHeat(6)
     UseHeatAction("H_FallenBeatdown", "Brawler", {char.LockedOn.Value})
     SuperCharge:Destroy()
