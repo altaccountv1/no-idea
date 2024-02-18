@@ -663,10 +663,10 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     char.HumanoidRootPart.Anchored = false
     fillHeat(6)
     UseHeatAction("H_Relentless", "Brawler", {char.LockedOn.Value})
-    task.wait(5.25)
+    task.wait(3.25)
     fillHeat(6)
     UseHeatAction("H_Whirl", "Brawler", {char.LockedOn.Value})
-    task.wait(2.5)
+    task.wait(3)
     fillHeat(6)
     UseHeatAction("H_FallenBeatdown", "Brawler", {char.LockedOn.Value})
     SuperCharge:Destroy()
