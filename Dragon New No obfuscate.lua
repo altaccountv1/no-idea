@@ -556,8 +556,8 @@ local function AutoSlap()
 end
 
 local function PVPSlap(plr)
-    if IsInPvp() then
-        if RDS.Value == true then
+    if not IsInPvp() then
+        if RDS.Value == false then
             local char = plr.Character
             if char then
                 local rootPart = char:FindFirstChild("HumanoidRootPart")
