@@ -447,7 +447,7 @@ status.Taunting.Changed:Connect(function()
 	    RDS.Value == true
 	end
     end
-end
+end)
 
 local cc = Instance.new("ColorCorrectionEffect", game.Lighting)
 cc.Name = "dragon tint"
