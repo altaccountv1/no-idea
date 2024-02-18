@@ -665,6 +665,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     anim:Stop()
     local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
     anim:Play()
+    anim.Looped = false
     PlaySound("Yell")
     fillHeat(6)
     anim.Ended:Wait()
