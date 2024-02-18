@@ -123,6 +123,8 @@ alreadyRunning.Parent = status
 alreadyRunning.Value = true
 alreadyRunning.Name = "Dragon Style"
 
+local Beast = styles.Beast
+local Rush = styles.Rush
 Dragon.VisualName.Value = "Dragon"
 Dragon.Speed.Value = 1.25
 Dragon.Color.Value = Color3.fromRGB(255,0,0)
@@ -215,6 +217,10 @@ moves["H_FastFootworkBack"].Closest.Value = '30'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
 wn.Value = '15'
+ps = Instance.new("StringValue", Rush)
+ps.Name = "EvadeStrikeB"
+ps.Value = "TigerDrop"
+moves.TigerDrop.MoveForward.Value += 5
 -- Other Move Values --
 if namesChanged == false then
     moves.Taunt.Name = "FakeTaunt"
@@ -232,6 +238,7 @@ moves.BRCounter2.Name = "FakeBRCounter2"
         end
     end
 end
+
 
 moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
 moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
