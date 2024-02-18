@@ -463,9 +463,18 @@ local function Animation()
     end)
 end
 
-sounds.Yell.Value = fetchRandom(RPS.Voices.Kiryu.Rage).Value
+playSound = (function(a1) -- PlaySound
+u10.playsound(a1, u9.hrp, nil, nil, true)
+local SoundEvent = {
+    [1] = "repsound",
+    [2] = a1
+}
+u5:FireServer(SoundEvent)
+end)
+
+local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
 RDS.Changed:Connect(function()
-if RDS.Value == true then
+if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
@@ -475,9 +484,28 @@ if RDS.Value == true then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
     end
+elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
+    Animation()
+    FillHeat()
+    local invul = Instance.new("Folder",status)
+    invul.Name = "Invulnerable" 
+    if not status:FindFirstChild("Invulnerable") then
+	local invul = Instance.new("Folder",status)
+	invul.Name = "Invulnerable"
+    end
 else 
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
+	end
+    end
+end)
+
+task.spawn(function()
+    while RDS.Value == true do
+	task.wait(0.5)
+	if not status:FindFirstChild("Invulnerable") then
+	    local invul = Instance.new("Folder",status)
+	    invul.Name = "Invulnerable"
 	end
     end
 end)
@@ -633,14 +661,14 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     PlaySound("Yell")
     anim.Ended:Wait()
     char.HumanoidRootPart.Anchored = false
-    fillHeat(4)
-    UseHeatAction("H_FastFootworkFront", "Brawler", {char.LockedOn.Value})
-    task.wait(2)
-    fillHeat(6)
-    UseHeatAction("H_FastFootworkRight", "Brawler", {char.LockedOn.Value})
-    task.wait(4)
     fillHeat(6)
     UseHeatAction("H_Relentless", "Brawler", {char.LockedOn.Value})
+    task.wait(5.25)
+    fillHeat(6)
+    UseHeatAction("H_Whirl", "Brawler", {char.LockedOn.Value})
+    task.wait(2.5)
+    fillHeat(6)
+    UseHeatAction("H_FallenBeatdown", "Brawler", {char.LockedOn.Value})
     SuperCharge:Destroy()
     task.wait(2)
     v:Destroy()
@@ -717,14 +745,6 @@ char.LeftLowerLeg.Color = Color3.fromRGB(42,42,42)
 char.RightUpperLeg.Color = Color3.fromRGB(42,42,42)
 char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
-playSound = (function(a1) -- PlaySound
-u10.playsound(a1, u9.hrp, nil, nil, true)
-local SoundEvent = {
-    [1] = "repsound",
-    [2] = a1
-}
-u5:FireServer(SoundEvent)
-end)
 
 if _G.VoiceMod == true then
 	_G.voicepack = "Kiryu" -- Current available voices: "Kiryu", "Akiyama", "Majima" and "Vulcan"
@@ -760,8 +780,8 @@ local main = bt.Main
 	alreadyRunning.Value = true
 	alreadyRunning.Name = "Voice Mod"
 	
-	Notify("Voice Mod loaded", Color3.fromRGB(255, 255, 255))
-	Notify("Selected voice: ".._G.voice.Name, Color3.fromRGB(255, 255, 255))
+	Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255))
+	Notify("Selected voice: ".._G.voice.Name,nil, Color3.fromRGB(255, 255, 255))
 	local receivedsound
 	
 	player.ChildAdded:Connect(function(child)
