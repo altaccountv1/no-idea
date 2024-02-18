@@ -630,6 +630,14 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     if char.LockedOn.Value then
         Stun(char.LockedOn.Value)
     end
+    local whichfinisher
+    if char.LockedOn.Value.Parent.Name == "Silent Stranger" or char.LockedOn.Value.Parent.Name == "Parker" or char.LockedOn.Value.Parent.Name == "Sensei Jeff Jefferson" then
+	whichfinisher = "Kicks"
+    elseif char.LockedOn.Value.Parent.Name == "Hue" or char.LockedOn.Value.Parent.Name == "Spoiled Brat" or char.LockedOn.Value.Parent.Name == "Bloodsucker" then
+        whichfinisher = "Punches"
+    elseif char.LockedOn.Value.Parent.Name == "Derek" or char.LockedOn.Value.Parent.Name == "The Foreman" then
+	whichfinisher = "Brutal"
+    end
     depleteHeat(6)
     task.wait()
     Notify("Feel the heat!!", "HeatDepleted")
@@ -653,13 +661,13 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     fillHeat(6)
     anim.Ended:Wait()
     char.HumanoidRootPart.Anchored = false
-    UseHeatAction("H_Relentless", "Brawler", {char.LockedOn.Value})
-    task.wait(4)
-    fillHeat(6)
-    UseHeatAction("H_Whirl", "Brawler", {char.LockedOn.Value})
-    task.wait(2.5)
-    fillHeat(6)
-    UseHeatAction("H_FallenBeatdown", "Brawler", {char.LockedOn.Value})
+    if whichfinisher == "Kicks" then
+	UseHeatAction("H_Relentless", "Brawler", {char.LockedOn.Value})
+    elseif whichfinisher == "Punches" then
+	UseHeatAction("H_Fisticuffs", "Brawler", {char.LockedOn.Value})
+    elseif whichfinisher == "Brutal" then
+	UseHeatAction("H_Torment", "Brawler", {char.LockedOn.Value})
+    end
     SuperCharge:Destroy()
     task.wait(2)
     v:Destroy()
