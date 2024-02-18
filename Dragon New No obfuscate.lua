@@ -472,14 +472,14 @@ local SoundEvent = {
 u5:FireServer(SoundEvent)
 end)
 
-local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
+    local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
-    PlaySound("Yell")
+    playSound(rage)
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
@@ -500,15 +500,6 @@ else
     end
 end)
 
-task.spawn(function()
-    while RDS.Value == true do
-	task.wait(0.5)
-	if not status:FindFirstChild("Invulnerable") then
-	    local invul = Instance.new("Folder",status)
-	    invul.Name = "Invulnerable"
-	end
-    end
-end)
 local feelingheat = Instance.new("BoolValue", workspace)
 feelingheat.Value = false
 thing = Instance.new("BoolValue", workspace)
