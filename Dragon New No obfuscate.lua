@@ -654,7 +654,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     char.HumanoidRootPart.Anchored = false
     fillHeat(6)
     UseHeatAction("H_Relentless", "Brawler", {char.LockedOn.Value})
-    task.wait(3.25)
+    task.wait(4)
     fillHeat(6)
     UseHeatAction("H_Whirl", "Brawler", {char.LockedOn.Value})
     task.wait(4)
