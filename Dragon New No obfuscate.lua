@@ -439,7 +439,7 @@ end
 
 plr.Status.Health.Changed:Connect(HealthChanged)
 
-
+local activatedmanually
 status.Taunting.Changed:Connect(function()
     if status.Taunting.Value == true then
 	if main.Heat.noheattho.Text = "Heat Actions Disabled" then
