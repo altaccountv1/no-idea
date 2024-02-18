@@ -444,7 +444,7 @@ status.Taunting.Changed:Connect(function()
     if status.Taunting.Value == true then
 	if main.Heat.noheattho.Text = "Heat Actions Disabled" then
             activatedmanually = true
-	    RDS.Value == true
+	    RDS.Value = true
 	end
     end
 end)
