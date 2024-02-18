@@ -439,16 +439,15 @@ end
 
 plr.Status.Health.Changed:Connect(HealthChanged)
 
-status.ChildAdded:Connect(function(child)
-if child.Name == "ANGRY" then
-	RDS.Value = true
+
+status.Taunting.Changed:Connect(function()
+    if status.Taunting.Value == true then
+	if main.Heat.noheattho.Text = "Heat Actions Disabled" then
+            activatedmanually = true
+	    RDS.Value == true
+	end
     end
-end)
-status.ChildRemoved:Connect(function(child)
-    if child.Name == "ANGRY" then
-	RDS.Value = false
-    end
-end)
+end
 
 local cc = Instance.new("ColorCorrectionEffect", game.Lighting)
 cc.Name = "dragon tint"
@@ -478,7 +477,7 @@ u5:FireServer(SoundEvent)
 end)
 
 RDS.Changed:Connect(function()
-if RDS.Value == true and not status:FindFirstChild("ANGRY") then
+if RDS.Value == true and not activatedmanually then
     local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
     FillHeat()
@@ -489,15 +488,19 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
     end
-elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
+elseif RDS.Value == true and activatedmanually then
+    local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
+    playSound(rage)
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
     end
+    task.wait(15)
+    RDS.Value = false activatedmanually = false
 else 
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
