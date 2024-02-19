@@ -456,10 +456,10 @@ heat.Changed:Connect(function()
 	moves[Dragon.Rush2.Value].ComboAt.Value -= 0.1
 	moves[Dragon.Rush3.Value].ComboAt.Value -= 0.1
 	moves[Dragon.Rush4.Value].ComboAt.Value -= 0.1
-	moves[Dragon.Strike2.Value].ComboAt.Value -= 0.2
-	moves[Dragon.Strike3.Value].ComboAt.Value -= 0.2
-	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.2
-	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.2
+	moves[Dragon.Strike2.Value].ComboAt.Value -= 0.1
+	moves[Dragon.Strike3.Value].ComboAt.Value -= 0.15
+	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.15
+	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.15
     elseif heat.Value < 50 then
 	moves[Dragon.Rush1.Value].ComboAt.Value = rush1c
 	moves[Dragon.Rush2.Value].ComboAt.Value = rush2c
