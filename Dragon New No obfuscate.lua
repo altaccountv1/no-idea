@@ -458,7 +458,7 @@ heat.Changed:Connect(function()
 	moves[Dragon.Rush4.Value].ComboAt.Value -= 0.1
 	moves[Dragon.Strike2.Value].ComboAt.Value -= 0.1
 	moves[Dragon.Strike3.Value].ComboAt.Value -= 0.15
-	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.15
+	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.075
 	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.15
     elseif heat.Value < 50 then
 	moves[Dragon.Rush1.Value].ComboAt.Value = rush1c
@@ -499,6 +499,17 @@ local SoundEvent = {
 u5:FireServer(SoundEvent)
 end)
 
+status.ChildRemoved:Connect(function(v)
+    if v.Name == "ANGRY" then
+	RDS.Value = false
+    end
+end)
+
+status.ChildAdded:Connect(function(v)
+    if v.Name == "ANGRY" then
+	RDS.Value = true
+    end
+end)
 RDS.Changed:Connect(function()
 if RDS.Value == true then
     local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
@@ -507,15 +518,6 @@ if RDS.Value == true then
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
     playSound(rage)
-    if not status:FindFirstChild("Invulnerable") then
-	local invul = Instance.new("Folder",status)
-	invul.Name = "Invulnerable"
-    end
-elseif status:FindFirstChild("ANGRY") then
-    Animation()
-    FillHeat()
-    local invul = Instance.new("Folder",status)
-    invul.Name = "Invulnerable" 
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
