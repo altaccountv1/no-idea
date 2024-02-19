@@ -439,6 +439,39 @@ end
 
 plr.Status.Health.Changed:Connect(HealthChanged)
 
+local heat = status.Heat
+
+local rush1c = moves[Dragon.Rush1.Value].ComboAt.Value
+local rush2c = moves[Dragon.Rush2.Value].ComboAt.Value
+local rush3c = moves[Dragon.Rush3.Value].ComboAt.Value
+local rush4c = moves[Dragon.Rush4.Value].ComboAt.Value
+local strike2c = moves[Dragon.Strike2.Value].ComboAt.Value
+local strike3c = moves[Dragon.Strike3.Value].ComboAt.Value
+local strike4c = moves[Dragon.Strike4.Value].ComboAt.Value
+local strike5c = moves[Dragon.Strike5.Value].ComboAt.Value
+
+heat.Changed:Connect(function()
+    if heat.Value >= 50 then
+	moves[Dragon.Rush1.Value].ComboAt.Value -= 0.1
+	moves[Dragon.Rush2.Value].ComboAt.Value -= 0.1
+	moves[Dragon.Rush3.Value].ComboAt.Value -= 0.1
+	moves[Dragon.Rush4.Value].ComboAt.Value -= 0.1
+	moves[Dragon.Strike2.Value].ComboAt.Value -= 0.2
+	moves[Dragon.Strike3.Value].ComboAt.Value -= 0.2
+	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.2
+	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.2
+    elseif heat.Value < 50 then
+	moves[Dragon.Rush1.Value].ComboAt.Value = rush1c
+	moves[Dragon.Rush2.Value].ComboAt.Value = rush2c
+	moves[Dragon.Rush3.Value].ComboAt.Value = rush3c
+	moves[Dragon.Rush4.Value].ComboAt.Value = rush4c
+	moves[Dragon.Strike2.Value].ComboAt.Value = strike2c
+	moves[Dragon.Strike3.Value].ComboAt.Value = strike3c
+	moves[Dragon.Strike4.Value].ComboAt.Value = strike4c
+	moves[Dragon.Strike5.Value].ComboAt.Value = strike5c
+    end
+end)
+
 local cc = Instance.new("ColorCorrectionEffect", game.Lighting)
 cc.Name = "dragon tint"
 
@@ -650,7 +683,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     end
     depleteHeat(6)
     task.wait()
-    Notify("Feel the heat!!", "HeatDepleted")
+    Notify("Feel the heat!!", "HeatDepleted", Color3.new(1,0,0))
     local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
     anim.Priority = Enum.AnimationPriority.Action4
     local id = "rbxassetid://10928237540"
