@@ -457,33 +457,32 @@ local strike5a = moves[Dragon.Strike5.Value].AniSpeed.Value
 heat.Changed:Connect(function()
     if heat.Value >= 50 then
 	moves[Dragon.Rush1.Value].ComboAt.Value -= 0.05
-	moves[Dragon.Rush2.Value].ComboAt.Value -= 0.1
-	moves[Dragon.Rush3.Value].ComboAt.Value -= 0.1
-	moves[Dragon.Rush4.Value].ComboAt.Value -= 0.1
+	moves[Dragon.Rush2.Value].ComboAt.Value -= 0.05
+	moves[Dragon.Rush3.Value].ComboAt.Value -= 0.05
+	moves[Dragon.Rush4.Value].ComboAt.Value -= 0.05
 	moves[Dragon.Strike2.Value].ComboAt.Value -= 0.1
 	moves[Dragon.Strike3.Value].ComboAt.Value -= 0.15
-	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.075
-	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.15
+	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.05
+	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.075
 	moves[Dragon.Strike2.Value].AniSpeed.Value += 0.1
 	moves[Dragon.Strike3.Value].AniSpeed.Value += 0.1
 	moves[Dragon.Strike4.Value].AniSpeed.Value += 0.1
 	moves[Dragon.Strike5.Value].AniSpeed.Value += 0.1
 	moves[Dragon.Strike5.Value].AniSpeed.Value += 0.1
     elseif heat.Value < 50 then
-	moves[Dragon.Rush1.Value].ComboAt.Value = rush1c
-	moves[Dragon.Rush2.Value].ComboAt.Value = rush2c
-	moves[Dragon.Rush3.Value].ComboAt.Value = rush3c
-	moves[Dragon.Rush4.Value].ComboAt.Value = rush4c
-	moves[Dragon.Strike2.Value].ComboAt.Value = strike2c
-	moves[Dragon.Strike3.Value].ComboAt.Value = strike3c
-	moves[Dragon.Strike4.Value].ComboAt.Value = strike4c
-	moves[Dragon.Strike5.Value].ComboAt.Value = strike5c
-	moves[Dragon.Strike5.Value].ComboAt.Value = strike5c
-	moves[Dragon.Strike2.Value].AniSpeed.Value = strike2a
-	moves[Dragon.Strike3.Value].AniSpeed.Value = strike3a
-	moves[Dragon.Strike4.Value].AniSpeed.Value = strike4a
-	moves[Dragon.Strike5.Value].AniSpeed.Value = strike5a
-	moves[Dragon.Strike5.Value].AniSpeed.Value = strike5a
+	moves[Dragon.Rush1.Value].ComboAt.Value += 0.05
+	moves[Dragon.Rush2.Value].ComboAt.Value += 0.05
+	moves[Dragon.Rush3.Value].ComboAt.Value += 0.05
+	moves[Dragon.Rush4.Value].ComboAt.Value += 0.05
+	moves[Dragon.Strike2.Value].ComboAt.Value += 0.1
+	moves[Dragon.Strike3.Value].ComboAt.Value += 0.15
+	moves[Dragon.Strike4.Value].ComboAt.Value += 0.05
+	moves[Dragon.Strike5.Value].ComboAt.Value += 0.075
+	moves[Dragon.Strike2.Value].AniSpeed.Value -= 0.1
+	moves[Dragon.Strike3.Value].AniSpeed.Value -= 0.1
+	moves[Dragon.Strike4.Value].AniSpeed.Value -= 0.1
+	moves[Dragon.Strike5.Value].AniSpeed.Value -= 0.1
+	moves[Dragon.Strike5.Value].AniSpeed.Value -= 0.1
     end
 end)
 
@@ -537,6 +536,15 @@ if RDS.Value == true then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
     end
+elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
+    Animation()
+    FillHeat()
+    local invul = Instance.new("Folder",status)
+    invul.Name = "Invulnerable" 
+    if not status:FindFirstChild("Invulnerable") then
+	local invul = Instance.new("Folder",status)
+	invul.Name = "Invulnerable"
+    end	
 else 
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
