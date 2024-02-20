@@ -443,10 +443,10 @@ local Heat = status.Heat
 
 local FastMoves = Instance.new("BoolValue", nil)
 
-heat.Changed:Connect(function()
-    if heat.Value >= 50 then
+Heat.Changed:Connect(function()
+    if Heat.Value >= 50 then
 	FastMoves.Value = true
-    elseif heat.Value < 50 then
+    elseif Heat.Value < 50 then
 	FastMoves.Value = false
     end
 end)
