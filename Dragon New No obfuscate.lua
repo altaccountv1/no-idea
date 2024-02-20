@@ -449,10 +449,14 @@ local strike2c = moves[Dragon.Strike2.Value].ComboAt.Value
 local strike3c = moves[Dragon.Strike3.Value].ComboAt.Value
 local strike4c = moves[Dragon.Strike4.Value].ComboAt.Value
 local strike5c = moves[Dragon.Strike5.Value].ComboAt.Value
+local strike2a = moves[Dragon.Strike2.Value].AniSpeed.Value
+local strike3a = moves[Dragon.Strike3.Value].AniSpeed.Value
+local strike4a = moves[Dragon.Strike4.Value].AniSpeed.Value
+local strike5a = moves[Dragon.Strike5.Value].AniSpeed.Value
 
 heat.Changed:Connect(function()
     if heat.Value >= 50 then
-	moves[Dragon.Rush1.Value].ComboAt.Value -= 0.1
+	moves[Dragon.Rush1.Value].ComboAt.Value -= 0.05
 	moves[Dragon.Rush2.Value].ComboAt.Value -= 0.1
 	moves[Dragon.Rush3.Value].ComboAt.Value -= 0.1
 	moves[Dragon.Rush4.Value].ComboAt.Value -= 0.1
@@ -460,6 +464,11 @@ heat.Changed:Connect(function()
 	moves[Dragon.Strike3.Value].ComboAt.Value -= 0.15
 	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.075
 	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.15
+	moves[Dragon.Strike2.Value].AniSpeed.Value += 0.1
+	moves[Dragon.Strike3.Value].AniSpeed.Value += 0.1
+	moves[Dragon.Strike4.Value].AniSpeed.Value += 0.1
+	moves[Dragon.Strike5.Value].AniSpeed.Value += 0.1
+	moves[Dragon.Strike5.Value].AniSpeed.Value += 0.1
     elseif heat.Value < 50 then
 	moves[Dragon.Rush1.Value].ComboAt.Value = rush1c
 	moves[Dragon.Rush2.Value].ComboAt.Value = rush2c
@@ -469,6 +478,12 @@ heat.Changed:Connect(function()
 	moves[Dragon.Strike3.Value].ComboAt.Value = strike3c
 	moves[Dragon.Strike4.Value].ComboAt.Value = strike4c
 	moves[Dragon.Strike5.Value].ComboAt.Value = strike5c
+	moves[Dragon.Strike5.Value].ComboAt.Value = strike5c
+	moves[Dragon.Strike2.Value].AniSpeed.Value = strike2a
+	moves[Dragon.Strike3.Value].AniSpeed.Value = strike3a
+	moves[Dragon.Strike4.Value].AniSpeed.Value = strike4a
+	moves[Dragon.Strike5.Value].AniSpeed.Value = strike5a
+	moves[Dragon.Strike5.Value].AniSpeed.Value = strike5a
     end
 end)
 
