@@ -237,7 +237,6 @@ moves.BRCounter2.Name = "FakeBRCounter2"
     end
 end
 
-
 moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
 moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
 moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
@@ -247,6 +246,7 @@ whenattack.Name = "WhenAttacking"
 counter = Instance.new("Folder", moves.ShuckyDrop)
 counter.Name = "CounterAttack" 
 
+moves[Dragon.Strike1.Value].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 
 -- FUNCTIONS -- 
