@@ -132,6 +132,18 @@ Dragon.Idle.AnimationId = "rbxassetid://12120045620"
 Dragon.StanceStrike.Value = "CounterHook"
 Dragon.BlockStrike.Value = "ShuckyDrop"
 Dragon.EvadeStrikeB.Value = "TigerDrop"
+Rush.EvadeF.AnimationId = Dragon.EvadeF.AnimationId
+Rush.EvadeB.AnimationId = Dragon.EvadeB.AnimationId
+Rush.EvadeL.AnimationId = Dragon.EvadeL.AnimationId
+Rush.EvadeR.AnimationId = Dragon.EvadeR.AnimationId
+Rush.EvadeCF.AnimationId = Dragon.EvadeF.AnimationId
+Rush.EvadeCB.AnimationId = Dragon.EvadeB.AnimationId
+Rush.EvadeCL.AnimationId = Dragon.EvadeL.AnimationId
+Rush.EvadeCR.AnimationId = Dragon.EvadeR.AnimationId
+Rush.EvadeQCF.AnimationId = Dragon.EvadeF.AnimationId
+Rush.EvadeQCB.AnimationId = Dragon.EvadeB.AnimationId
+Rush.EvadeQCL.AnimationId = Dragon.EvadeL.AnimationId
+Rush.EvadeQCR.AnimationId = Dragon.EvadeR.AnimationId
 if _G.DEMoveset == false or _G.DEMoveset == nil then
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
@@ -248,7 +260,6 @@ counter.Name = "CounterAttack"
 
 moves[Dragon.Strike1.Value].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
-
 -- FUNCTIONS -- 
 local function add_forcefield(duration)
 	local p = game.Players.LocalPlayer
