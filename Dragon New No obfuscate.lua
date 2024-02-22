@@ -117,7 +117,7 @@ if alreadyRunning then
     sentNotifs = true
 end
  
- 
+moves[Dragon.Strike1.Value].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 alreadyRunning = Instance.new("BoolValue")
 alreadyRunning.Parent = status
 alreadyRunning.Value = true
@@ -274,7 +274,6 @@ whenattack.Name = "WhenAttacking"
 counter = Instance.new("Folder", moves.ShuckyDrop)
 counter.Name = "CounterAttack" 
 
-moves[Dragon.Strike1.Value].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 -- FUNCTIONS -- 
 local function add_forcefield(duration)
