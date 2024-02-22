@@ -166,6 +166,14 @@ Dragon["2Strike2"].Value = "龍2Strike1"
 Dragon["2Strike3"].Value = "龍2Strike2"
 Dragon["2Strike4"].Value = "龍2Strike3"
 Dragon["2Strike5"].Value = "龍2Strike4"
+moves.BStrike2.ComboAt.Value -= 0.1
+moves["龍2Strike2"].AniSpeed.Value = 2
+moves["龍2Strike2"].MoveForward.Value = -= 4
+moves.BStrike3.AniSpeed.Value += 0.05
+moves.BStrike3.ComboAt.Value -= 0.05
+moves.BStrike5.Anim.AnimationId = moves["龍2Strike1"].Anim.AnimationId
+moves.BStrike5.AniSpeed.Value += 0.05
+moves["龍Strike5"].Anim.AnimationId = moves.BStrike1.Anim.AnimationId
 else
 moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
 moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
