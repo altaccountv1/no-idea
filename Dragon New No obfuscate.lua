@@ -144,6 +144,14 @@ Rush.EvadeQCF.AnimationId = Dragon.EvadeF.AnimationId
 Rush.EvadeQCB.AnimationId = Dragon.EvadeB.AnimationId
 Rush.EvadeQCL.AnimationId = Dragon.EvadeL.AnimationId
 Rush.EvadeQCR.AnimationId = Dragon.EvadeR.AnimationId
+local walkf = Dragon.WalkF:Clone()
+walkf.Parent = Rush
+local walkb = Dragon.WalkB:Clone()
+walkb.Parent = Rush
+local walkl = Dragon.WalkF:Clone()
+walkl.Parent = Rush
+local walkr = Dragon.WalkR:Clone()
+walkr.Parent = Rush
 if _G.DEMoveset == false or _G.DEMoveset == nil then
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
