@@ -168,7 +168,7 @@ Dragon["2Strike4"].Value = "龍2Strike3"
 Dragon["2Strike5"].Value = "龍2Strike4"
 moves.BStrike2.ComboAt.Value -= 0.1
 moves["龍2Strike2"].AniSpeed.Value = 2
-moves["龍2Strike2"].MoveForward.Value = -= 4
+moves["龍2Strike2"].MoveForward.Value -= 4
 moves.BStrike3.AniSpeed.Value += 0.05
 moves.BStrike3.ComboAt.Value -= 0.05
 moves.BStrike5.Anim.AnimationId = moves["龍2Strike1"].Anim.AnimationId
