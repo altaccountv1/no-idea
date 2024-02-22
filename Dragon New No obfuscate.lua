@@ -173,7 +173,7 @@ moves.BStrike3.AniSpeed.Value += 0.05
 moves.BStrike3.ComboAt.Value -= 0.05
 moves.BStrike5.Anim.AnimationId = moves["龍2Strike1"].Anim.AnimationId
 moves.BStrike5.AniSpeed.Value += 0.05
-moves["龍Strike5"].Anim.AnimationId = moves["龍Strike1"].Anim.AnimationId
+moves["龍Strike5"].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 else
 moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
 moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
