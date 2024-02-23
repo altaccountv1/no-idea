@@ -158,7 +158,7 @@ if IsInPvp() then
         local ability = Instance.new("StringValue", Dragon.GrabStrike) ability.Value = "Guru Parry"
     elseif not Dragon.StanceStrike:FindFIrstChild("Ability") then
         local ability = Instance.new("StringValue", Dragon.StanceStrike) ability.Value = "Counter Hook"
-    elseif not Dragon.BlockStrike:FindFIrstChild("Ability") then
+    elseif not Dragon.BlockStrike:FindFirstChild("Ability") then
         local ability = Instance.new("StringValue", Dragon.BlockStrike) ability.Value = "Guru Knockback"
     end
 end
