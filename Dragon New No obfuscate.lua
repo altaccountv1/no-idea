@@ -1050,9 +1050,9 @@ if hasReloaded == false then
 	local startsound = Instance.new("Sound")
 	startsound.SoundId = "rbxassetid://9085027122"
 	game:GetService("SoundService"):PlayLocalSound(startsound)
-        Notify("hii"..plr.DisplayName)
+        Notify("hii"..plr.DisplayName,nil,Color3.fromRGB(255,255,255),"Bangers")
         task.wait()
-	Notify("Dragon style loaded",nil,Color3.fromRGB(255,255,255))
+	Notify("Dragon style loaded",nil,Color3.fromRGB(255,255,255), "Bangers")
 	startsound.Ended:Wait()
 	startsound:Destroy()
 end
