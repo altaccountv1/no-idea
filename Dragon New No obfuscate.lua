@@ -156,7 +156,7 @@ walkr.Parent = Rush
 if IsInPvp() then
     if not Dragon.GrabStrike:FindFirstChild("Ability") then
         local ability = Instance.new("StringValue", Dragon.GrabStrike) ability.Value = "Guru Parry"
-    elseif not Dragon.StanceStrike:FindFIrstChild("Ability") then
+    elseif not Dragon.StanceStrike:FindFirstChild("Ability") then
         local ability = Instance.new("StringValue", Dragon.StanceStrike) ability.Value = "Counter Hook"
     elseif not Dragon.BlockStrike:FindFirstChild("Ability") then
         local ability = Instance.new("StringValue", Dragon.BlockStrike) ability.Value = "Guru Knockback"
