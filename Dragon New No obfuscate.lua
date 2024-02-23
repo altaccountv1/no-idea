@@ -226,6 +226,8 @@ rush.VisualName.Value = "Rush"
 beast.VisualName.Value = "Beast"
 beast.Strike2.Value = "DashAttack"
 beast.Strike4.Value = "DerekCharge"
+moves.T_GuruParry.Anim.AnimationId = moves["T_龍GParry"].Anim.AnimationId
+moves.T_GuruParry.AniSpeed += 0.075
 -- New Values --
 r4 = Instance.new("StringValue", Dragon)
 r4.Name = "H_Running4"
