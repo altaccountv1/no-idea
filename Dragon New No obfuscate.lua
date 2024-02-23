@@ -393,12 +393,19 @@ anim.Priority = Enum.AnimationPriority.Movement
 
 local DragonText = "Dragon"
 styles.Blade.Color.Value = Color3.fromRGB(0,0,0)
-local DragonColor = Color3.new(1,0,0)
+local DragonColor
+
+if _G.Legend == true then
+    DragonColor = Color3.new(1,1,1)
+else
+    DragonColor = Color3.new(1,0,0)
+end
 local DSeq = ColorSequence.new({ColorSequenceKeypoint.new(0, DragonColor), ColorSequenceKeypoint.new(1, DragonColor)})
 local NoTrail = ColorSequence.new({ColorSequenceKeypoint.new(0, styles.Blade.Color.Value), ColorSequenceKeypoint.new(1, styles.Blade.Color.Value)})
 
 local function UpdateStyle()
 if status.Style.Value == "Brawler" then
+	Dragon.Color.Value = DragonColor
 	char.HumanoidRootPart.Fire_Main.Color = DSeq
         char.HumanoidRootPart.Fire_Secondary.Color = DSeq
         char.HumanoidRootPart.Fire_Main.Rate = status.Heat.Value >= 100 and 115 or status.Heat.Value >= 75 and 85 or 80
@@ -419,7 +426,6 @@ if status.Style.Value == "Brawler" then
         char.UpperTorso["r2f_aura_burst"].Flare.Color = DSeq
         char.UpperTorso["r2f_aura_burst"].Smoke.Color = DSeq
         char.UpperTorso.Evading.Color = NoTrail
-
   	if main.HeatMove.TextLabel.Text == "Essence of Fisticuffs" then
 		main.HeatMove.TextLabel.Text = "Essence of Battery"
 	elseif main.HeatMove.TextLabel.Text == "Guru Firearm Flip" then
