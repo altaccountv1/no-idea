@@ -128,6 +128,7 @@ local Rush = styles.Rush
 Dragon.VisualName.Value = "Dragon"
 Dragon.Speed.Value = 1.25
 Dragon.Color.Value = Color3.fromRGB(255,0,0)
+Dragon.Pummel.Value = "T_龍GParry"
 Dragon.Idle.AnimationId = "rbxassetid://12120045620"
 Dragon.StanceStrike.Value = "CounterHook"
 Dragon.BlockStrike.Value = "ShuckyDrop"
