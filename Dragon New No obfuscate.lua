@@ -227,7 +227,6 @@ beast.VisualName.Value = "Beast"
 beast.Strike2.Value = "DashAttack"
 beast.Strike4.Value = "DerekCharge"
 moves.T_GuruParry.Anim.AnimationId = moves["T_龍GParry"].Anim.AnimationId
-moves.T_GuruParry.AniSpeed.Value += 0.075
 -- New Values --
 r4 = Instance.new("StringValue", Dragon)
 r4.Name = "H_Running4"
@@ -274,6 +273,8 @@ if namesChanged == false then
     moves.Taunt.Anim.AnimationId = "rbxassetid://10928237540"
 if not IsInPvp() then
 moves.BRCounter2.Name = "FakeBRCounter2"
+moves.FGetup.Name = "risingtornado"
+moves.RSweep.Name = "FGetup"
     moves["龍TigerDrop"].Name = "BRCounter2"
     moves["BRCounter2"].AniSpeed.Value = 0.75
     moves["TigerDrop"].AniSpeed.Value = 0.75
