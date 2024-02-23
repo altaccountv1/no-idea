@@ -167,13 +167,16 @@ Dragon["2Strike3"].Value = "龍2Strike2"
 Dragon["2Strike4"].Value = "龍2Strike3"
 Dragon["2Strike5"].Value = "龍2Strike4"
 moves.BStrike2.ComboAt.Value -= 0.15
-moves["龍2Strike2"].AniSpeed.Value = 1.65
-moves["龍2Strike2"].MoveForward.Value -= 3
+Dragon.GrabStrike.Value = "T_龍GParry"
+moves["龍2Strike2"].AniSpeed.Value = 1.45
+moves["龍2Strike2"].MoveForward.Value -= 4
+moves.BStrike2.MoveForward.Value -= 3
 moves.BStrike3.AniSpeed.Value += 0.05
 moves.BStrike3.ComboAt.Value -= 0.05
 moves["龍Strike1"].Anim.AnimationId = "rbxassetid://13731752257"
 moves.BStrike5.Anim.AnimationId = moves["龍2Strike1"].Anim.AnimationId
 moves.BStrike5.AniSpeed.Value += 0.05
+moves.BStrike5.ComboAt.Value -= 0.1
 moves["龍Strike5"].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 else
 moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
@@ -394,12 +397,7 @@ anim.Priority = Enum.AnimationPriority.Movement
 local DragonText = "Dragon"
 styles.Blade.Color.Value = Color3.fromRGB(0,0,0)
 local DragonColor
-
-if _G.Legend == true then
-    DragonColor = Color3.new(1,1,1)
-else
-    DragonColor = Color3.new(1,0,0)
-end
+DragonColor = Color3.new(1,0,0)
 local DSeq = ColorSequence.new({ColorSequenceKeypoint.new(0, DragonColor), ColorSequenceKeypoint.new(1, DragonColor)})
 local NoTrail = ColorSequence.new({ColorSequenceKeypoint.new(0, styles.Blade.Color.Value), ColorSequenceKeypoint.new(1, styles.Blade.Color.Value)})
 
