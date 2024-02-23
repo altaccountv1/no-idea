@@ -153,9 +153,19 @@ local walkl = Dragon.WalkL:Clone()
 walkl.Parent = Rush
 local walkr = Dragon.WalkR:Clone()
 walkr.Parent = Rush
+if Dragon.GrabStrike:FindFirstChild("Ability") then
 Dragon.GrabStrike.Ability.Value = "Guru Parry"
 Dragon.StanceStrike.Ability.Value = "Counter Hook"
 Dragon.BlockStrike.Ability.Value = "Guru Knockback"
+else
+    if not Dragon.GrabStrike:FindFirstChild("Ability") then
+        local ability = Instance.new("StringValue", Dragon.GrabStrike) ability.Value = "Guru Parry"
+    elseif not Dragon.StanceStrike:FindFirstChild("Ability") then
+        local ability = Instance.new("StringValue", Dragon.StanceStrike) ability.Value = "Counter Hook"
+    elseif not Dragon.BlockStrike:FindFirstChild("Ability") then
+        local ability = Instance.new("StringValue", Dragon.BlockStrike) ability.Value = "Guru Knockback"
+    end
+end
 if _G.DEMoveset == false or _G.DEMoveset == nil then
 Dragon.Rush1.Value = "龍Attack1"
 Dragon.Rush2.Value = "龍Attack2"
