@@ -193,7 +193,6 @@ moves["龍Strike1"].Anim.AnimationId = "rbxassetid://13731752257"
 moves.BStrike5.Anim.AnimationId = moves["龍2Strike1"].Anim.AnimationId
 moves.BStrike5.AniSpeed.Value += 0.05
 moves.BStrike5.ComboAt.Value -= 0.1
-moves["龍Strike5"]Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 moves["龍Strike5"].HitboxLocations.Value = '[["LeftFoot",2,[0,0,0]],["LeftLowerLeg",1.5,[0,0,0]],["LeftUpperLeg",1,[0,0,0]]]'
 moves["龍Strike5"].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 else
