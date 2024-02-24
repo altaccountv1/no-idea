@@ -895,8 +895,7 @@ local main = bt.Main
 	alreadyRunning.Value = true
 	alreadyRunning.Name = "Voice Mod"
 	
-	Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255))
-	Notify("Selected voice: ".._G.voice.Name,nil, Color3.fromRGB(255, 255, 255))
+	Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255), "Bangers" )
 	local receivedsound
 	
 	player.ChildAdded:Connect(function(child)
@@ -1052,7 +1051,7 @@ if hasReloaded == false then
 	local startsound = Instance.new("Sound")
 	startsound.SoundId = "rbxassetid://9085027122"
 	game:GetService("SoundService"):PlayLocalSound(startsound)
-        Notify("dragon loaded :3",nil,Color3.fromRGB(255,255,255),"Bangers")
+        Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
 	startsound.Ended:Wait()
 	startsound:Destroy()
 end
