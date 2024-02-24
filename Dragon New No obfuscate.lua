@@ -296,7 +296,9 @@ whenattack = Instance.new("Folder", moves.ShuckyDrop)
 whenattack.Name = "WhenAttacking"
 counter = Instance.new("Folder", moves.ShuckyDrop)
 counter.Name = "CounterAttack" 
-
+moves.B2Strike1.Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
+combo = Instance.new("NumberValue", moves.B2Strike1) combo.Value = moves["龍Strike5"].ComboAt.Value
+moves.B2Strike1.AniSpeed.Value = moves["龍Strike5"].AniSpeed.Value
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 -- FUNCTIONS -- 
 local function add_forcefield(duration)
