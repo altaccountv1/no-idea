@@ -84,7 +84,7 @@ function IsInPvp()
     end
 end
 
-local function Notify(Text,Sound,Color) --text function, sounds: tp, buzz, Gong, HeatDepleted
+local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
 	local Text1 = string.upper(Text)
 	if Sound then
 		pgui.Notify:Fire(Text,Sound)
@@ -96,7 +96,9 @@ local function Notify(Text,Sound,Color) --text function, sounds: tp, buzz, Gong,
 			if v.Name == "XPEx" and v.Text == Text1 then
 				v.Text = Text
 				v.TextColor3 = Color
-				v.Font = Enum.Font.RobotoMono
+				if Font then
+				    v.Font = Enum.Font[Fonts]
+				end
 			end
 		end
 	end
@@ -1050,9 +1052,7 @@ if hasReloaded == false then
 	local startsound = Instance.new("Sound")
 	startsound.SoundId = "rbxassetid://9085027122"
 	game:GetService("SoundService"):PlayLocalSound(startsound)
-        Notify("hii"..plr.DisplayName,nil,Color3.fromRGB(255,255,255),"Bangers")
-        task.wait()
-	Notify("Dragon style loaded",nil,Color3.fromRGB(255,255,255), "Bangers")
+        Notify("dragon loaded :3",nil,Color3.fromRGB(255,255,255),"Bangers")
 	startsound.Ended:Wait()
 	startsound:Destroy()
 end
