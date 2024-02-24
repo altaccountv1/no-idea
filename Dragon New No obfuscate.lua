@@ -177,7 +177,7 @@ Dragon.Strike1.Value = "龍Strike1"
 Dragon.Strike2.Value = "BStrike2"
 Dragon.Strike3.Value = "BStrike3"
 Dragon.Strike4.Value = "BStrike5"
-Dragon.Strike5.Value = "B2Strike1"
+Dragon.Strike5.Value = "龍Strike5"
 Dragon["2Strike2"].Value = "龍2Strike1"
 Dragon["2Strike3"].Value = "龍2Strike2"
 Dragon["2Strike4"].Value = "龍2Strike3"
@@ -193,6 +193,8 @@ moves["龍Strike1"].Anim.AnimationId = "rbxassetid://13731752257"
 moves.BStrike5.Anim.AnimationId = moves["龍2Strike1"].Anim.AnimationId
 moves.BStrike5.AniSpeed.Value += 0.05
 moves.BStrike5.ComboAt.Value -= 0.1
+moves["龍Strike5"]Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
+moves["龍Strike5"].HitboxLocations.Value = '[["LeftFoot",2,[0,0,0]],["LeftLowerLeg",1.5,[0,0,0]],["LeftUpperLeg",1,[0,0,0]]]'
 moves["龍Strike5"].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 else
 moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
@@ -296,9 +298,6 @@ whenattack = Instance.new("Folder", moves.ShuckyDrop)
 whenattack.Name = "WhenAttacking"
 counter = Instance.new("Folder", moves.ShuckyDrop)
 counter.Name = "CounterAttack" 
-moves.B2Strike1.Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
-combo = Instance.new("NumberValue", moves.B2Strike1) combo.Value = moves["龍Strike5"].ComboAt.Value
-moves.B2Strike1.AniSpeed.Value = moves["龍Strike5"].AniSpeed.Value
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 -- FUNCTIONS -- 
 local function add_forcefield(duration)
