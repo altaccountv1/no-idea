@@ -96,7 +96,7 @@ local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz,
 			if v.Name == "XPEx" and v.Text == Text1 then
 				v.Text = Text
 				v.TextColor3 = Color
-				if Font then
+				if Fonts then
 				    v.Font = Enum.Font[Fonts]
 				end
 			end
