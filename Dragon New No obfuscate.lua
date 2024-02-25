@@ -437,10 +437,10 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then
 	task.wait(2)
 	fillHeat(3)
-	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}
+	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value})
 	task.wait(2)
 	fillHeat(3)
-	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}
+	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value})
     end
 end)
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
