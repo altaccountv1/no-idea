@@ -416,7 +416,7 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Essence of Sumo Slapping " and not char:FindFirstChild("BeingHeated") then
+    if Main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" and not char:FindFirstChild("BeingHeated") then
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
         Anim:AdjustSpeed(1)
@@ -436,11 +436,13 @@ end)
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then
 	task.wait(2)
+	if IsInBattle() then
 	fillHeat(3)
 	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value})
 	task.wait(2)
 	fillHeat(3)
 	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value})
+	end
     end
 end)
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
@@ -481,9 +483,7 @@ if status.Style.Value == "Brawler" then
 		main.HeatMove.TextLabel.Text = "Essence of Battery"
 	elseif main.HeatMove.TextLabel.Text == "Guru Firearm Flip" then
 		main.HeatMove.TextLabel.Text = "Komaki Shot Stopper"
-	elseif main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" then
-		main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping "
-    elseif main.HeatMove.TextLabel.Text == "Ultimate Essence" then
+        elseif main.HeatMove.TextLabel.Text == "Ultimate Essence" then
 		main.HeatMove.TextLabel.Text = "Ultimate Essence "
 	    end
     end
@@ -823,7 +823,7 @@ if hasReloaded == false then
 interf.Client.Disabled = true
 task.wait()
 interf.Client.Disabled = false
-task.wait(1)
+task.wait()
 char.HumanoidRootPart.CFrame = oldcframe
 end
 
