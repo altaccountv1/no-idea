@@ -220,7 +220,7 @@ Dragon["2Strike3"].Value = "BStrike2" -- leg sweep
 Dragon["2Strike4"].Value = "B2Strike3" -- high leg sweep
 Dragon["2Strike5"].Value = "龍Strike5" -- hook kick
 end
-Dragon.H_FallenDown.Value = "H_FallenProne"
+Dragon.H_FallenDown.Value = "H_FallenGrate"
 Dragon.H_CounterSoloAllFront.Value = "H_TSpinCounterFront"
 Dragon.H_CounterSoloAllBack.Value = "H_TSpinCounterBack"
 Dragon.H_CounterSoloAllLeft.Value = "H_TSpinCounterLeft"
@@ -274,8 +274,8 @@ if namesChanged == false then
     moves.Taunt.Name = "FakeTaunt"
     moves.DragonTaunt.Name = "Taunt"
     moves.Taunt.Anim.AnimationId = "rbxassetid://10928237540"
-    moves.BGetup.Name = "risingtornado"
-    moves.RSweep.Name = "BGetup"
+    moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
+    moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
 if not IsInPvp() then
 moves.BRCounter2.Name = "FakeBRCounter2"
     moves["龍TigerDrop"].Name = "BRCounter2"
@@ -362,10 +362,10 @@ local Char = Player.Character
 local Main = Player.PlayerGui.Interface.Battle.Main
 
 local function fetchRandom(instance)
-	    local instancechildren = instance:GetChildren()
-	    local random = instancechildren[math.random(1, #instancechildren)]
-	    return random
-	end
+    local instancechildren = instance:GetChildren()
+    local random = instancechildren[math.random(1, #instancechildren)]
+    return random
+end
 
 vpSound = (function(a1) -- PlaySound
 u10.playsound(a1, u9.hrp, nil, nil, true)
@@ -375,6 +375,31 @@ local SoundEvent = {
 }
 u5:FireServer(SoundEvent)
 end)
+
+local A_1 =  {
+	[1] = "heat", 
+	[2] = game:GetService("ReplicatedStorage").Moves.Taunt
+}
+
+local A_2 = {
+  [1] = {
+    [1] = "evade",
+    [3] = false,
+    [4] = true
+  }
+}
+
+local function fillHeat(howmany)
+	for i = 1, howmany, 1 do
+		ME:FireServer(A_1)
+	end
+end
+
+local function depleteHeat(howmany)
+	for i = 1, howmany, 1 do
+		ME:FireServer(A_2)
+	end
+end
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") then
@@ -408,7 +433,16 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
-
+Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
+    if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then
+	task.wait(2)
+	fillHeat(3)
+	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}
+	task.wait(2)
+	fillHeat(3)
+	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}
+    end
+end)
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
 anim.Priority = Enum.AnimationPriority.Movement
@@ -711,31 +745,6 @@ if table.find(BossHPTable, pgui.EInterface.EnemyHP.BG.Meter.HPTxt.Text) then
     end
 end)
 
-local A_1 =  {
-	[1] = "heat", 
-	[2] = game:GetService("ReplicatedStorage").Moves.Taunt
-}
-
-local A_2 = {
-  [1] = {
-    [1] = "evade",
-    [3] = false,
-    [4] = true
-  }
-}
-
-local function fillHeat(howmany)
-	for i = 1, howmany, 1 do
-		ME:FireServer(A_1)
-	end
-end
-
-local function depleteHeat(howmany)
-	for i = 1, howmany, 1 do
-		ME:FireServer(A_2)
-	end
-end
-
 CanFeelHeat.Changed:Connect(function()
 if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     AlreadyFeltHeat.Value = true
@@ -809,11 +818,13 @@ local plr = game:GetService("Players").LocalPlayer
 local pgui = plr.PlayerGui
 local interf = pgui.Interface
 
-local cframe = plr.Character.LowerTorso.CFrame
+local oldcframe = char.HumanoidRootPart.CFrame
 if hasReloaded == false then
 interf.Client.Disabled = true
 task.wait()
 interf.Client.Disabled = false
+task.wait(1)
+char.HumanoidRootPart.CFrame = oldcframe
 end
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
@@ -909,9 +920,11 @@ local main = bt.Main
 	    if child.Name == "Heated" and child:WaitForChild("Heating",0.5).Value ~= character then
 	        local isThrowing = child:WaitForChild("Throwing",0.5)
 	        if not isThrowing then
+		if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " or main.HeatMove.TextLabel.Text ~= "Ultimate Essence" then
 	        receivedsound = fetchRandom(_G.voice.HeatAction)
 	        playSound(receivedsound)
-			end
+		    end
+		end
 	    end
 		if child.Name == "Hitstunned" and not character:FindFirstChild("Ragdolled") then
 			if hitCD == false then
