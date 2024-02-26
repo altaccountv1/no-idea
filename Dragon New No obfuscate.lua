@@ -435,16 +435,15 @@ end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then
-	task.wait(2)
-	if isInBattle() then
-	fillHeat(3)
-	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value})
-	task.wait(2)
-	fillHeat(3)
-	UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value})
-	end
+    task.wait(1.5) -- stomp
+    fillHeat(3)
+    UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}) -- punch
+    task.wait(2)
+    fillHeat(3)
+    UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value}) -- kick
     end
-end)
+end) 
+
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
 anim.Priority = Enum.AnimationPriority.Movement
@@ -897,7 +896,7 @@ local main = bt.Main
 	
 	local alreadyRunning = status:FindFirstChild("Voice Mod")
 	if alreadyRunning then
-	   Notify("Selected voice: ".._G.voice.Name, Color3.fromRGB(255, 255, 255))
+	   Notify("Selected voice: ".._G.voice.Name,"buzz", Color3.fromRGB(255, 255, 255))
 	    return
 	end 
 	
