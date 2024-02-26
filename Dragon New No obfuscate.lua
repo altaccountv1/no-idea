@@ -403,11 +403,13 @@ end
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") then
+	local soundr = fetchRandom(Rep.Voices.Kiryu.Taunt)
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
         Anim:AdjustSpeed(1)
         Anim:Play()
-	vpSound(fetchRandom(Rep.Voices.Kiryu.Taunt))
+	vpSound(soundr)
+	print(soundr.Name)
         task.wait(1)
         PlaySound("MassiveSlap")
         task.wait(2)
