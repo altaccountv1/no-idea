@@ -363,7 +363,7 @@ local function Hit(Move, Enemy)
                 [6] = status.Style.Value, 
                 [7] = 0.04611371246065557, 
                 [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
-                [13] = plr.Character.HumanoidRootPart.Position, --rootpart 
+                [13] = char.HumanoidRootPart.CFrame.Position, --rootpart 
                 [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
     }
 if thing.Value == false then
