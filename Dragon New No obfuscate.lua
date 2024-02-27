@@ -360,11 +360,11 @@ local function Hit(Move, Enemy)
                 [3] = Enemy, 
                 [4] = plr.Character.RightHand.Position,
                 [5] = game:GetService("ReplicatedStorage").Moves[Move],
-                [6] = status.Style.Value, 
+                [6] = "Brawler", 
                 [7] = 0.04611371246065557, 
                 [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
-                [13] = char.HumanoidRootPart.CFrame.Position, --rootpart 
-                [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
+                [13] = char.HumanoidRootPart.Position, --rootpart 
+                [14] = CFrame.new(Enemy.Position.X, Enemy.Position.Y, Enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
     }
 if thing.Value == false then
         thing.Value = true
@@ -431,6 +431,88 @@ status.CurrentMove.Changed:Connect(function()
 	DOD88 = true
     end
 end)
+
+local feelingheat = Instance.new("BoolValue")
+feelingheat.Value = false
+thing = Instance.new("BoolValue")
+local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
+
+if not status:FindFirstChild("RedDragonSpirit") then
+    RDS = Instance.new("BoolValue", status)
+    RDS.Value = false 
+    RDS.Name = "RedDragonSpirit"
+else
+    RDS = status.RedDragonSpirit
+end
+
+local function HealthChanged()
+if status.Health.Value <= 150 then
+    RDS.Value = true
+elseif status.Health.Value >= 150 then
+    RDS.Value = false
+    end
+end
+
+plr.Status.Health.Changed:Connect(HealthChanged)
+
+local function Slap(enemy)
+    local A_1 = {
+                [1] = "damage", 
+                [3] = enemy, 
+                [4] = plr.Character.RightHand.Position, --right hand
+                [5] = game:GetService("ReplicatedStorage").Moves.Slapper, --Slapper
+                [6] = "Brawler", 
+                [7] = 0.04611371246065557, 
+                [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
+                [13] = plr.Character.HumanoidRootPart.Position, --rootpart 
+                [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
+    }
+if thing.Value == false then
+        thing.Value = true
+        Event:FireServer(A_1)
+    end
+end
+
+local function Stun(enemy)
+    local A_1 = {
+                [1] = "damage", 
+                [3] = enemy, 
+                [4] = plr.Character.RightHand.Position, --right hand
+                [5] = game:GetService("ReplicatedStorage").Moves.ShuckyDrop, --Slapper
+                [6] = "Brawler", 
+                [7] = 0.04611371246065557, 
+                [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
+                [13] = plr.Character.HumanoidRootPart.Position, --rootpart 
+                [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
+    }
+if thing.Value == false then
+        thing.Value = true
+        Event:FireServer(A_1)
+    end
+end
+
+local function AutoSlap()
+    if RDS.Value == true then
+        for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+                if enemy.Parent.AttackBegan.Value == true then
+                    enemy.Parent.AttackBegan.Value = false
+                    thing.Value = false
+                    Slap(enemy)
+                end
+                if enemy.Parent.TookAim.Value == true then
+                    enemy.Parent.TookAim.Value = false
+                    wait(0.6)
+                    thing.Value = false                
+                    Slap(enemy)
+                end
+            end
+        end
+    end
+end
+
+game:GetService("RunService").RenderStepped:Connect(AutoSlap)
+
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt == true and DOD88 == false then -- dargon of dojima 88 or slap ult.
 	local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
@@ -542,23 +624,7 @@ end)
 
 -- Red Dragon Spirit --
 
-if not status:FindFirstChild("RedDragonSpirit") then
-    RDS = Instance.new("BoolValue", status)
-    RDS.Value = false 
-    RDS.Name = "RedDragonSpirit"
-else
-    RDS = status.RedDragonSpirit
-end
 
-local function HealthChanged()
-if status.Health.Value <= 150 then
-    RDS.Value = true
-elseif status.Health.Value >= 150 then
-    RDS.Value = false
-    end
-end
-
-plr.Status.Health.Changed:Connect(HealthChanged)
 
 local Heat = status.Heat
 
@@ -670,96 +736,7 @@ else
     end
 end)
 
-local feelingheat = Instance.new("BoolValue")
-feelingheat.Value = false
-thing = Instance.new("BoolValue")
-local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
 
-local function Slap(enemy)
-    local A_1 = {
-                [1] = "damage", 
-                [3] = enemy, 
-                [4] = plr.Character.RightHand.Position, --right hand
-                [5] = game:GetService("ReplicatedStorage").Moves.Slapper, --Slapper
-                [6] = "Brawler", 
-                [7] = 0.04611371246065557, 
-                [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
-                [13] = plr.Character.HumanoidRootPart.Position, --rootpart 
-                [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
-    }
-if thing.Value == false then
-        thing.Value = true
-        Event:FireServer(A_1)
-    end
-end
-
-local function Stun(enemy)
-    local A_1 = {
-                [1] = "damage", 
-                [3] = enemy, 
-                [4] = plr.Character.RightHand.Position, --right hand
-                [5] = game:GetService("ReplicatedStorage").Moves.ShuckyDrop, --Slapper
-                [6] = "Brawler", 
-                [7] = 0.04611371246065557, 
-                [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
-                [13] = plr.Character.HumanoidRootPart.Position, --rootpart 
-                [14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
-    }
-if thing.Value == false then
-        thing.Value = true
-        Event:FireServer(A_1)
-    end
-end
-
-local function AutoSlap()
-    if RDS.Value == true then
-        for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
-                if enemy.Parent.AttackBegan.Value == true then
-                    enemy.Parent.AttackBegan.Value = false
-                    thing.Value = false
-                    Slap(enemy)
-                end
-                if enemy.Parent.TookAim.Value == true then
-                    enemy.Parent.TookAim.Value = false
-                    wait(0.6)
-                    thing.Value = false                
-                    Slap(enemy)
-                end
-            end
-        end
-    end
-end
-
-local function PVPSlap()
-    if IsInPvp() then
-        if RDS.Value == true then
-            local char = plr.Character
-            if char then
-                local rootPart = char:FindFirstChild("HumanoidRootPart")
-                if rootPart then
-                    for i, player in ipairs(game.Players:GetPlayers()) do
-                        if player ~= plr then
-                            local opponentChar = player.Character
-                            if opponentChar then
-                                local opponentRootPart = opponentChar:FindFirstChild("HumanoidRootPart")
-                                if opponentRootPart then
-                                    local distance = (rootPart.Position - opponentRootPart.Position).Magnitude
-                                    if distance <= 15 then
-                                        Slap(opponentRootPart)
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
-
-game:GetService("RunService").RenderStepped:Connect(AutoSlap)
-game:GetService("RunService").RenderStepped:Connect(PVPSlap)
 -- Feel The Heat
 
 local EnemyText = pgui.EInterface.EnemyHP.TextLabel
