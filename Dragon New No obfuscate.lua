@@ -454,14 +454,10 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then
     task.wait(1.5) -- stomp
     fillHeat(3)
-    if isInBattle() then
     UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}) -- punch
-    end
     task.wait(2)
-    if isInBattle()
     fillHeat(3)
     UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value}) -- kick
-        end
     end
 end) 
 
