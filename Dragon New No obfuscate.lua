@@ -434,6 +434,7 @@ end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" and not char:FindFirstChild("BeingHeated") then
+	Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
         Anim:AdjustSpeed(1)
@@ -453,10 +454,10 @@ end)
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
     if not char.LockedOn.Value.Parent:FindFirstChild("Boss") then return end
-    task.wait(1) -- stomp
+    task.wait(1.35) -- stomp
     fillHeat(3)
     UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}) -- punch
-    task.wait(1.25)
+    task.wait(1.4)
     fillHeat(3)
     UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value}) -- kick
     end
