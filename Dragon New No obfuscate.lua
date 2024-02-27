@@ -451,7 +451,8 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then
+    if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
+    if not char.LockedOn.Value.Parent:FindFirstChild("Boss") then return end
     task.wait(1) -- stomp
     fillHeat(3)
     UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}) -- punch
