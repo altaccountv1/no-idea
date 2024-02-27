@@ -401,16 +401,31 @@ local function depleteHeat(howmany)
 	end
 end
 
+local SlapUlt = false
+local DOD88 = false
+
+status.CurrentMove.Changed:Connect(function()
+    if status.CurrentMove.Value == "龍Attack2" then
+	SlapUlt = false
+	DOD88 = true
+    elseif status.CurrentMove.Value ~= "龍Attack2" then
+	SlapUlt = true
+	DOD88 = false
+    end
+end)
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") then
-	local soundr = fetchRandom(Rep.Voices.Kiryu.Taunt)
+    if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt then -- dargon of dojima 88 or slap ult.
+	local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
         Anim:AdjustSpeed(1)
         Anim:Play()
-	vpSound(soundr)
-	print(soundr.Name)
+	vpSound(soundr) -- ora doushita??
         task.wait(1)
+        PlaySound("MassiveSlap") -- slap slap slap 
+	task.wait(0.05)
+        PlaySound("MassiveSlap")
+	task.wait(0.05)
         PlaySound("MassiveSlap")
         task.wait(2)
         Anim:Destroy()
@@ -439,10 +454,14 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then
     task.wait(1.5) -- stomp
     fillHeat(3)
+    if isInBattle() then
     UseHeatAction("H_FallenProne","Brawler",{char.LockedOn.Value}) -- punch
+    end
     task.wait(2)
+    if isInBattle()
     fillHeat(3)
     UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value}) -- kick
+        end
     end
 end) 
 
