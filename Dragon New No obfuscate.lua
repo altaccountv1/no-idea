@@ -117,6 +117,7 @@ if alreadyRunning then
     namesChanged = true
     hasReloaded = true
     sentNotifs = true
+    return
 end
  
 moves[Dragon.Strike1.Value].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
