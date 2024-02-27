@@ -405,16 +405,16 @@ local SlapUlt = false
 local DOD88 = false
 
 status.CurrentMove.Changed:Connect(function()
-    if status.CurrentMove.Value == "龍Attack2" then
-	SlapUlt = false
-	DOD88 = true
-    elseif status.CurrentMove.Value ~= "龍Attack2" then
+    if status.CurrentMove.Value ~= "龍Attack2" then
 	SlapUlt = true
 	DOD88 = false
+    elseif status.CurrentMove.Value == "龍Attack2" then
+	SlapUlt = false
+	DOD88 = true
     end
 end)
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt then -- dargon of dojima 88 or slap ult.
+    if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt == true and DOD88 == false then -- dargon of dojima 88 or slap ult.
 	local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
@@ -423,9 +423,9 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 	vpSound(soundr) -- ora doushita??
         task.wait(1)
         PlaySound("MassiveSlap") -- slap slap slap 
-	task.wait(0.05)
+	task.wait(0.25)
         PlaySound("MassiveSlap")
-	task.wait(0.05)
+	task.wait(0.25)
         PlaySound("MassiveSlap")
         task.wait(2)
         Anim:Destroy()
