@@ -329,6 +329,11 @@ local function FillHeat()
 	end
 end
 
+local feelingheat = Instance.new("BoolValue")
+feelingheat.Value = false
+thing = Instance.new("BoolValue")
+local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
+
 function UseHeatAction(HeatAction, Style, Bots)
 	local args = {
 		[1] = {
@@ -408,13 +413,13 @@ local A_2 = {
 }
 
 local function fillHeat(howmany)
-	for i = 1, howmany, 1 do
+	for i = 1, howmany do
 		ME:FireServer(A_1)
 	end
 end
 
 local function depleteHeat(howmany)
-	for i = 1, howmany, 1 do
+	for i = 1, howmany do
 		ME:FireServer(A_2)
 	end
 end
@@ -431,11 +436,6 @@ status.CurrentMove.Changed:Connect(function()
 	DOD88 = true
     end
 end)
-
-local feelingheat = Instance.new("BoolValue")
-feelingheat.Value = false
-thing = Instance.new("BoolValue")
-local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
 
 if not status:FindFirstChild("RedDragonSpirit") then
     RDS = Instance.new("BoolValue", status)
@@ -508,6 +508,14 @@ local function AutoSlap()
                 end
             end
         end
+	if game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent) then
+	    local opp = game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent)
+		if opp.Status.AttackBegan.Value == true then
+                    opp.Status.AttackBegan.Value = false
+                    thing.Value = false
+                    Slap(char.LockedOn.Value)
+	    end	
+	end
     end
 end
 
@@ -557,6 +565,7 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     local anim = char.Humanoid:LoadAnimation(moves.H_FallenProne.Anim)
     anim.Priority = Enum.AnimationPriority.Action4
     anim:Play()
+    task.wait(0.5)
     Hit("BStrike5", char.LockedOn.Value)
     anim.Ended:Wait()
     fillHeat(3)
