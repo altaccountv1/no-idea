@@ -566,7 +566,7 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     anim.Priority = Enum.AnimationPriority.Action4
     anim:Play()
     task.wait(0.5)
-    Hit("BStrike5", char.LockedOn.Value)
+    Hit("TigerDrop", char.LockedOn.Value)
     anim.Ended:Wait()
     fillHeat(3)
     UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value}) -- kick
