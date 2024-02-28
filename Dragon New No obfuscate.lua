@@ -557,7 +557,7 @@ end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
-        task.wait(1.3)
+        task.wait(1.2)
         if status.CurrentMove.Value == "龍Stomp" then
 	task.wait(0.5)
 	UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value})
