@@ -531,10 +531,6 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 	vpSound(soundr) -- ora doushita??
         task.wait(1)
         PlaySound("MassiveSlap") -- slap slap slap 
-	task.wait(0.25)
-        PlaySound("MassiveSlap")
-	task.wait(0.25)
-        PlaySound("MassiveSlap")
         task.wait(2)
         Anim:Destroy()
     end
@@ -561,17 +557,16 @@ end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
-    task.wait(1.5)
-    local anim = char.Humanoid:LoadAnimation(moves.H_FallenProne.Anim)
-    anim.Priority = Enum.AnimationPriority.Action4
-    anim:Play()
-    task.wait(0.5)
-    Hit("TigerDrop", char.LockedOn.Value)
-    anim.Ended:Wait()
-    fillHeat(3)
-    UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value}) -- kick
+        task.wait(1.3)
+        if status.CurrentMove.Value == "龍Stomp" then
+	task.wait(0.5)
+	UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value})
+        end
     end
 end) 
+
+moves["龍Stomp"].Anim.AnimationId = moves.H_FallenProne.Anim.AnimationId
+moves["龍Stomp"].HitboxLocations.Value = moves.TigerDrop.HitboxLocations.Value
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
