@@ -557,7 +557,7 @@ end)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
-        task.wait(1.2)
+        task.wait(1.5)
         if status.CurrentMove.Value == "龍Stomp" then
 	task.wait(0.5)
 	UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value})
@@ -566,6 +566,7 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end) 
 
 moves["龍Stomp"].Anim.AnimationId = moves.H_FallenProne.Anim.AnimationId
+moves["龍Stomp"].ForceSF.Value = moves.BRCounter.ForceSF.Value -= 0.1
 moves["龍Stomp"].HitboxLocations.Value = moves.TigerDrop.HitboxLocations.Value
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
