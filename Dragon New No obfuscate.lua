@@ -428,10 +428,10 @@ local SlapUlt = false
 local DOD88 = false
 
 status.CurrentMove.Changed:Connect(function()
-    if status.CurrentMove.Value ~= "龍Attack2" then
+    if status.CurrentMove.Value ~= moves["龍Attack2"] then
 	SlapUlt = true
 	DOD88 = false
-    elseif status.CurrentMove.Value == "龍Attack2" then
+    elseif status.CurrentMove.Value == moves["龍Attack2"] then
 	SlapUlt = false
 	DOD88 = true
     end
@@ -566,7 +566,6 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end) 
 
 moves["龍Stomp"].Anim.AnimationId = moves.H_FallenProne.Anim.AnimationId
-moves["龍Stomp"].ForceSF.Value = moves.BRCounter.ForceSF.Value -= 0.1
 moves["龍Stomp"].HitboxLocations.Value = moves.TigerDrop.HitboxLocations.Value
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
