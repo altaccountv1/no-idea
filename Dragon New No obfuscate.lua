@@ -494,7 +494,7 @@ end
 local function AutoSlap()
     if RDS.Value == true then
         for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart and not IsInPvp() then
                 if enemy.Parent.AttackBegan.Value == true then
                     enemy.Parent.AttackBegan.Value = false
                     thing.Value = false
@@ -508,13 +508,15 @@ local function AutoSlap()
                 end
             end
         end
-	if game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent) then
-	    local opp = game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent)
-		if opp.Status.AttackBegan.Value == true then
+        if IsInPvp() then
+	    if game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent) then
+	        local opp = game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent)
+	        if opp.Status.AttackBegan.Value == true then
                     opp.Status.AttackBegan.Value = false
                     thing.Value = false
                     Slap(char.LockedOn.Value)
-	    end	
+	        end	
+	    end
 	end
     end
 end
@@ -533,11 +535,9 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
         PlaySound("MassiveSlap") -- slap slap slap 
         task.wait(2)
         Anim:Destroy()
-    end
-end)
-
-Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" and not char:FindFirstChild("BeingHeated") then
+    elseif Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt == false and DOD88 == true then
+	Main.HeatMove.TextLabel.Text = "Ultimate Essence 88"
+    elseif Main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" and not char:FindFirstChild("BeingHeated") then
 	Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
@@ -552,20 +552,19 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
         task.wait(0.9)
         PlaySound("MassiveSlap")
         Anim:Destroy()
+   elseif Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
+        task.wait(1.5)
+        if status.CurrentMove.Value == moves["龍Stomp"] then
+	    task.wait(0.25)
+	    UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value})
+        end
     end
 end)
 
-Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
-        task.wait(1.5)
-        if status.CurrentMove.Value == "龍Stomp" then
-	task.wait(0.5)
-	UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value})
-        end
-    end
-end) 
-
 moves["龍Stomp"].Anim.AnimationId = moves.H_FallenProne.Anim.AnimationId
+local sf = moves.BStrike5.ForceSF:Clone()
+sf.Parent = moves["龍Stomp"]
+sf.Value = 0.15
 moves["龍Stomp"].HitboxLocations.Value = moves.TigerDrop.HitboxLocations.Value
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
