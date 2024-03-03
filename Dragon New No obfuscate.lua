@@ -562,7 +562,7 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 moves["龍Stomp"].Anim.AnimationId = moves.H_FallenProne.Anim.AnimationId
-local sf = moves.BStrike5.ForceSF:Clone()
+local sf = moves.BRCounter2.ForceSF:Clone()
 sf.Parent = moves["龍Stomp"]
 sf.Value = 0.15
 moves["龍Stomp"].HitboxLocations.Value = moves.TigerDrop.HitboxLocations.Value
