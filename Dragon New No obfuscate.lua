@@ -773,7 +773,8 @@ function Teleport()
     trail.Attachment0 = top
     trail.Attachment1 = bot
     trail.Parent = char.Torso
-    task.delay(0.25, function()
+    trail.Enabled = true
+    task.delay(0.5, function()
         trail.Enabled = false
     end)
 end
