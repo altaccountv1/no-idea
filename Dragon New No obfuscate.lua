@@ -711,8 +711,76 @@ status.ChildAdded:Connect(function(v)
 	RDS.Value = true
     end
 end)
+
+local settings = {
+    Brightness = 128,
+    
+    Color = ColorSequence.new(Color3.new(1)),
+    
+    Texture = "rbxassetid://5699911427",
+    
+    LightEmission = 1,
+    
+    LightInfluence = 1,
+    
+    Transparency = NumberSequence.new(
+        {
+            NumberSequenceKeypoint.new(0, 0, 0),
+            NumberSequenceKeypoint.new(0.4, 0, 0),
+            NumberSequenceKeypoint.new(1, 1, 1)
+        }
+    ),
+    
+    Name = "Dragon Trail",
+    
+    Lifetime = 0.5,
+    
+    MaxLength = 0,
+    
+    MinLength = 0.1,
+    
+    WidthScale = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 1, 1),
+        NumberSequenceKeypoint.new(1, 0, 0),
+    })
+}
+
+local function makeTrail()
+    local trail = Instance.new("Trail", workspace)
+    for i,v in settings do
+        trail[i] = v
+    end
+    return trail
+end
+
+local function makeAttachments(target)
+    -- Target is a part
+    local topAttachment = Instance.new("Attachment", target)
+    topAttachment.Position = Vector3.new(0, target.Size.Y*0.5, 0)
+    
+    local bottomAttachment = Instance.new("Attachment", target)
+    bottomAttachment.Position = Vector3.new(0, target.Size.Y*-0.5, 0)
+    
+    return bottomAttachment, topAttachment
+end
+
+
+
+function Teleport()
+    local trail = makeTrail()
+    local top, bot = makeAttachments(char.Torso)
+    
+    trail.Attachment0 = top
+    trail.Attachment1 = bot
+    trail.Parent = char.Torso
+    task.delay(0.25, function()
+        trail.Enabled = false
+    end)
+end
+local con
 RDS.Changed:Connect(function()
 if RDS.Value == true then
+    con = status.Taunting.Changed:Connect(Teleport)
     local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
     FillHeat()
@@ -736,6 +804,9 @@ else
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
 	end
+    end
+    if con then
+        con:Disconnect()
     end
 end)
 
