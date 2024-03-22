@@ -649,8 +649,6 @@ end)
 
 -- Red Dragon Spirit --
 
-
-
 local Heat = status.Heat
 
 local FastMoves = Instance.new("BoolValue", nil)
@@ -793,6 +791,14 @@ trail.Attachment1 = bot
 trail.Parent = char.UpperTorso
 trail.Enabled = false
 
+local plr = game:GetService("Players").LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+
+
+local oldt = moves.Taunt.Anim.AnimationId
+local newt = "rbxassetid://0"
+
 local function teleportToLocked(target)
     local user = game.Players.LocalPlayer
     local char = user.Character or user.CharacterAdded:Wait()
@@ -803,11 +809,23 @@ local function teleportToLocked(target)
     local val = target or lock.Value
     if val and val:IsDescendantOf(workspace) and val.Parent.Health.Value > 0 then
 	local anim = Instance.new("Animation") anim.AnimationId = moves.BEvadeStrikeForward.Anim.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
+	moves.Taunt.AnimationId = newt
+	local oldcframe = char.HumanoidRootPart.CFrame
+        interf.Client.Disabled = true
+	task.wait()
+	interf.Client.Disabled = false
+	char.HumanoidRootPart.CFrame = oldcframe
 	atrack:AdjustSpeed(2)
 	atrack.Priority = Enum.AnimationPriority.Action4
 	atrack:Play()
 	play_ingamesound("Teleport")
         root.CFrame = CFrame.new(val.Position - (val.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), val.Position)
+	moves.Taunt.AnimationId = oldt
+	local oldcframe = char.HumanoidRootPart.CFrame
+        interf.Client.Disabled = true
+	task.wait()
+	interf.Client.Disabled = false
+	char.HumanoidRootPart.CFrame = oldcframe
         return true    
     end
     return false
@@ -971,7 +989,6 @@ if hasReloaded == false then
 interf.Client.Disabled = true
 task.wait()
 interf.Client.Disabled = false
-task.wait()
 char.HumanoidRootPart.CFrame = oldcframe
 end
 
