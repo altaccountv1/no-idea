@@ -749,20 +749,20 @@ end
 local function makeAttachments(target)
     -- Target is a part
     local topAttachment = Instance.new("Attachment", target)
-    topAttachment.Position = Vector3.new(0, target.Size.Y*0.5, 0)
+    topAttachment.Position = Vector3.new(0, target.Size.Y*1, 0)
     topAttachment.Name = "TAttach"
     local bottomAttachment = Instance.new("Attachment", target)
-    bottomAttachment.Position = Vector3.new(0, target.Size.Y*-0.5, 0)
+    bottomAttachment.Position = Vector3.new(0, target.Size.Y*-1, 0)
     bottomAttachment.Name = "BAttach"
     return bottomAttachment, topAttachment
 end
 
 local trail = makeTrail()
-local top, bot = makeAttachments(char.LowerTorso)
+local top, bot = makeAttachments(char.UpperTorso)
 trail.Attachment0 = top
 trail.Attachment1 = bot
-trail.Parent = char.LowerTorso
-
+trail.Parent = char.UpperTorso
+--trail.Enabled = false
 function Teleport() 
     trail.Enabled = true
     task.delay(1, function()
@@ -773,6 +773,11 @@ local con
 RDS.Changed:Connect(function()
 if RDS.Value == true then
     con = status.Taunting.Changed:Connect(Teleport)
+     local id = "rbxassetid://10928237540"
+    local SuperCharge = Instance.new("Animation", workspace)
+    SuperCharge.AnimationId = id
+    local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge) anim.Priority = Enum.AnimationPriority.Action4
+    anim:Play()
     local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
     FillHeat()
@@ -1000,7 +1005,7 @@ local main = bt.Main
 	    if child.Name == "Heated" and child:WaitForChild("Heating",0.5).Value ~= character then
 	        local isThrowing = child:WaitForChild("Throwing",0.5)
 	        if not isThrowing then
-		if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " or main.HeatMove.TextLabel.Text ~= "Ultimate Essence" then
+		if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " then
 	        receivedsound = fetchRandom(_G.voice.HeatAction)
 	        playSound(receivedsound)
 		    end
