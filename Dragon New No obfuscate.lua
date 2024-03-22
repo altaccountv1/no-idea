@@ -797,11 +797,13 @@ local function teleportToLocked(target)
     local user = game.Players.LocalPlayer
     local char = user.Character or user.CharacterAdded:Wait()
 
-    local root = char:WaitForChild("HumanoidRootPart")
+    local root = char.HumanoidRootPart
 
-    local lock = char:WaitForChild("LockedOn")
+    local lock = char.LockedOn
     local val = target or lock.Value
+    print("val loaded")
     if val and val:IsDescendantOf(workspace) and val.Parent.Health.Value > 0 then
+	play_ingamesound("Teleport")
         root.CFrame = CFrame.new(lock.Position - (lock.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), lock.Position)
         return true    
     end
@@ -814,12 +816,13 @@ local debouceDuration = 0.5
 function Teleport()
     if status.Taunting.Value == true then
         trail.Enabled = true
+	print("trail enabled")
         local success = teleportToLocked()
 
         if success then
             local ff = RPS.Invulnerable:Clone()
             ff.Parent = status
-        
+            print("success")
             game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
         
             task.defer(function()
