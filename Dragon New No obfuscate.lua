@@ -812,23 +812,20 @@ local teleportDebounce = 0
 local debouceDuration = 0.5
 
 function Teleport()
+    trail.Enabled = true
     local success = teleportToLocked()
 
     if success then
         local ff = RPS.Invulnerable:Clone()
-	local id = moves.BEvadeStrikeFront.Anim.AnimationId
-	local a = Instance.new("Animation")
-	a.AnimationId = id
-	local anim = char.Humanoid:LoadAnimation(a)
-	anim.Priority = Enum.AnimationPriority.Action4
-	anim:Play()
         ff.Parent = status
-        trail.Enabled = true
+        
         game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
+        
         task.defer(function()
             trail.Enabled = false
-	    anim:Destroy()
         end)
+    else
+        trail.Enabled = false
     end
 end
 
