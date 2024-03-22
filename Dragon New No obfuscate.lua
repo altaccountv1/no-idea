@@ -274,7 +274,6 @@ moves.TigerDrop.MoveForward.Value += 5
 if namesChanged == false then
     moves.Taunt.Name = "FakeTaunt"
     moves.DragonTaunt.Name = "Taunt"
-    moves.Taunt.Anim.AnimationId = "rbxassetid://10928237540"
     moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
     moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
 if not IsInPvp() then
@@ -764,17 +763,15 @@ local function makeAttachments(target)
     return bottomAttachment, topAttachment
 end
 
+local trail = makeTrail()
+local top, bot = makeAttachments(char.Torso)
 
-
-function Teleport()
-    local trail = makeTrail()
-    local top, bot = makeAttachments(char.Torso)
-    
+function Teleport() 
     trail.Attachment0 = top
     trail.Attachment1 = bot
     trail.Parent = char.Torso
     trail.Enabled = true
-    task.delay(0.5, function()
+    task.delay(1, function()
         trail.Enabled = false
     end)
 end
