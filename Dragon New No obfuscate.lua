@@ -801,10 +801,13 @@ local function teleportToLocked(target)
 
     local lock = char.LockedOn
     local val = target or lock.Value
-    print("val loaded")
     if val and val:IsDescendantOf(workspace) and val.Parent.Health.Value > 0 then
+	local anim = Instance.new("Animation") anim.AnimationId = moves.BEvadeStrikeFront.Anim.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
+	atrack:AdjustSpeed(2)
+	atrack.Priority = Enum.AnimationPriority.Action4
+	atrack:Play()
 	play_ingamesound("Teleport")
-        root.CFrame = CFrame.new(lock.Position - (lock.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), lock.Position)
+        root.CFrame = CFrame.new(val.Position - (val.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), val.Position)
         return true    
     end
     return false
@@ -816,15 +819,13 @@ local debouceDuration = 0.5
 function Teleport()
     if status.Taunting.Value == true and RDS.Value == true then
         trail.Enabled = true
-	print("trail enabled")
         local success = teleportToLocked()
 
         if success then
             local ff = RPS.Invulnerable:Clone()
             ff.Parent = status
-            print("success")
             game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
-        
+            
             task.defer(function()
                 trail.Enabled = false
             end)
