@@ -814,7 +814,7 @@ local teleportDebounce = 0
 local debouceDuration = 0.5
 
 function Teleport()
-    if status.Taunting.Value == true then
+    if status.Taunting.Value == true and RDS.Value == true then
         trail.Enabled = true
 	print("trail enabled")
         local success = teleportToLocked()
@@ -834,10 +834,10 @@ function Teleport()
     end
 end
 
-local con
+status.Taunting.Changed:Connect(Teleport)
+
 RDS.Changed:Connect(function()
 if RDS.Value == true then
-    con = status.Taunting.Changed:Connect(Teleport)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -866,9 +866,6 @@ else
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
 	end
-    end
-    if con then
-        con:Disconnect()
     end
 end)
 
