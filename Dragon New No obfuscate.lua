@@ -793,6 +793,15 @@ trail.Attachment1 = bot
 trail.Parent = char.UpperTorso
 trail.Enabled = false
 
+local ti = TweenInfo.new(0.9, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, true, 0)
+local ti2 = TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, true, 0)
+
+local color = Instance.new("ColorCorrectionEffect", game:GetService("Lighting"))
+
+local ctween = ts:Create(color, ti, {Saturation = -2, Brightness = -0.1})
+local ctween2 = ts:Create(color, ti2, {Saturation = -2, Brightness = -0.1})
+local dashcooldown = false
+
 function tpvelo()
 			if not cooldown then
 				local lookvector = workspace.CurrentCamera.CFrame.LookVector * Vector3.new(1, 0, 1)
