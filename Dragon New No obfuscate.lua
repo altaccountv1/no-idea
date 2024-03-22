@@ -822,12 +822,12 @@ function Teleport()
 	local anim = char.Humanoid:LoadAnimation(a)
 	anim.Priority = Enum.AnimationPriority.Action4
 	anim:Play()
-	task.wait(1) anim:Destroy()
         ff.Parent = status
         trail.Enabled = true
         game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
         task.defer(function()
             trail.Enabled = false
+	    anim:Destroy()
         end)
     end
 end
