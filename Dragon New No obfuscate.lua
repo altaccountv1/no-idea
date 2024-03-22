@@ -817,7 +817,8 @@ function Teleport()
     if success then
         local ff = RPS.Invulnerable:Clone()
 	local id = moves.BEvadeStrikeFront.Anim.AnimationId
-	local a = Instance.new("Animation").AnimationId = id
+	local a = Instance.new("Animation")
+	a.AnimationId = id
 	local anim = char.Humanoid:LoadAnimation(a)
 	anim:Play()
         ff.Parent = status
