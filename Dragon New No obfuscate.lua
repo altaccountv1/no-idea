@@ -73,7 +73,7 @@ function showMaxHeatEffect()
 end
 
 function hasWeaponInHand()
-	return (plr.Character:FindFirstChild("Holding") and true or false)
+	return (plr.Character:FindFirstChild("Holding") and true or false) 
 end
 
 function IsInPvp()
@@ -820,11 +820,12 @@ function Teleport()
 	local a = Instance.new("Animation")
 	a.AnimationId = id
 	local anim = char.Humanoid:LoadAnimation(a)
+	anim.Priority = Enum.AnimationPriority.Action4
 	anim:Play()
+	task.wait(1) anim:Destroy()
         ff.Parent = status
         trail.Enabled = true
         game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
-        
         task.defer(function()
             trail.Enabled = false
         end)
