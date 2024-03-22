@@ -764,12 +764,12 @@ local function makeAttachments(target)
 end
 
 local trail = makeTrail()
-local top, bot = makeAttachments(char.Torso)
+local top, bot = makeAttachments(char.LowerTorso)
 
 function Teleport() 
     trail.Attachment0 = top
     trail.Attachment1 = bot
-    trail.Parent = char.Torso
+    trail.Parent = char.LowerTorso
     trail.Enabled = true
     task.delay(1, function()
         trail.Enabled = false
