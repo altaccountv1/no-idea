@@ -802,7 +802,7 @@ local function teleportToLocked(target)
     local lock = char.LockedOn
     local val = target or lock.Value
     if val and val:IsDescendantOf(workspace) and val.Parent.Health.Value > 0 then
-	local anim = Instance.new("Animation") anim.AnimationId = moves.BEvadeStrikeFront.Anim.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
+	local anim = Instance.new("Animation") anim.AnimationId = moves.BEvadeStrikeForward.Anim.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
 	atrack:AdjustSpeed(2)
 	atrack.Priority = Enum.AnimationPriority.Action4
 	atrack:Play()
