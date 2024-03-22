@@ -824,7 +824,7 @@ function Teleport()
         if success then
             local ff = RPS.Invulnerable:Clone()
             ff.Parent = status 
-            task.delay(0.25,function()
+            task.delay(1,function()
                 trail.Enabled = false
 		ff:Destroy()
             end)
