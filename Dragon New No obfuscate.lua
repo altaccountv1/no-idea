@@ -393,6 +393,18 @@ local function play_ingamesound(sfxname)
 	end)
 end
 
+local function playsound(id)
+	local sfx = Instance.new("Sound", workspace)
+	sfx.SoundId = "rbxassetid://"..tostring(id)
+
+	game:GetService("SoundService"):PlayLocalSound(sfx)
+
+	spawn(function()
+		task.wait(sfx.TimeLength)
+		sfx:Destroy()
+	end)
+end
+
 -- Ultimate Essence and Essence of Sumo Slapping --
 
 local Player = game.Players.LocalPlayer
