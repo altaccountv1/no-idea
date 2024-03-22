@@ -823,14 +823,14 @@ function Teleport()
 
         if success then
             local ff = RPS.Invulnerable:Clone()
-            ff.Parent = status
-            game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
-            
-            task.defer(function()
+            ff.Parent = status 
+            task.delay(0.25,function()
                 trail.Enabled = false
+		ff:Destroy()
             end)
         else
             trail.Enabled = false
+	    ff:Destroy()
         end
     end
 end
