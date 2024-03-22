@@ -812,20 +812,22 @@ local teleportDebounce = 0
 local debouceDuration = 0.5
 
 function Teleport()
-    trail.Enabled = true
-    local success = teleportToLocked()
+    if status.Taunting.Value == true then
+        trail.Enabled = true
+        local success = teleportToLocked()
 
-    if success then
-        local ff = RPS.Invulnerable:Clone()
-        ff.Parent = status
+        if success then
+            local ff = RPS.Invulnerable:Clone()
+            ff.Parent = status
         
-        game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
+            game:GetService("Debris"):AddItem(ff, debouceDuration * 0.5)
         
-        task.defer(function()
+            task.defer(function()
+                trail.Enabled = false
+            end)
+        else
             trail.Enabled = false
-        end)
-    else
-        trail.Enabled = false
+        end
     end
 end
 
@@ -834,9 +836,6 @@ RDS.Changed:Connect(function()
 if RDS.Value == true then
     con = status.Taunting.Changed:Connect(Teleport)
     local id = "rbxassetid://10928237540"
-    local SuperCharge = Instance.new("Animation", workspace)
-    SuperCharge.AnimationId = id
-    anim:Play()
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
     local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge) anim.Priority = Enum.AnimationPriority.Action4
