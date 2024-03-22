@@ -376,6 +376,23 @@ if thing.Value == false then
     end
 end
 
+local function play_ingamesound(sfxname)
+	local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
+	local sfx = Instance.new("Sound", nil)
+	local id = v.Value
+
+	sfx.SoundId = id
+
+	for i,v in pairs(v:GetChildren()) do
+		sfx[v.Name] = v.Value
+	end
+
+	game.SoundService:PlayLocalSound(sfx)
+	task.delay(15, function()
+		sfx:Destroy()
+	end)
+end
+
 -- Ultimate Essence and Essence of Sumo Slapping --
 
 local Player = game.Players.LocalPlayer
@@ -762,9 +779,149 @@ local top, bot = makeAttachments(char.UpperTorso)
 trail.Attachment0 = top
 trail.Attachment1 = bot
 trail.Parent = char.UpperTorso
---trail.Enabled = false
+trail.Enabled = false
+
+function tpvelo()
+			if not cooldown then
+				local lookvector = workspace.CurrentCamera.CFrame.LookVector * Vector3.new(1, 0, 1)
+				local root = game.Players.LocalPlayer.Character.PrimaryPart
+				local lock = game.Players.LocalPlayer.Character.LockedOn.Value
+				if lock and lock:IsDescendantOf(workspace) and lock.Parent.Health.Value > 0 then
+					local id = "rbxassetid://10928237540"
+					local anim = Instance.new("Animation")
+					anim.AnimationId = id
+
+					local v = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+					v:Play()
+
+					v:AdjustSpeed(8)
+					ctween2:Play()
+
+					dashcooldown = true
+
+					root.Anchored = true
+
+					playsound(2102274452)
+				
+
+					root.Anchored = false
+					root.CFrame = CFrame.new(lock.Position - (lock.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), lock.Position)
+
+					play_ingamesound("Teleport")
+
+					task.wait(0)
+
+					dashcooldown = false
+					return
+				
+				end
+				dashcooldown = true
+
+				local id = "rbxassetid://10928237540"
+				local anim = Instance.new("Animation")
+				anim.AnimationId = id
+
+				local v = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+				v:Play()
+
+				root.Anchored = true
+				
+				task.wait(0.3)
+				playsound(2102274452)
+				task.wait(0.4)
+
+				play_ingamesound("Teleport")
+				root.Anchored = false
+				root.CFrame = CFrame.new(root.Position, root.Position + lookvector)
+
+				--local rp = RaycastParams.new()
+				--rp.FilterDescendantsInstances = {root.Parent}
+				--rp.FilterType = Enum.RaycastFilterType.Blacklist
+				--rp.IgnoreWater = true
+
+				--local ray = workspace:Raycast(root.Position, lookvector * 50, rp)
+
+				--local cf
+				--if ray then
+				--	cf = CFrame.new(ray.Position - lookvector * 6, ray.Position + lookvector)
+				--else
+				--	cf = root.CFrame + lookvector * 50
+				--end
+
+				--local ti = TweenInfo.new(v.Length*0.5, Enum.EasingStyle.Linear)
+				--local t = tweenserive:Create(root, ti, {CFrame = cf})
+				--t:Play()
+				--t.Completed:Once(function()
+				--	root.Anchored = false
+				--	v:Stop()
+				--end)
+
+
+				local bodyvel = Instance.new("BodyVelocity", root)
+				bodyvel.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+				bodyvel.Velocity = lookvector * 90
+				local hitbox = Instance.new("Part", bodyvel)
+				hitbox.CanCollide = false
+				hitbox.CanQuery = false
+				hitbox.Transparency = 1
+				hitbox.Size = Vector3.new(1, 1, 5)
+				local w = Instance.new("Weld", hitbox)
+				w.Part0 = hitbox
+				w.Part1 = root
+
+				local b2 = game:GetService("RunService").Heartbeat:Connect(function(d)
+					root.CFrame = root.CFrame + (bodyvel.Velocity*d)*4
+				end)
+
+				local b = hitbox.Touched:Connect(function(part)
+					if part.CanCollide then
+						local vel = -bodyvel.Velocity
+
+						bodyvel:Destroy()
+						v:Stop()
+
+						--local id = "rbxassetid://"..getrandom_array(hurtanims)
+						--local anim = Instance.new("Animation")
+						--anim.AnimationId = id
+						--local v = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+
+						--v:Play()
+
+						--local b = game:GetService("RunService").Heartbeat:Connect(function(d)
+						--	root.CFrame += (vel * d) * 0.5
+						--end)
+
+						--v.Ended:Once(function()
+						--	b:Disconnect()
+						--	v:Destroy()
+						--end)
+					end
+				end)
+
+				bodyvel.Destroying:Once(function()
+					b:Disconnect()
+					b2:Disconnect()
+					hitbox:Destroy()
+				end)
+
+				v.Ended:wait()
+
+				if bodyvel then
+					bodyvel:Destroy()
+				end
+
+				task.wait(2)
+
+				
+
+				dashcooldown = false
+			end
+		end
+end
+
 function Teleport() 
     trail.Enabled = true
+    tpvelo()
     task.delay(1, function()
         trail.Enabled = false
     end)
@@ -773,7 +930,7 @@ local con
 RDS.Changed:Connect(function()
 if RDS.Value == true then
     con = status.Taunting.Changed:Connect(Teleport)
-     local id = "rbxassetid://10928237540"
+     local id = moves.BEvadeStrikeFront.Anim.AnimationId
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
     local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge) anim.Priority = Enum.AnimationPriority.Action4
@@ -885,7 +1042,7 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
     AlreadyFeltHeat.Value = false
     end
 end)
-		
+	
 status.RedDragonSpirit.Changed:Connect(function()
 if status.RedDragonSpirit.Value == true then
 	local id = "rbxassetid://10928237540"
