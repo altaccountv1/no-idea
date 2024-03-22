@@ -793,6 +793,7 @@ trail.Attachment1 = bot
 trail.Parent = char.UpperTorso
 trail.Enabled = false
 
+local ts = game:GetService("TweenService")
 local ti = TweenInfo.new(0.9, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, true, 0)
 local ti2 = TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, true, 0)
 
@@ -808,14 +809,6 @@ function tpvelo()
 				local root = game.Players.LocalPlayer.Character.PrimaryPart
 				local lock = game.Players.LocalPlayer.Character.LockedOn.Value
 				if lock and lock:IsDescendantOf(workspace) and lock.Parent.Health.Value > 0 then
-					local id = "rbxassetid://10928237540"
-					local anim = Instance.new("Animation")
-					anim.AnimationId = id
-
-					local v = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
-					v:Play()
-
-					v:AdjustSpeed(8)
 					ctween2:Play()
 
 					dashcooldown = true
@@ -837,13 +830,6 @@ function tpvelo()
 				
 				end
 				dashcooldown = true
-
-				local id = "rbxassetid://10928237540"
-				local anim = Instance.new("Animation")
-				anim.AnimationId = id
-
-				local v = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
-				v:Play()
 
 				root.Anchored = true
 				
