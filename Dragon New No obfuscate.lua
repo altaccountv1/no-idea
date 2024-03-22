@@ -560,12 +560,6 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
-moves["龍Stomp"].Anim.AnimationId = moves.H_FallenProne.Anim.AnimationId
-local sf = moves.BRCounter2.ForceSF:Clone()
-sf.Parent = moves["龍Stomp"]
-sf.Value = 0.15
-moves["龍Stomp"].HitboxLocations.Value = moves.TigerDrop.HitboxLocations.Value
-
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
 anim.Priority = Enum.AnimationPriority.Movement
@@ -745,7 +739,7 @@ local settings = {
 }
 
 local function makeTrail()
-    local trail = Instance.new("Trail", workspace)
+    local trail = Instance.new("Trail", char.UpperTorso)
     for i,v in settings do
         trail[i] = v
     end
@@ -756,20 +750,20 @@ local function makeAttachments(target)
     -- Target is a part
     local topAttachment = Instance.new("Attachment", target)
     topAttachment.Position = Vector3.new(0, target.Size.Y*0.5, 0)
-    
+    topAttachment.Name = "TAttach"
     local bottomAttachment = Instance.new("Attachment", target)
     bottomAttachment.Position = Vector3.new(0, target.Size.Y*-0.5, 0)
-    
+    bottomAttachment.Name = "BAttach"
     return bottomAttachment, topAttachment
 end
 
 local trail = makeTrail()
 local top, bot = makeAttachments(char.LowerTorso)
+trail.Attachment0 = top
+trail.Attachment1 = bot
+trail.Parent = char.LowerTorso
 
 function Teleport() 
-    trail.Attachment0 = top
-    trail.Attachment1 = bot
-    trail.Parent = char.LowerTorso
     trail.Enabled = true
     task.delay(1, function()
         trail.Enabled = false
