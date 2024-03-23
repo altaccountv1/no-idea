@@ -824,11 +824,11 @@ function Teleport()
 	task.wait()
 	local success = teleportToLocked()
         task.wait()
+	trail.Enabled = false
         if success then
             local ff = RPS.Invulnerable:Clone()
             ff.Parent = status 
 	    task.wait(0.1)
-            trail.Enabled = false
             ff:Destroy()
         else
             trail.Enabled = false
