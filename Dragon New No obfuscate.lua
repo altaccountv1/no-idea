@@ -810,9 +810,9 @@ local function teleportToLocked(target)
 	atrack:Play()
 	play_ingamesound("Teleport")
 	trail.Enabled = true
-	task.wait()
+	task.wait(0.1)
         root.CFrame = CFrame.new(val.Position - (val.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), val.Position)
-	task.wait()
+	task.wait(0.1)
 	trail.Enabled = false
         return true    
     end
