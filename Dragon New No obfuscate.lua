@@ -809,7 +809,7 @@ local function teleportToLocked(target)
     local val = target or lock.Value
     if val and val:IsDescendantOf(workspace) and val.Parent.Health.Value > 0 then
 	local anim = Instance.new("Animation") anim.AnimationId = moves.BEvadeStrikeForward.Anim.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
-	moves.Taunt.AnimationId = newt
+	moves.Taunt.Anim.AnimationId = newt
 	local oldcframe = char.HumanoidRootPart.CFrame
         interf.Client.Disabled = true
 	task.wait()
@@ -820,7 +820,7 @@ local function teleportToLocked(target)
 	atrack:Play()
 	play_ingamesound("Teleport")
         root.CFrame = CFrame.new(val.Position - (val.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), val.Position)
-	moves.Taunt.AnimationId = oldt
+	moves.Taunt.Anim.AnimationId = oldt
 	local oldcframe = char.HumanoidRootPart.CFrame
         interf.Client.Disabled = true
 	task.wait()
