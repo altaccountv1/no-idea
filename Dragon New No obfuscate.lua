@@ -820,19 +820,21 @@ local debouceDuration = 0.5
 
 function Teleport()
     if status.Taunting.Value == true and RDS.Value == true then
-        trail.Enabled = true
         local success = teleportToLocked()
 
         if success then
             local ff = RPS.Invulnerable:Clone()
             ff.Parent = status 
-            task.delay(1,function()
+	    trail.Enabled = true
+            task.defer(function()
                 trail.Enabled = false
-		ff:Destroy()
+                ff:Destroy()
             end)
         else
             trail.Enabled = false
-	    ff:Destroy()
+            if status:FindFirstChild("Invulnerable") then
+		status.Invulnerable:Destroy()
+            end
         end
     end
 end
