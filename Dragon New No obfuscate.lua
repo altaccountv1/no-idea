@@ -539,7 +539,7 @@ local function AutoSlap()
 	  end
         end
         if IsInPvp() then
-	    if game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent) then
+	    if char.LockedOn.Value and game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent) then
 	        local opp = game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent)
 	        if opp.Status.AttackBegan.Value == true then
                     opp.Status.AttackBegan.Value = false
