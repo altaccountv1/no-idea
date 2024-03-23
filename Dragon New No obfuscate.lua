@@ -521,8 +521,9 @@ end
 
 local function AutoSlap()
     if RDS.Value == true then
+	if not IsInPvp() then
         for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart and not IsInPvp() then
+            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
                 if enemy.Parent.AttackBegan.Value == true then
                     enemy.Parent.AttackBegan.Value = false
                     thing.Value = false
@@ -535,6 +536,7 @@ local function AutoSlap()
                     Slap(enemy)
                 end
             end
+	  end
         end
         if IsInPvp() then
 	    if game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent) then
