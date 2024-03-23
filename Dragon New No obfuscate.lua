@@ -831,7 +831,6 @@ function Teleport()
 	    task.wait(0.1)
             ff:Destroy()
         else
-            trail.Enabled = false
             if status:FindFirstChild("Invulnerable") then
 		status.Invulnerable:Destroy()
             end
