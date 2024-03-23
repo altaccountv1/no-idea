@@ -809,7 +809,11 @@ local function teleportToLocked(target)
 	atrack.Priority = Enum.AnimationPriority.Action4
 	atrack:Play()
 	play_ingamesound("Teleport")
+	trail.Enabled = true
+	task.wait()
         root.CFrame = CFrame.new(val.Position - (val.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), val.Position)
+	task.wait()
+	trail.Enabled = false
         return true    
     end
     return false
@@ -820,11 +824,7 @@ local debouceDuration = 0.5
 
 function Teleport()
     if status.Taunting.Value == true and RDS.Value == true then
-        trail.Enabled = true
-	task.wait()
 	local success = teleportToLocked()
-        task.wait()
-	trail.Enabled = false
         if success then
             local ff = RPS.Invulnerable:Clone()
             ff.Parent = status 
