@@ -36,6 +36,8 @@ local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
 local u12 = nil
 local battleWatcher = false;
 
+local Forcefield = RPS.Invulnerable:Clone()
+Forcefield.Parent = status
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ReplicatedFirst = game:GetService("ReplicatedFirst")
@@ -754,7 +756,7 @@ local settings = {
     
     Name = "Dragon Trail",
     
-    Lifetime = 0.5,
+    Lifetime = 1,
     
     MaxLength = 0,
     
@@ -777,10 +779,10 @@ end
 local function makeAttachments(target)
     -- Target is a part
     local topAttachment = Instance.new("Attachment", target)
-    topAttachment.Position = Vector3.new(0, target.Size.Y*1, 0)
+    topAttachment.Position = Vector3.new(0, target.Size.Y*1.25, 0)
     topAttachment.Name = "TAttach"
     local bottomAttachment = Instance.new("Attachment", target)
-    bottomAttachment.Position = Vector3.new(0, target.Size.Y*-1, 0)
+    bottomAttachment.Position = Vector3.new(0, target.Size.Y*-1.25, 0)
     bottomAttachment.Name = "BAttach"
     return bottomAttachment, topAttachment
 end
@@ -791,7 +793,7 @@ trail.Attachment0 = top
 trail.Attachment1 = bot
 trail.Parent = char.UpperTorso
 trail.Enabled = false
-
+trail.FaceCamera = true
 local plr = game:GetService("Players").LocalPlayer
 local pgui = plr.PlayerGui
 local interf = pgui.Interface
@@ -1218,4 +1220,5 @@ if hasReloaded == false then
         Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
 	startsound.Ended:Wait()
 	startsound:Destroy()
+	Forcefield:Destroy()
 end
