@@ -135,7 +135,6 @@ Dragon.Pummel.Value = "T_龍GParry"
 Dragon.Idle.AnimationId = "rbxassetid://12120045620"
 Dragon.StanceStrike.Value = "CounterHook"
 Dragon.BlockStrike.Value = "ShuckyDrop"
-Dragon.EvadeStrikeB.Value = "TigerDrop"
 Rush.EvadeF.AnimationId = Dragon.EvadeF.AnimationId
 Rush.EvadeB.AnimationId = Dragon.EvadeB.AnimationId
 Rush.EvadeL.AnimationId = Dragon.EvadeL.AnimationId
@@ -265,7 +264,7 @@ sf = Instance.new("StringValue", Dragon)
 sf.Name = "H_StanceFallen"
 sf.Value = "H_FallenStomp"
 -- Sumo Slap Move Values
-moves["H_FastFootworkBack"].Closest.Value = '30'
+moves["H_FastFootworkBack"].Closest.Value = '40'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
 wn.Value = '15'
@@ -522,36 +521,36 @@ end
 local function AutoSlap()
     if RDS.Value == true then
 	if not IsInPvp() then
-        for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-            if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
-                if enemy.Parent.AttackBegan.Value == true then
-                    enemy.Parent.AttackBegan.Value = false
-                    thing.Value = false
-                    Slap(enemy)
+            for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+                if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+                    if enemy.Parent.AttackBegan.Value == true then
+                        enemy.Parent.AttackBegan.Value = false
+                        thing.Value = false
+                        Slap(enemy)
+                    end
+                    if enemy.Parent.TookAim.Value == true then
+                        enemy.Parent.TookAim.Value = false
+                        wait(0.6)
+                        thing.Value = false                
+                        Slap(enemy)
+                    end
                 end
-                if enemy.Parent.TookAim.Value == true then
-                    enemy.Parent.TookAim.Value = false
-                    wait(0.6)
-                    thing.Value = false                
-                    Slap(enemy)
-                end
-            end
-	  end
+	    end
         end
         if IsInPvp() then
-	    if char.LockedOn.Value and game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent) then
-	        local opp = game.Players:GetPlayerFromCharacter(char.LockedOn.Value.Parent)
-	        if opp.Status.AttackBegan.Value == true then
-                    opp.Status.AttackBegan.Value = false
-                    thing.Value = false
-                    Slap(char.LockedOn.Value)
-	        end	
+	    for i,opp in game.Players:GetPlayers() do
+		if opp ~= plr then
+                    if opp.Status.AttackBegan.Value == true then
+                        opp.Status.AttackBegan.Value = false
+                        thing.Value = false
+                        Slap(opp.Character.HumanoidRootPart)
+	                end	
+	            end
+		end
 	    end
 	end
     end
 end
-
-game:GetService("RunService").RenderStepped:Connect(AutoSlap)
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
     if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt == true and DOD88 == false then -- dargon of dojima 88 or slap ult.
@@ -647,6 +646,7 @@ end
 
 game:GetService("RunService").RenderStepped:Connect(function()
     UpdateStyle()
+    AutoSlap()
 end)
 
 -- Red Dragon Spirit --
@@ -656,9 +656,9 @@ local Heat = status.Heat
 local FastMoves = Instance.new("BoolValue", nil)
 
 Heat.Changed:Connect(function()
-    if Heat.Value >= 50 then
+    if Heat.Value >= 50 or RDS.Value == true then
 	FastMoves.Value = true
-    elseif Heat.Value < 50 then
+    elseif Heat.Value < 50 or RDS.Value == false then
 	FastMoves.Value = false
     end
 end)
@@ -821,22 +821,22 @@ local function teleportToLocked(target)
     return false
 end
 
-local teleportDebounce = 0
-local debouceDuration = 0.5
+local TPDebounce = false
+local DebounceDuration = 0.5
 local ff = RPS.Invulnerable:Clone()
 
 function Teleport()
-    if status.FFC.Evading.Value == true and RDS.Value == true then
+    if status.FFC.Evading.Value == true and RDS.Value == true and not TPDebounce and status.Style.Value == "Brawler" then
 	local success = teleportToLocked()
+	TPDebounce = true
         if success then
             ff.Parent = status 
 	    task.wait(0.1)
             ff.Parent = RPS
-        else
-            if ff.Parent == status then
-		ff.Parent = RPS
-            end
+	    task.wait(0.4)
+	    TPDebounce = false
         end
+	TPDebounce = false
     end
 end
 
@@ -847,7 +847,7 @@ if RDS.Value == true then
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
-    local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge) anim.Priority = Enum.AnimationPriority.Action4
+    local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
     anim:Play()
     local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
@@ -1123,7 +1123,7 @@ local main = bt.Main
 	        dodgeCD = true
 	        receivedsound = fetchRandom(_G.voice.Dodge)
 	        playSound(receivedsound)
-	        delay(2,function()
+	        delay(3,function()
 	            dodgeCD = false
 	        end)
 	    end
@@ -1146,17 +1146,17 @@ local main = bt.Main
 	    if string.match(status.CurrentMove.Value.Name, "Attack") or string.match(status.CurrentMove.Value.Name, "Punch") then
 	        if lattackCD == false then
 	            lattackCD = true
-	        receivedsound = fetchRandom(_G.voice.LightAttack)
-	        playSound(receivedsound)
-	        delay(0.35, function()
-	        lattackCD = false
+	            receivedsound = fetchRandom(_G.voice.LightAttack)
+	            playSound(receivedsound)
+	            delay(0.35, function()
+	            lattackCD = false
 	        end)
 	    end
 	    else
-	    if not string.match(status.CurrentMove.Value.Name, "Taunt") and not string.match(status.CurrentMove.Value.Name, "Grab") then
-	    receivedsound = fetchRandom(_G.voice.HeavyAttack)
-	    playSound(receivedsound)
-	    end
+	        if not string.match(status.CurrentMove.Value.Name, "Taunt") and not string.match(status.CurrentMove.Value.Name, "Grab") then
+	            receivedsound = fetchRandom(_G.voice.HeavyAttack)
+	           playSound(receivedsound)
+	        end
 	    end
 	end)
 	
