@@ -186,7 +186,7 @@ Dragon["2Strike4"].Value = "龍2Strike3"
 Dragon["2Strike5"].Value = "龍2Strike4"
 moves.BStrike2.ComboAt.Value -= 0.15
 Dragon.GrabStrike.Value = "T_龍GParry"
-moves["龍2Strike2"].AniSpeed.Value = 1.45
+moves["龍2Strike2"].AniSpeed.Value = 1.45 
 moves["龍2Strike2"].MoveForward.Value -= 4
 moves.BStrike2.MoveForward.Value -= 3
 moves.BStrike3.AniSpeed.Value += 0.05
@@ -528,24 +528,26 @@ local function AutoSlap()
                     if enemy.Parent.AttackBegan.Value == true then
                         enemy.Parent.AttackBegan.Value = false
                         thing.Value = false
-                        Slap(enemy)
+                        Slap(enemy) Slap(enemy) Slap(enemy)  
                     end
                     if enemy.Parent.TookAim.Value == true then
                         enemy.Parent.TookAim.Value = false
                         wait(0.6)
-                        thing.Value = false                
-                        Slap(enemy)
-                    end
-                end
-	    end
-        end
-        if IsInPvp() then
-	    for i,opp in game.Players:GetPlayers() do
-		if opp ~= plr then
+                        thing.Value = false                 
+                        Slap(enemy)                         
+                    end                                     
+                end                                         
+	    end                                             
+        end                                                 
+        if IsInPvp() then                                   
+	    for i,opp in game.Players:GetPlayers() do       
+		if opp ~= plr then                           
                     if opp.Status.AttackBegan.Value == true then
                         opp.Status.AttackBegan.Value = false
-                        thing.Value = false
+                        thing.Value = false                 
                         Slap(opp.Character.HumanoidRootPart)
+			Slap(opp.Character.HumanoidRootPart)
+			Slap(opp.Character.HumanoidRootPart)
 	            end
 		end
 	    end
@@ -592,9 +594,6 @@ Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
-local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.AIStyles.Dragon.StanceIdle)
-anim.Priority = Enum.AnimationPriority.Movement
-
 local DragonText = "Dragon"
 styles.Blade.Color.Value = Color3.fromRGB(0,0,0)
 local DragonColor
@@ -1203,7 +1202,7 @@ menu.Abilities.Frame.Frame.Frame.List.ListFrame.ChildAdded:Connect(function(v)
   end
 end)
             --Ability descriptions and prompts--
-abilFolder["Time for Resolve"].Description.Value = "Unleash the willpower of the Legendary Red Dragon to fly above the rest and withstand any attacks that would stagger or knock you down."
+abilFolder["Time for Resolve"].Description.Value = "Gain the power to destroy every enemy. EVADE to teleport, attacks get deflected, and you get heat."
 abilFolder["Guru Parry"].Description.Value = "One of the Three Ultimate Komaki style moves. Stuns the enemy."
 abilFolder["Guru Knockback"].Description.Value = "One of the Three Ultimate Komaki style moves. Send an enemy's attack right back at them."
 abilFolder["Counter Hook"].Description.Value = "One of the Three Ultimate Komaki style moves. The style's strongest counter-attack."
