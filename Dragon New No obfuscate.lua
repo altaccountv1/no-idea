@@ -1218,7 +1218,7 @@ if hasReloaded == false then
 	startsound.SoundId = "rbxassetid://9085027122"
 	game:GetService("SoundService"):PlayLocalSound(startsound)
         Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
+	Forcefield:Destroy()
 	startsound.Ended:Wait()
 	startsound:Destroy()
-	Forcefield:Destroy()
 end
