@@ -544,7 +544,6 @@ local function AutoSlap()
                         opp.Status.AttackBegan.Value = false
                         thing.Value = false
                         Slap(opp.Character.HumanoidRootPart)
-	                end	
 	            end
 		end
 	    end
