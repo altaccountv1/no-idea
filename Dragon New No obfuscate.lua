@@ -806,7 +806,7 @@ local function teleportToLocked(target)
     local lock = char.LockedOn
     local val = target or lock.Value
     if val and val:IsDescendantOf(workspace) and not val.Parent:FindFirstChild("ImaDea") then
-	local anim = Instance.new("Animation") anim.AnimationId = moves.BEvadeStrikeForward.Anim.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
+	local anim = Instance.new("Animation") anim.AnimationId = Dragon.EvadeF.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
 	atrack:AdjustSpeed(2)
 	atrack.Priority = Enum.AnimationPriority.Action4
 	atrack:Play()
@@ -823,24 +823,24 @@ end
 
 local teleportDebounce = 0
 local debouceDuration = 0.5
+local ff = RPS.Invulnerable:Clone()
 
 function Teleport()
-    if status.Taunting.Value == true and RDS.Value == true then
+    if status.FFC.Evading.Value == true and RDS.Value == true then
 	local success = teleportToLocked()
         if success then
-            local ff = RPS.Invulnerable:Clone()
             ff.Parent = status 
 	    task.wait(0.1)
-            ff:Destroy()
+            ff.Parent = RPS
         else
-            if status:FindFirstChild("Invulnerable") then
-		status.Invulnerable:Destroy()
+            if ff.Parent == status then
+		ff.Parent = RPS
             end
         end
     end
 end
 
-status.Taunting.Changed:Connect(Teleport)
+status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 if RDS.Value == true then
@@ -1123,7 +1123,7 @@ local main = bt.Main
 	        dodgeCD = true
 	        receivedsound = fetchRandom(_G.voice.Dodge)
 	        playSound(receivedsound)
-	        delay(10,function()
+	        delay(2,function()
 	            dodgeCD = false
 	        end)
 	    end
