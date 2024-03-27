@@ -778,10 +778,10 @@ end
 local function makeAttachments(target)
     -- Target is a part
     local topAttachment = Instance.new("Attachment", target.UpperTorso)
-    topAttachment.Position = Vector3.new(0, target.Size.Y * 1.25, 0)
+    topAttachment.Position = Vector3.new(0, target.UpperTorso.Size.Y * 1.25, 0)
     topAttachment.Name = "TAttach"
     local bottomAttachment = Instance.new("Attachment", target.LowerTorso)
-    bottomAttachment.Position = Vector3.new(0, target.Size.Y * -1.25, 0)
+    bottomAttachment.Position = Vector3.new(0, target.LowerTorso.Size.Y * -1.25, 0)
     bottomAttachment.Name = "BAttach"
     return topAttachment, bottomAttachment
 end
