@@ -792,7 +792,6 @@ trail.Attachment0 = top
 trail.Attachment1 = bot
 trail.Parent = char.UpperTorso
 trail.Enabled = false
-trail.FaceCamera = true
 local plr = game:GetService("Players").LocalPlayer
 local pgui = plr.PlayerGui
 local interf = pgui.Interface
