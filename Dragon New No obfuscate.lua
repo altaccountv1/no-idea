@@ -777,17 +777,17 @@ end
 
 local function makeAttachments(target)
     -- Target is a part
-    local topAttachment = Instance.new("Attachment", target)
-    topAttachment.Position = Vector3.new(0, target.Size.Y*1.25, 0)
+    local topAttachment = Instance.new("Attachment", target.UpperTorso)
+    topAttachment.Position = Vector3.new(0, target.Size.Y * 1.25, 0)
     topAttachment.Name = "TAttach"
-    local bottomAttachment = Instance.new("Attachment", target)
-    bottomAttachment.Position = Vector3.new(0, target.Size.Y*-1.25, 0)
+    local bottomAttachment = Instance.new("Attachment", target.LowerTorso)
+    bottomAttachment.Position = Vector3.new(0, target.Size.Y * -1.25, 0)
     bottomAttachment.Name = "BAttach"
-    return bottomAttachment, topAttachment
+    return topAttachment, bottomAttachment
 end
 
 local trail = makeTrail()
-local top, bot = makeAttachments(char.UpperTorso)
+local top, bot = makeAttachments(char)
 trail.Attachment0 = top
 trail.Attachment1 = bot
 trail.Parent = char.UpperTorso
