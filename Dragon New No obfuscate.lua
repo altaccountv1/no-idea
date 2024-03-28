@@ -424,7 +424,7 @@ local Rep = game.ReplicatedStorage
 local Char = Player.Character
 local Main = Player.PlayerGui.Interface.Battle.Main
 
-local function fetchRandom(instance)
+local function (instance)
     local instancechildren = instance:GetChildren()
     local random = instancechildren[math.random(1, #instancechildren)]
     return random
@@ -859,7 +859,7 @@ if RDS.Value == true then
     SuperCharge.AnimationId = id
     local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
     anim:Play()
-    local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
+    local rage = (RPS.Voices.Kiryu.Rage)
     Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
@@ -1064,104 +1064,90 @@ char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
 
 if _G.VoiceMod == true then
-	_G.voicepack = "Kiryu" -- Current available voices: "Kiryu", "Akiyama", "Majima" and "Vulcan"
+		--// Cache
+	local Voice = RPS.Voices:FindFirstChild("Kiryu")
 	local player = game.Players.LocalPlayer
 	local character = player.Character
 	local pgui = player.PlayerGui
 	local status = player.Status
 	local RPS = game.ReplicatedStorage
-	_G.voice = RPS.Voices:FindFirstChild(_G.voicepack)
+        local plr = game.Players.LocalPlayer
+	local pgui = plr.PlayerGui
+	local interf = pgui.Interface
+	local bt = interf.Battle
+	local main = bt.Main
 	
-	print(_G.voice.Name)
-	local function fetchRandom(instance)
-	    local instancechildren = instance:GetChildren()
-	    local random = instancechildren[math.random(1, #instancechildren)]
+	local function GetRandom(Instance)
+	    local children = Instance:GetChildren()
+	    local random = children[math.random(1,#children)]
 	    return random
 	end
-
-local plr = game.Players.LocalPlayer
-local pgui = plr.PlayerGui
-local interf = pgui.Interface
-local bt = interf.Battle
-local main = bt.Main
-
-	
-	local alreadyRunning = status:FindFirstChild("Voice Mod")
-	if alreadyRunning then
-	   Notify("Selected voice: ".._G.voice.Name,"buzz", Color3.fromRGB(255, 255, 255))
-	    return
-	end 
-	
-	alreadyRunning = Instance.new("BoolValue")
-	alreadyRunning.Parent = status
-	alreadyRunning.Value = true
-	alreadyRunning.Name = "Voice Mod"
-	
-	Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255), "Bangers" )
 	local receivedsound
 	
-	player.ChildAdded:Connect(function(child)
+	plr.ChildAdded:Connect(function(child)
 	    if child.Name == "InBattle" then
-	        receivedsound = fetchRandom(_G.voice.BattleStart)
+	        receivedsound = GetRandom(Voice.BattleStart)
 	        playSound(receivedsound)
 	    end 
 	end) 
-	local hitCD = false
-	character.ChildAdded:Connect(function(child)
+	local HeatActionCD = false
+	
+	char.ChildAdded:Connect(function(child)
 	    if child.Name == "Heated" and child:WaitForChild("Heating",0.5).Value ~= character then
 	        local isThrowing = child:WaitForChild("Throwing",0.5)
 	        if not isThrowing then
-		if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " then
-	        receivedsound = fetchRandom(_G.voice.HeatAction)
-	        playSound(receivedsound)
-		print(receivedsound)
+		    if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " then
+	            receivedsound = GetRandom(Voice.HeatAction)
+	            playSound(receivedsound)
+		    print(receivedsound)
 		    end
 		end
 	    end
-		if child.Name == "Hitstunned" and not character:FindFirstChild("Ragdolled") then
-			if hitCD == false then
-			hitCD = true
-	        receivedsound = fetchRandom(_G.voice.Pain)
-	        playSound(receivedsound)
-			delay(2,function()
-				hitCD = false
-			end)
-			end
+	    if child.Name == "Hitstunned" and not character:FindFirstChild("Ragdolled") then
+		if hitCD == false then
+		    hitCD = true
+	            receivedsound = GetRandom(Voice.Pain)
+	            playSound(receivedsound)
+		    delay(2,function()
+			hitCD = false
+		    end)
 		end
-		if child.Name == "Ragdolled" then
-	        receivedsound = fetchRandom(_G.voice.Knockdown)
-	        playSound(receivedsound)
+	    end
+	    if child.Name == "Ragdolled" then
+	            receivedsound = GetRandom(Voice.Knockdown)
+	            playSound(receivedsound)
 	    end
 	    if child.Name == "ImaDea" then
-	        receivedsound = fetchRandom(_G.voice.Death)
-	        playSound(receivedsound)
+	            receivedsound = GetRandom(Voice.Death)
+	            playSound(receivedsound)
 	    end
 		if child.Name == "Stunned" then
-	        receivedsound = fetchRandom(_G.voice.Stun)
-	        playSound(receivedsound)
+	            receivedsound = GetRandom(Voice.Stun)
+	            playSound(receivedsound)
 	    end
 	end)
 	
 	character.ChildRemoved:Connect(function(child)
-		if child.Name == "Ragdolled" then
-			wait(0.1)
-			if not string.match(status.CurrentMove.Value.Name, "Getup") then
-			receivedsound = fetchRandom(_G.voice.Recover)
-	        playSound(receivedsound)
-			end
+	     if child.Name == "Ragdolled" then
+		wait(0.1)
+		if not string.match(status.CurrentMove.Value.Name, "Getup") then
+		    receivedsound = GetRandom(Voice.Recover)
+	            playSound(receivedsound)
 		end
+	    end
 	end)
 	
 	character.HumanoidRootPart.ChildAdded:Connect(function(child)
 	    if child.Name == "KnockOut" or child.Name == "KnockOutRare" then
-	                child.Volume = 0
-	            end
+	        child.Volume = 0
+	    end
 	end) 
-	local dodgeCD = false
+	
+	local EvadeCD = false
 	status.FFC.Evading.Changed:Connect(function()
-	    if status.FFC.Evading.Value == true and character:FindFirstChild("BeingHacked") and not dodgeCD then
+	    if status.FFC.Evading.Value == true and character:FindFirstChild("BeingHacked") and not EvadeCD then
 	        dodgeCD = true
-	        receivedsound = fetchRandom(_G.voice.Dodge)
+	        receivedsound = GetRandom(Voice.Dodge)
 	        playSound(receivedsound)
 	        delay(3,function()
 	            dodgeCD = false
@@ -1177,46 +1163,29 @@ local main = bt.Main
 	RPS.Moves.GoonTaunt.Sound.Value = "FakeLaugh"
 	status.Taunting.Changed:Connect(function()
 	    if status.Taunting.Value == true and status.CurrentMove.Value.Name ~= "BeastTaunt" then
-	        receivedsound = fetchRandom(_G.voice.Taunt)
+	        receivedsound = GetRandom(Voice.Taunt)
 	        playSound(receivedsound)
 	    end
 	end)
-	local lattackCD = false
+	local LightAttackCD
 	status.CurrentMove.Changed:Connect(function()
 	    if string.match(status.CurrentMove.Value.Name, "Attack") or string.match(status.CurrentMove.Value.Name, "Punch") then
-	        if lattackCD == false then
-	            lattackCD = true
-	            receivedsound = fetchRandom(_G.voice.LightAttack)
+	        if LightAttackCD == false then
+	            LightAttackCD = true
+	            receivedsound = GetRandom(Voice.LightAttack)
 	            playSound(receivedsound)
 	            delay(0.35, function()
-	            lattackCD = false
+	            LightAttackCD = false
 	        end)
 	    end
 	    else
 	        if not string.match(status.CurrentMove.Value.Name, "Taunt") and not string.match(status.CurrentMove.Value.Name, "Grab") and not string.match(status.CurrentMove.Value.Name, "CounterHook") and not string.match(status.CurrentMove.Value.Name, "BRCounter2")then
-	            receivedsound = fetchRandom(_G.voice.HeavyAttack)
+	            receivedsound = GetRandom(Voice.HeavyAttack)
 	           playSound(receivedsound)
 	        end
 	    end
 	end)
-	
-	game.UserInputService.InputBegan:Connect(function(key)
-		if game.UserInputService:GetFocusedTextBox() == nil then
-			if key.KeyCode == Enum.KeyCode.H then
-					if _G.voicepack == "Kiryu" then
-						_G.voicepack = "Akiyama"
-					elseif _G.voicepack == "Akiyama" then
-						_G.voicepack = "Majima"
-					elseif _G.voicepack == "Majima" then
-						_G.voicepack = "Vulcan"
-					elseif _G.voicepack == "Vulcan" then
-						_G.voicepack = "Kiryu"
-					end
-					_G.voice = RPS.Voices:FindFirstChild(_G.voicepack)
-					Notify("Selected voice: ".._G.voice.Name, Color3.fromRGB(255, 255, 255))
-			end	
-		end
-	end)
+    Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255), "Bangers" )
 end
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Brawler.Filled.Title.Text = "Dragon"
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Rush.Filled.Title.Text = "Rush"
