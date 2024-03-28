@@ -1024,7 +1024,6 @@ end)
 status.AttackBegan.Changed:Connect(function() 
     if status.AttackBegan.Value == true then 
 	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" then 
-	     playsound(16907444297)
 	end 
     end 
 end)
@@ -1106,6 +1105,7 @@ local main = bt.Main
 		if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " then
 	        receivedsound = fetchRandom(_G.voice.HeatAction)
 	        playSound(receivedsound)
+		print(receivedsound)
 		    end
 		end
 	    end
