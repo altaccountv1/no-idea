@@ -171,10 +171,10 @@ else
     end
 end
 if _G.DEMoveset == false or _G.DEMoveset == nil then
-Dragon.Rush1.Value = "龍Attack1"
-Dragon.Rush2.Value = "龍Attack2"
-Dragon.Rush3.Value = "龍Attack3"
-Dragon.Rush4.Value = "龍Attack4"
+moves["BAttack1"].Anim.AnimationId = moves["龍Attack1"].Anim.AnimationId
+moves["BAttack2"].Anim.AnimationId = moves["龍Attack2"].Anim.AnimationId
+moves["BAttack3"].Anim.AnimationId = moves["龍Attack3"].Anim.AnimationId
+moves["BAttack4"].Anim.AnimationId = moves["龍Attack4"].Anim.AnimationId
 Dragon.Strike1.Value = "龍Strike1"
 Dragon.Strike2.Value = "BStrike2"
 Dragon.Strike3.Value = "BStrike3"
@@ -282,6 +282,7 @@ moves.BRCounter2.Name = "FakeBRCounter2"
     moves["龍TigerDrop"].Name = "BRCounter2"
     moves["BRCounter2"].AniSpeed.Value = 0.75
     moves["TigerDrop"].AniSpeed.Value = 0.75
+    moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
     if not moves.BRCounter2:FindFirstChild("HSize") then
         HSize = Instance.new("NumberValue", moves.BRCounter2)
         HSize.Name = "HSize"
