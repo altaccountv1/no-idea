@@ -508,7 +508,7 @@ local function UpdateStyleOnce()
 		plr.Character.HumanoidRootPart.CFrame = cframe
     game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = game.ReplicatedStorage.Moves.CounterHook.Anim.AnimationId
 	end
- 
+end
 game:GetService("RunService").RenderStepped:Connect(function()
 	UpdateStyle()
 end)
