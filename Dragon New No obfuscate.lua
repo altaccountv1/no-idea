@@ -1023,7 +1023,8 @@ end)
 
 status.AttackBegan.Changed:Connect(function() 
     if status.AttackBegan.Value == true then 
-	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" then 
+	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" then
+	    playSound(RPS.Voices.Kiryu.HeatAction["heataction1 (2)"])
 	end 
     end 
 end)
@@ -1184,7 +1185,7 @@ local main = bt.Main
 	        end)
 	    end
 	    else
-	        if not string.match(status.CurrentMove.Value.Name, "Taunt") and not string.match(status.CurrentMove.Value.Name, "Grab") then
+	        if not string.match(status.CurrentMove.Value.Name, "Taunt") and not string.match(status.CurrentMove.Value.Name, "Grab") and not string.match(status.CurrentMove.Value.Name, "CounterHook") and not string.match(status.CurrentMove.Value.Name, "BRCounter2")then
 	            receivedsound = fetchRandom(_G.voice.HeavyAttack)
 	           playSound(receivedsound)
 	        end
