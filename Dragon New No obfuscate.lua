@@ -277,17 +277,20 @@ if namesChanged == false then
     moves.DragonTaunt.Name = "Taunt"
     moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
     moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
-if not IsInPvp() then
-moves.BRCounter2.Name = "FakeBRCounter2"
-    moves["龍TigerDrop"].Name = "BRCounter2"
-    moves["BRCounter2"].AniSpeed.Value = 0.75
-    moves["TigerDrop"].AniSpeed.Value = 0.75
-    moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
-    if not moves.BRCounter2:FindFirstChild("HSize") then
-        HSize = Instance.new("NumberValue", moves.BRCounter2)
-        HSize.Name = "HSize"
-        HSize.Value = 2
+    if not IsInPvp() then
+        moves.BRCounter2.Name = "FakeBRCounter2"
+        moves["龍TigerDrop"].Name = "BRCounter2"
+        moves["BRCounter2"].AniSpeed.Value = 0.75
+        moves["TigerDrop"].AniSpeed.Value = 0.75
+        moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
+        if not moves.BRCounter2:FindFirstChild("HSize") then
+            HSize = Instance.new("NumberValue", moves.BRCounter2)
+            HSize.Name = "HSize"
+            HSize.Value = 2
         end
+	elseif IsInPvp() then
+            moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
+	    moves.BRGrab.Anim.AnimationId = "rbxassetid://12120052426"
     end
 end
 
@@ -299,7 +302,6 @@ whenattack = Instance.new("Folder", moves.ShuckyDrop)
 whenattack.Name = "WhenAttacking"
 counter = Instance.new("Folder", moves.ShuckyDrop)
 counter.Name = "CounterAttack" 
-moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 -- FUNCTIONS -- 
 local function add_forcefield(duration)
 	local p = game.Players.LocalPlayer
