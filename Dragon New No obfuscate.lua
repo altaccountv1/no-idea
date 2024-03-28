@@ -600,7 +600,7 @@ end)
 local DragonText = "Dragon"
 styles.Blade.Color.Value = Color3.fromRGB(0,0,0)
 local DragonColor
-DragonColor = Color3.new(1,0,0)
+DragonColor = Color3.fromRGB(250,5,10)
 local DSeq = ColorSequence.new({ColorSequenceKeypoint.new(0, DragonColor), ColorSequenceKeypoint.new(1, DragonColor)})
 local NoTrail = ColorSequence.new({ColorSequenceKeypoint.new(0, styles.Blade.Color.Value), ColorSequenceKeypoint.new(1, styles.Blade.Color.Value)})
 
@@ -1000,6 +1000,35 @@ game.StarterGui:SetCore("SendNotification",{
 })
     end
 end
+
+status.Resets.Changed:Connect(function()
+	sendNotification("You have prestiged [" .. status.Resets.Value .. "] times !",nil, Color3.fromRGB(0, 200, 0))
+end)
+ 
+status.Level.Changed:Connect(function()
+	if status.Level.Value % 5 == 0 then
+		sendNotification("You are now level [" .. status.Level.Value .. "]",nil, Color3.fromRGB(0, 200, 0))
+	end
+end)
+ 
+status.Stats.Deaths.Changed:Connect(function()
+	sendNotification("How are you dying??" , "HeatDepleted", Color3.fromRGB(250,5,10))
+end)
+ 
+status.Stats.Kills.Changed:Connect(function()
+	if status.Stats.Kills.Value % 50 == 0 then
+		sendNotification("You have defeated [" .. status.Stats.Kills.Value .. "] enemies, damn",nil, Color3.fromRGB(0, 200, 0))
+	end
+end)
+
+status.AttackBegan.Changed:Connect(function() 
+    if status.AttackBegan.Value == true then 
+	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" then 
+	     playsound(16907444297)
+	end 
+    end 
+end)
+	
 if _G.CustomMorphSkin == true and _G.MorphMod == true then
 char.Ignore.FakeUpperTorso["Kiryu_Buttons"].Color = Color3.fromRGB(228,212,0)
 char.Ignore.FakeUpperTorso["Kiryu_Shirt"].Color = Color3.fromRGB(255,255,255)
