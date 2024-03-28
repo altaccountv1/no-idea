@@ -506,7 +506,7 @@ local function UpdateStyleOnce()
 		task.wait()
 		interf.Client.Disabled = false
 		plr.Character.HumanoidRootPart.CFrame = cframe
-    game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = game.ReplicatedStorage.Moves.CounterHook.Anim.AnimationId
+    game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "0"
 	end
 end
 game:GetService("RunService").RenderStepped:Connect(function()
