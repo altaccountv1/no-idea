@@ -251,18 +251,6 @@ local DEMoveConfig = {
 	{move = "BAttack4", property = "ComboAt", value = moves["BAttack1"].ComboAt.Value}
 }
 
-local MoveConfig = {
-    {name = "ShuckyDrop", property = "AniSpeed", value = moves.GuruStumble.AniSpeed.Value},
-    {name = "ShuckyDrop", property = "MoveForward", value = moves.GuruStumble.MoveForward.Value},
-    {name = "ShuckyDrop", property = "SF", value = 0.1},
-    {name = "H_FastFootworkBack", property = "Closest", value = '40'},
-    {name = "BGetup", property = "HitboxLocations", value = moves.RSweep.HitboxLocations.Value}
-}
-local MoveAnims = {
-    {name = "ShuckyDrop", value = moves.GuruStumble.Anim.AnimationId},
-    {name = "BGetup", value = moves.RSweep.Anim.AnimationId}
-}
-
 local function ChangeConfig(Table)
     for i,mv in ipairs(moves:GetChildren()) do
 	for i,data in ipairs(Table) do
@@ -349,9 +337,8 @@ elseif _G.DEMoveset == true then
     ChangeAnims(DEAnims)
 end
 
-ChangeConfig(MoveConfig)
 ChangeAnims(RDSAnims)
-ChangeAnims(MoveAnims)
+
 moves["H_FastFootworkBack"].Closest.Value = '40'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
@@ -365,6 +352,12 @@ elseif IsInPvp() then
     moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
     moves.BRGrab.Anim.AnimationId = "rbxassetid://12120052426"
 end
+moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
+moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
+moves.ShuckyDrop.SF.Value = 0.1
+Moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
+Moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
+moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
 moves.Taunt.Name = "FakeTaunt" moves.DragonTaunt.Name = "Taunt"
 local feelingheat = Instance.new("BoolValue")
 feelingheat.Value = false
@@ -561,41 +554,47 @@ local function AutoSlap()
     end
 end
 
-Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") then -- dargon of dojima 88 or slap ult.
-	local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
-        local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
-        Anim.Priority = Enum.AnimationPriority.Action4
-        Anim:AdjustSpeed(1)
-        Anim:Play()
-	playSound(soundr) -- ora doushita??
-        task.wait(1)
-        PlaySound("MassiveSlap") -- slap slap slap 
-        task.wait(2)
-        Anim:Destroy()
-    elseif Main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" and not char:FindFirstChild("BeingHeated") then
-	Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
-        local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
-        Anim.Priority = Enum.AnimationPriority.Action4
-        Anim:AdjustSpeed(1)
-        Anim:Play()
-        task.wait(0.1)
-        PlaySound("Slap")
-        task.wait(0.45)
-        PlaySound("Slap")
-        task.wait(0.45)
-        PlaySound("Slap")
-        task.wait(0.9)
-        PlaySound("MassiveSlap")
-        Anim:Destroy()
-   elseif Main.HeatMove.TextLabel.Text == "Essence of Stomping" then 
-        task.wait(1.5)
-        if status.CurrentMove.Value == moves["龍Stomp"] then
-	    task.wait(0.25)
-	    UseHeatAction("H_FallenKick","Brawler",{char.LockedOn.Value})
-        end
+local debounce = false
+
+function Hacts()
+    if plr.Character:FindFirstChild("Heated") and plr.Character.Heated:FindFirstChild("MoveName") then
+	if status.Style.Value == "Brawler" then
+	    local heatthing = plr.Character:FindFirstChild("Heated")
+	    local whatHact = heatthing:WaitForChild("MoveName")
+	    if whatHact.Value == "Ultimate Essence" and debounce == false then
+		debounce = true
+		local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
+        	local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
+        	Anim.Priority = Enum.AnimationPriority.Action4
+       		Anim:AdjustSpeed(1)
+        	Anim:Play()
+		playSound(soundr) -- ora doushita??
+        	task.wait(1)
+        	PlaySound("MassiveSlap") -- slap slap slap 
+        	task.wait(2)
+        	Anim:Destroy()
+   	    elseif whatHact.Value == "Essence of Fast Footwork [Back]" and debounce == false and status.Style.Value == "Brawler" then
+		Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
+        	local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
+        	Anim.Priority = Enum.AnimationPriority.Action4
+        	Anim:AdjustSpeed(1)
+        	Anim:Play()
+        	task.wait(0.1)
+        	PlaySound("Slap")
+        	task.wait(0.45)
+        	PlaySound("Slap")
+        	task.wait(0.45)
+        	PlaySound("Slap")
+        	task.wait(0.9)
+        	PlaySound("MassiveSlap")
+        	Anim:Destroy()
+	    end
+	end
     end
-end)
+    if not plr.Character:FindFirstChild("Heated") then
+	debounce = false
+    end
+end
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local DragonText = "Dragon"
@@ -651,6 +650,7 @@ end
 game:GetService("RunService").RenderStepped:Connect(function()
     UpdateStyle()
     AutoSlap()
+    Hacts()
 end)
 
 -- Red Dragon Spirit --
@@ -879,7 +879,6 @@ else
 	status.Invulnerable:Destroy()
     end
     ChangeMoveset(Dragon, NCombo)
-    FastMoves.Value = false
     end
 end)
 
