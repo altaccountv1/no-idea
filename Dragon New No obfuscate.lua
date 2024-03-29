@@ -171,13 +171,13 @@ local DEMoveset = {
 	{name = "Rush2", Type = "StringValue", value = "BAttack2"},
 	{name = "Rush3", Type = "StringValue", value = "BAttack3"},
 	{name = "Rush4", Type = "StringValue", value = "BAttack4"},
-
+	
 	{name = "Strike1", Type = "StringValue", value = "龍Strike1"},
 	{name = "Strike2", Type = "StringValue", value = "BStrike3"},
 	{name = "Strike3", Type = "StringValue", value = "BStrike2"},
 	{name = "Strike4", Type = "StringValue", value = "BStrike5"},
+	
 	{name = "Strike5", Type = "StringValue", value = "BStrike4"},
-
 	{name = "2Strike2", Type = "StringValue", value = "BEvadeStrikeBack"},
 	{name = "2Strike3", Type = "StringValue", value = "BStrike2"},
 	{name = "2Strike4", Type = "StringValue", value = "B2Strike3"},
@@ -185,10 +185,6 @@ local DEMoveset = {
 }
 
 local Y0MoveConfig = {
-	{move = "BAttack1", property = "Anim", value = moves["龍Attack1"].Anim.AnimationId},
-	{move = "BAttack2", property = "Anim", value = moves["龍Attack2"].Anim.AnimationId},
-	{move = "BAttack3", property = "Anim", value = moves["龍Attack3"].Anim.AnimationId},
-	{move = "BAttack4", property = "Anim", value = moves["龍Attack4"].Anim.AnimationId},
 	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
 	{move = "BAttack2", property = "HitboxLocations", value = moves["龍Attack2"].HitboxLocations.Value},
 	{move = "BAttack3", property = "HitboxLocations", value = moves["龍Attack3"].HitboxLocations.Value},
@@ -198,33 +194,45 @@ local Y0MoveConfig = {
 	{move = "BAttack3", property = "ComboAt", value = moves["龍Attack3"].ComboAt.Value},
 	{move = "BAttack4", property = "ComboAt", value = moves["龍Attack4"].ComboAt.Value},
 	{move = "龍Strike5", property = "HitboxLocations", value = '[["LeftFoot",2,[0,0,0]],["LeftLowerLeg",1.5,[0,0,0]],["LeftUpperLeg",1,[0,0,0]]]'},
-	{move = "龍Strike5", property = "Anim", value = moves.BStrike1.TurnAnim.AnimationId},
 	{move = "BStrike2", property = "ComboAt", value = moves.BStrike2.ComboAt.Value - 0.15},
 	{move = "BStrike2", property = "MoveForward", value = moves.BStrike2.MoveForward.Value - 3},
 	{move = "BStrike3", property = "AniSpeed", value = moves.BStrike2.AniSpeed.Value + 0.05},
 	{move = "BStrike3", property = "ComboAt", value = moves.BStrike2.ComboAt.Value - 0.05},
 	{move = "龍2Strike2", property = "AniSpeed", value = 1.45},
-	{move = "龍Strike1", property = "Anim", value = "rbxassetid://13731752257"},
 	{move = "龍2Strike2", property = "MoveForward", value = moves["龍2Strike2"].MoveForward.Value - 4},
-	{move = "BStrike5", property = "Anim", value = moves["龍2Strike1"].Anim.AnimationId},
 	{move = "BStrike5", property = "AniSpeed", value = moves["BStrike5"].AniSpeed.Value + 0.05},
 	{move = "BStrike5", property = "ComboAt", value = moves["BStrike5"].ComboAt.Value - 0.1}
 }
 
-local DEMoveConfig = {
+local Y0Anims = {
+    	{move = "BAttack1", value = moves["龍Attack1"].Anim.AnimationId},
+	{move = "BAttack2", value = moves["龍Attack2"].Anim.AnimationId},
+	{move = "BAttack3", value = moves["龍Attack3"].Anim.AnimationId},
+	{move = "BAttack4", value = moves["龍Attack4"].Anim.AnimationId},
+	{move = "龍Strike1", value = "rbxassetid://13731752257"},
+	{move = "BStrike5", value = moves["龍2Strike1"].Anim.AnimationId},
+	{move = "龍Strike5", value = moves.BStrike1.TurnAnim.AnimationId}
+}
+
+local DEAnims = {
 	{move = "BStrike2", property = "Anim", value = "rbxassetid://13785068836"},
 	{move = "B2Strike3", property = "Anim", value = "rbxassetid://13785070193"},
 	{move = "BStrike4", property = "Anim", value = "rbxassetid://13785070193"},
 	{move = "龍Strike5", property = "Anim", value = "rbxassetid://13731752257"},
+        {move = "BAttack1", property = "Anim", value = moves["龍Attack1"].Anim.AnimationId},
+	{move = "BAttack2", property = "Anim", value = moves["龍Attack2"].Anim.AnimationId},
+	{move = "BAttack3", property = "Anim", value = moves["龍Attack3"].Anim.AnimationId},
+	{move = "BAttack4", property = "Anim", value = moves["BAttack1"].Anim.AnimationId}
+}
+
+local DEMoveConfig = {
+	
 	{move = "龍Strike5", property = "AniSpeed", value = 1.5},
 	{move = "龍Strike5", property = "MoveForward", value = 12},
 	{move = "BStrike4", property = "ComboAt", value = 0.6},
 	{move = "BStrike4", property = "AniSpeed", value = moves.B2Strike3.AniSpeed.Value},
 	{move = "BStrike5", property = "ComboAt", value = 0.6},
-	{move = "BAttack1", property = "Anim", value = moves["龍Attack1"].Anim.AnimationId},
-	{move = "BAttack2", property = "Anim", value = moves["龍Attack2"].Anim.AnimationId},
-	{move = "BAttack3", property = "Anim", value = moves["龍Attack3"].Anim.AnimationId},
-	{move = "BAttack4", property = "Anim", value = moves["BAttack1"].Anim.AnimationId},
+	
 	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
 	{move = "BAttack2", property = "HitboxLocations", value = moves["龍Attack2"].HitboxLocations.Value},
 	{move = "BAttack3", property = "HitboxLocations", value = moves["龍Attack3"].HitboxLocations.Value},
@@ -257,6 +265,16 @@ local function ChangeConfig(Table)
 		if data.newname then
 		    mv.Name = data.newname
 		end
+	    end
+	end
+    end
+end
+
+function ChangeAnims(Table)
+    for i,Move in ipairs(moves:GetChildren()) do
+	for i,v in ipairs(Table) do
+	    if v.Name == Move.Name then
+		Move.Anim.AnimationId = v.value
 	    end
 	end
     end
