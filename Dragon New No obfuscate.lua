@@ -980,8 +980,11 @@ interf.Client.Disabled = false
 char.HumanoidRootPart.CFrame = oldcframe
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
-moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
-
+if moves:FindFirstChild("CounterHook") then
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
+else
+    moves.BRGrab.Anim.AnimationId = "rbxassetid://12338275115"
+end
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
