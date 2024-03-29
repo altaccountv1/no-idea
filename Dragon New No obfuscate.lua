@@ -15,27 +15,6 @@ local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 local char = plr.Character
 local RPS = game.ReplicatedStorage
 local sounds = RPS.Sounds
-local DragonText = "Dragon"
-local u1 = game.Players.LocalPlayer
-local u2 = u1.Status
-local u3 = u2.Settings
-local u4 = game.Workspace.CurrentCamera
-local S_UserInputService_1 = game:GetService("UserInputService")
-local S_ReplicatedStorage_2 = game:GetService("ReplicatedStorage")
-local S_ReplicatedFirst_3 = game:GetService("ReplicatedFirst")
-local S_TweenService_4 = game:GetService("TweenService")
-local u5 = S_ReplicatedStorage_2.Events.ME
-local L_Interface_5 = u1:WaitForChild("PlayerGui"):WaitForChild("Interface")
-local u6 = require(S_ReplicatedStorage_2.Modules.XP)
-local u7 = require(S_ReplicatedStorage_2.Modules.SpecialFunctions)
-local u8 = require(S_ReplicatedFirst_3.Ambassador)
-local u9 = require(S_ReplicatedFirst_3.Variables)
-local u10 = require(S_ReplicatedStorage_2.Modules.Sound)
-local u11 = require(u1:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule"):WaitForChild("ControlModule"))
-local L_MenuUI_6 = u1:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
-local u12 = nil
-local battleWatcher = false;
-
 local Forcefield = RPS.Invulnerable:Clone()
 Forcefield.Parent = status
 local UserInputService = game:GetService("UserInputService")
@@ -106,23 +85,14 @@ local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz,
 	end
 end
 
-
-local namesChanged = false
-local hasReloaded = false
-local sentNotifs = false
-
 local alreadyRunning = status:FindFirstChild("Dragon Style")
 if alreadyRunning then
     Notify("Dragon Style is already loaded", "buzz", Color3.fromRGB(255,255,255), "RobotoMono")
     task.wait(2)
     Notify("If you have an error, report it to me.", "HeatDepleted", Color3.fromRGB(255,255,255), "RobotoMono")
-    namesChanged = true
-    hasReloaded = true
-    sentNotifs = true
     return
 end
  
-moves[Dragon.Strike1.Value].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
 alreadyRunning = Instance.new("BoolValue")
 alreadyRunning.Parent = status
 alreadyRunning.Value = true
@@ -130,214 +100,232 @@ alreadyRunning.Name = "Dragon Style"
 
 local Beast = styles.Beast
 local Rush = styles.Rush
-Dragon.VisualName.Value = "Dragon"
-Dragon.Speed.Value = 1.25
-Dragon.Color.Value = Color3.fromRGB(255,0,0)
-Dragon.Pummel.Value = "T_龍GParry"
-Dragon.Idle.AnimationId = "rbxassetid://12120045620"
-Dragon.StanceStrike.Value = "CounterHook"
-Dragon.BlockStrike.Value = "ShuckyDrop"
-Rush.EvadeF.AnimationId = Dragon.EvadeF.AnimationId
-Rush.EvadeB.AnimationId = Dragon.EvadeB.AnimationId
-Rush.EvadeL.AnimationId = Dragon.EvadeL.AnimationId
-Rush.EvadeR.AnimationId = Dragon.EvadeR.AnimationId
-Rush.EvadeCF.AnimationId = Dragon.EvadeF.AnimationId
-Rush.EvadeCB.AnimationId = Dragon.EvadeB.AnimationId
-Rush.EvadeCL.AnimationId = Dragon.EvadeL.AnimationId
-Rush.EvadeCR.AnimationId = Dragon.EvadeR.AnimationId
-Rush.EvadeQCF.AnimationId = Dragon.EvadeF.AnimationId
-Rush.EvadeQCB.AnimationId = Dragon.EvadeB.AnimationId
-Rush.EvadeQCL.AnimationId = Dragon.EvadeL.AnimationId
-Rush.EvadeQCR.AnimationId = Dragon.EvadeR.AnimationId
-local walkf = Dragon.WalkF:Clone()
-walkf.Parent = Rush
-local walkb = Dragon.WalkB:Clone()
-walkb.Parent = Rush
-local walkl = Dragon.WalkL:Clone()
-walkl.Parent = Rush
-local walkr = Dragon.WalkR:Clone()
-walkr.Parent = Rush
-if Dragon.GrabStrike:FindFirstChild("Ability") then
-Dragon.GrabStrike.Ability.Value = "Guru Parry"
-Dragon.StanceStrike.Ability.Value = "Counter Hook"
-Dragon.BlockStrike.Ability.Value = "Guru Knockback"
-else
-    if not Dragon.GrabStrike:FindFirstChild("Ability") then
-        local ability = Instance.new("StringValue", Dragon.GrabStrike) ability.Value = "Guru Parry"
-    elseif not Dragon.StanceStrike:FindFirstChild("Ability") then
-        local ability = Instance.new("StringValue", Dragon.StanceStrike) ability.Value = "Counter Hook"
-    elseif not Dragon.BlockStrike:FindFirstChild("Ability") then
-        local ability = Instance.new("StringValue", Dragon.BlockStrike) ability.Value = "Guru Knockback"
+local DEF = Dragon.EvadeF.AnimationId
+local DEB = Dragon.EvadeB.AnimationId
+local DEL = Dragon.EvadeL.AnimationId
+local DER = Dragon.EvadeR.AnimationId
+
+for i,v in Rush:GetChildren() do
+    if v:IsA("Animation") then
+	if string.find(v.Name, "Evade") and string.find(v.Name, "F") then
+	    v.AnimationId = DEF
+	elseif string.find(v.Name, "Evade") and string.find(v.Name, "B") then
+	    v.AnimationId = DEB
+	elseif string.find(v.Name, "Evade") and string.find(v.Name, "L") then
+	    v.AnimationId = DEL
+	elseif string.find(v.Name, "Evade") and string.find(v.Name, "R") then
+	    v.AnimationId = DER
+	end
     end
 end
-if _G.DEMoveset == false or _G.DEMoveset == nil then
-moves["BAttack1"].Anim.AnimationId = moves["龍Attack1"].Anim.AnimationId
-moves["BAttack2"].Anim.AnimationId = moves["龍Attack2"].Anim.AnimationId
-moves["BAttack3"].Anim.AnimationId = moves["龍Attack3"].Anim.AnimationId
-moves["BAttack4"].Anim.AnimationId = moves["龍Attack4"].Anim.AnimationId
-moves["BAttack1"].HitboxLocations.Value = moves["龍Attack1"].HitboxLocations.Value
-moves["BAttack2"].HitboxLocations.Value = moves["龍Attack2"].HitboxLocations.Value
-moves["BAttack3"].HitboxLocations.Value = moves["龍Attack3"].HitboxLocations.Value
-moves["BAttack4"].HitboxLocations.Value = moves["龍Attack4"].HitboxLocations.Value
-moves["BAttack1"].ComboAt.Value = moves["龍Attack1"].ComboAt.Value
-moves["BAttack2"].ComboAt.Value = moves["龍Attack2"].ComboAt.Value
-moves["BAttack3"].ComboAt.Value = moves["龍Attack3"].ComboAt.Value
-moves["BAttack4"].ComboAt.Value = moves["龍Attack4"].ComboAt.Value
-Dragon.Strike1.Value = "龍Strike1"
-Dragon.Strike2.Value = "BStrike2"
-Dragon.Strike3.Value = "BStrike3"
-Dragon.Strike4.Value = "BStrike5"
-Dragon.Strike5.Value = "龍Strike5"
-Dragon["2Strike2"].Value = "龍2Strike1"
-Dragon["2Strike3"].Value = "龍2Strike2"
-Dragon["2Strike4"].Value = "龍2Strike3"
-Dragon["2Strike5"].Value = "龍2Strike4"
-moves.BStrike2.ComboAt.Value -= 0.15
-Dragon.GrabStrike.Value = "T_龍GParry"
-moves["龍2Strike2"].AniSpeed.Value = 1.45 
-moves["龍2Strike2"].MoveForward.Value -= 4
-moves.BStrike2.MoveForward.Value -= 3
-moves.BStrike3.AniSpeed.Value += 0.05
-moves.BStrike3.ComboAt.Value -= 0.05
-moves["龍Strike1"].Anim.AnimationId = "rbxassetid://13731752257"
-moves.BStrike5.Anim.AnimationId = moves["龍2Strike1"].Anim.AnimationId
-moves.BStrike5.AniSpeed.Value += 0.05
-moves.BStrike5.ComboAt.Value -= 0.1
-moves["龍Strike5"].HitboxLocations.Value = '[["LeftFoot",2,[0,0,0]],["LeftLowerLeg",1.5,[0,0,0]],["LeftUpperLeg",1,[0,0,0]]]'
-moves["龍Strike5"].Anim.AnimationId = moves.BStrike1.TurnAnim.AnimationId
-else
-moves.BStrike2.Anim.AnimationId = "rbxassetid://13785068836"
-moves.B2Strike3.Anim.AnimationId = "rbxassetid://13785070193"
-moves.BStrike4.Anim.AnimationId = "rbxassetid://13785070193"
-moves["龍Strike5"].Anim.AnimationId = "rbxassetid://13731752257"
-moves["龍Strike5"]:WaitForChild("AniSpeed").Value = 1.5
-moves["龍Strike5"]:WaitForChild("MoveForward").Value = 12
-moves.BStrike5:WaitForChild("ComboAt").Value = 0.6
-moves.BStrike4:WaitForChild("ComboAt").Value = 0.6
-moves.BStrike4.AniSpeed.Value = moves.B2Strike3.AniSpeed.Value
-Dragon.Rush1.Value = "龍Attack1"
-Dragon.Rush2.Value = "龍Attack2"
-Dragon.Rush3.Value = "龍Attack3"
-Dragon.Rush4.Value = "BAttack1"
-Dragon.GrabStrike.Value = "T_CounterQuickstep"
-Dragon.Strike1.Value = "龍Strike1"
-Dragon.Strike2.Value = "BStrike3" -- gut punch
-Dragon.Strike3.Value = "BStrike2" -- leg sweep
-Dragon.Strike4.Value = "BStrike5" -- uppercut
-Dragon.Strike5.Value = "BStrike4" -- high leg sweep
-Dragon["2Strike2"].Value = "BEvadeStrikeBack" -- evade punch
-Dragon["2Strike3"].Value = "BStrike2" -- leg sweep
-Dragon["2Strike4"].Value = "B2Strike3" -- high leg sweep
-Dragon["2Strike5"].Value = "龍Strike5" -- hook kick
+Dragon.WalkF:Clone().Parent = Rush
+Dragon.WalkB:Clone().Parent = Rush
+Dragon.WalkL:Clone().Parent = Rush
+Dragon.WalkR:Clone().Parent = Rush
+
+local Y0Moveset = {
+	{name = "Grab", Type = "StringValue", value = "Grab"},
+	{name = "Throw", Type = "StringValue", value = "T_BrawlerToss"},
+	{name = "GrabStrike", Type = "StringValue", value = "T_龍GParry"},
+	{name = "Taunt", Type = "StringValue", value = "DragonTaunt"},
+	{name = "RedHeat", Type = "Folder", value = nil},
+	{name = "Idle", Type = "Animation", value = RPS.AIStyles.Dragon.StanceIdle.AnimationId},
+	{name = "Color", Type = "Color", value = Color3.fromRGB(250,5,10)},
+        {name = "Speed", Type = "NumberValue", value = 1.25},
+	{name = "Pummel", Type = "StringValue", value = "T_龍GParry"},
+	
+	{name = "Rush1", Type = "StringValue", value = "BAttack1"},
+	{name = "Rush2", Type = "StringValue", value = "BAttack2"},
+	{name = "Rush3", Type = "StringValue", value = "BAttack3"},
+	{name = "Rush4", Type = "StringValue", value = "BAttack4"},
+
+	{name = "Strike1", Type = "StringValue", value = "龍Strike1"},
+	{name = "Strike2", Type = "StringValue", value = "BStrike2"},
+	{name = "Strike3", Type = "StringValue", value = "BStrike3"},
+	{name = "Strike4", Type = "StringValue", value = "BStrike5"},
+	{name = "Strike5", Type = "StringValue", value = "龍Strike5"},
+
+	{name = "2Strike2", Type = "StringValue", value = "龍2Strike1"},
+	{name = "2Strike3", Type = "StringValue", value = "龍2Strike2"},
+	{name = "2Strike4", Type = "StringValue", value = "龍2Strike3"},
+	{name = "2Strike5", Type = "StringValue", value = "龍2Strike4"},
+	
+	{name = "BlockStrike", Type = "StringValue", value = "ShuckyDrop"},
+	{name = "StanceStrike", Type = "StringValue", value = "CounterHook"
+	{name = "H_Fallen", Type = "StringValue", value = "H_FallenStomp"},
+	{name = "H_FallenDown", Type = "StringValue", value = "H_FallenGrate"},
+	{name = "H_TwoHandeds", Type = "StringValue", value = "H_SelfDestruct"},
+	{name = "H_GrabStanding3", Type = "StringValue", value = "H_Entangle"},
+	{name = "H_Running4", Type = "StringValue", value = "H_Terror"},
+	{name = "H_EvadedL", Type = "StringValue", value = "H_FastFootworkLeft"},
+	{name = "H_EvadedR", Type = "StringValue", value = "H_FastFootworkRight"},
+	{name = "H_EvadedF", Type = "StringValue", value = "H_FastFootworkFront"},
+	{name = "H_CounterSoloAllFront", Type = "StringValue", value = "H_TSpinCounterFront"},
+	{name = "H_CounterSoloAllBack", Type = "StringValue", value = "H_TSpinCounterBack"},
+	{name = "H_CounterSoloAllLeft", Type = "StringValue", value = "H_TSpinCounterLeft"},
+	{name = "H_CounterSoloAllRight", Type = "StringValue", value = "H_TSpinCounterRight"},
+	{name = "H_CounterSolo", Type = "StringValue", value = "H_Escape"}
+}
+local DEMoveset = {
+	{name = "Rush1", Type = "StringValue", value = "BAttack1"},
+	{name = "Rush2", Type = "StringValue", value = "BAttack2"},
+	{name = "Rush3", Type = "StringValue", value = "BAttack3"},
+	{name = "Rush4", Type = "StringValue", value = "BAttack4"},
+
+	{name = "Strike1", Type = "StringValue", value = "龍Strike1"},
+	{name = "Strike2", Type = "StringValue", value = "BStrike3"},
+	{name = "Strike3", Type = "StringValue", value = "BStrike2"},
+	{name = "Strike4", Type = "StringValue", value = "BStrike5"},
+	{name = "Strike5", Type = "StringValue", value = "BStrike4"},
+
+	{name = "2Strike2", Type = "StringValue", value = "BEvadeStrikeBack"},
+	{name = "2Strike3", Type = "StringValue", value = "BStrike2"},
+	{name = "2Strike4", Type = "StringValue", value = "B2Strike3"},
+	{name = "2Strike5", Type = "StringValue", value = "龍Strike5"}
+}
+
+local Y0MoveConfig = {
+	{move = "BAttack1", property = "Anim", value = moves["龍Attack1"].Anim.AnimationId},
+	{move = "BAttack2", property = "Anim", value = moves["龍Attack2"].Anim.AnimationId},
+	{move = "BAttack3", property = "Anim", value = moves["龍Attack3"].Anim.AnimationId},
+	{move = "BAttack4", property = "Anim", value = moves["龍Attack4"].Anim.AnimationId},
+	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
+	{move = "BAttack2", property = "HitboxLocations", value = moves["龍Attack2"].HitboxLocations.Value},
+	{move = "BAttack3", property = "HitboxLocations", value = moves["龍Attack3"].HitboxLocations.Value},
+	{move = "BAttack4", property = "HitboxLocations", value = moves["龍Attack4"].HitboxLocations.Value},
+	{move = "BAttack1", property = "ComboAt", value = moves["龍Attack1"].ComboAt.Value},
+	{move = "BAttack2", property = "ComboAt", value = moves["龍Attack2"].ComboAt.Value},
+	{move = "BAttack3", property = "ComboAt", value = moves["龍Attack3"].ComboAt.Value},
+	{move = "BAttack4", property = "ComboAt", value = moves["龍Attack4"].ComboAt.Value},
+	{move = "龍Strike5", property = "HitboxLocations", value = '[["LeftFoot",2,[0,0,0]],["LeftLowerLeg",1.5,[0,0,0]],["LeftUpperLeg",1,[0,0,0]]]'},
+	{move = "龍Strike5", property = "Anim", value = moves.BStrike1.TurnAnim.AnimationId},
+	{move = "BStrike2", property = "ComboAt", value = moves.BStrike2.ComboAt.Value -= 0.15},
+	{move = "BStrike2", property = "MoveForward", value = moves.BStrike2.MoveForward.Value -= 3},
+	{move = "BStrike3", property = "AniSpeed", value = moves.BStrike2.AniSpeed.Value += 0.05},
+	{move = "BStrike3", property = "ComboAt", value = moves.BStrike2.ComboAt.Value -= 0.05},
+	{move = "龍2Strike2", property = "AniSpeed", value = 1.45},
+	{move = "龍Strike1", property = "Anim", value = "rbxassetid://13731752257"},
+	{move = "龍2Strike2", property = "MoveForward", value = moves["龍2Strike2"].MoveForward.Value -= 4},
+	{move = "BStrike5", property = "Anim", value = moves["龍2Strike1"].Anim.AnimationId},
+	{move = "BStrike5", property = "AniSpeed", value = moves["BStrike5"].AniSpeed.Value += 0.05},
+	{move = "BStrike5", property = "ComboAt", value = moves["BStrike5"].ComboAt.Value -= 0.1}
+}
+
+local DEMoveConfig = {
+	{move = "BStrike2", property = "Anim", value = "rbxassetid://13785068836"},
+	{move = "B2Strike3", property = "Anim", value = "rbxassetid://13785070193"},
+	{move = "BStrike4", property = "Anim", value = "rbxassetid://13785070193"},
+	{move = "龍Strike5", property = "Anim", value = "rbxassetid://13731752257"},
+	{move = "龍Strike5", property = "AniSpeed", value = 1.5},
+	{move = "龍Strike5", property = "MoveForward", value = 12},
+	{move = "BStrike4", property = "ComboAt", value = 0.6},
+	{move = "BStrike4", property = "AniSpeed", value = moves.B2Strike3.AniSpeed.Value},
+	{move = "BStrike5", property = "ComboAt", value = 0.6},
+	{move = "BAttack1", property = "Anim", value = moves["龍Attack1"].Anim.AnimationId},
+	{move = "BAttack2", property = "Anim", value = moves["龍Attack2"].Anim.AnimationId},
+	{move = "BAttack3", property = "Anim", value = moves["龍Attack3"].Anim.AnimationId},
+	{move = "BAttack4", property = "Anim", value = moves["BAttack1"].Anim.AnimationId},
+	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
+	{move = "BAttack2", property = "HitboxLocations", value = moves["龍Attack2"].HitboxLocations.Value},
+	{move = "BAttack3", property = "HitboxLocations", value = moves["龍Attack3"].HitboxLocations.Value},
+	{move = "BAttack4", property = "HitboxLocations", value = moves["BAttack1"].HitboxLocations.Value},
+	{move = "BAttack1", property = "ComboAt", value = moves["龍Attack1"].ComboAt.Value},
+	{move = "BAttack2", property = "ComboAt", value = moves["龍Attack2"].ComboAt.Value},
+	{move = "BAttack3", property = "ComboAt", value = moves["龍Attack3"].ComboAt.Value},
+	{move = "BAttack4", property = "ComboAt", value = moves["BAttack1"].ComboAt.Value}
+}
+
+local MoveConfig = {
+    {name = "ShuckyDrop", property = "Anim", value = moves.GuruStumble.Anim.AnimationId},
+    {name = "ShuckyDrop", property = "AniSpeed", value = moves.GuruStumble.AniSpeed.Value},
+    {name = "ShuckyDrop", property = "MoveForward", value = moves.GuruStumble.MoveForward.Value},
+    {name = "ShuckyDrop", property = "SF", value = 0.1},
+    {name = "H_FastFootworkBack", property = "Closest", value = '40'},
+    {name = "BGetup", property = "Anim", value = moves.RSweep.Anim.AnimationId}
+    {name = "BGetup", property = "HitboxLocations", value = moves.RSweep.HitboxLocations.Value}
+}
+	
+local function ChangeConfig(Table)
+    for i,mv in ipairs(moves:GetChildren()) do
+	for i,data in ipairs(Table) do
+	    if data.move == mv.Name then
+		if mv[data.property].Name ~= "Anim" and data.value then
+		    mv[data.property].Value = data.value
+		elseif mv[data.property].Name == "Anim" and data.value then
+		    mv[data.property].AnimationId = value
+		end
+		if data.newname then
+		    mv.Name == data.newname
+		end
+	    end
+	end
+    end
 end
-Dragon.H_FallenDown.Value = "H_FallenGrate"
-Dragon.H_CounterSoloAllFront.Value = "H_TSpinCounterFront"
-Dragon.H_CounterSoloAllBack.Value = "H_TSpinCounterBack"
-Dragon.H_CounterSoloAllLeft.Value = "H_TSpinCounterLeft"
-Dragon.H_CounterSoloAllRight.Value = "H_TSpinCounterRight"
-rush.VisualName.Value = "Rush"
-beast.VisualName.Value = "Beast"
-beast.Strike2.Value = "DashAttack"
-beast.Strike4.Value = "DerekCharge"
-moves.T_GuruParry.Anim.AnimationId = moves["T_龍GParry"].Anim.AnimationId
--- New Values --
-r4 = Instance.new("StringValue", Dragon)
-r4.Name = "H_Running4"
-r4.Value = 'H_Terror'
-ta = Instance.new("StringValue", Dragon)
-ta.Name = "Taunt"
-ta.Value = 'Taunt'
-fh = Instance.new("StringValue", Dragon)
-fh.Name = "H_FullHeat"
-fh.Value = 'H_GUltimateEssence'
-th = Instance.new("StringValue", Dragon)
-th.Name = "H_TwoHandeds"
-th.Value = 'H_SelfDestruct'
-cs = Instance.new("StringValue", Dragon)
-cs.Name = "H_CounterSolo"
-cs.Value = 'H_Escape'
-ds = Instance.new("StringValue", Dragon)
-ds.Name = "H_Distanced"
-ds.Value = 'H_FastFootworkBack' 
-rd = Instance.new("Folder", Dragon)
-rd.Name = "RedHeat"
-ef = Instance.new("StringValue", Dragon)
-ef.Name = "H_EvadedF"
-ef.Value = 'H_FastFootworkFront'
-el = Instance.new("StringValue", Dragon)
-el.Name = "H_EvadedL"
-el.Value = 'H_FastFootworkLeft'
-er = Instance.new("StringValue", Dragon)
-er.Name = "H_EvadedR"
-er.Value = 'H_FastFootworkRight'
-sf = Instance.new("StringValue", Dragon)
-sf.Name = "H_StanceFallen"
-sf.Value = "H_FallenStomp"
--- Sumo Slap Move Values
+
+function ChangeMoveset(Style, Table)
+    for i,data in ipairs(Table) do
+	if not Style:FindFirstChild(data.name) and data.Type ~= "Destroy" then
+	    local new = Instance.new(data.Type, Style)
+            new.Name = data.name
+	    if data.value ~= nil then
+		new.Value = data.value
+	    end	
+	elseif Style:FindFirstChild(data.name) then
+	    if data.value ~= nil or data.Type ~= "Animation" then
+		Style[data.name].Value = data.value
+	    elseif data.Type == "Destroy" then
+                Style[data.name]:Destroy()
+	    elseif data.Type == "Animation" then
+		Style[data.name].AnimationId = data.value
+	    elseif data.Type == "Color" then
+		Style[data.name].Value = data.value
+	    end
+	end	
+    end
+end
+
+local RDSCombo = {
+  {name="Rush1", value="BAttack1", Type="StringValue"},
+  {name="Rush2", value="BAttack2", Type="StringValue"},
+  {name="Rush3", value="BAttack1", Type="StringValue"},
+  {name="Rush4", value="BAttack2", Type="StringValue"},
+  {name="Rush5", value="BAttack1", Type="StringValue"},
+  {name="Rush6", value="BAttack2", Type="StringValue"},
+  {name="Rush7", value="BAttack1", Type="StringValue"},
+  {name="Rush8", value="BAttack2", Type="StringValue"}
+}
+local NCombo = {
+  {name="Rush1", value="BAttack1", Type="StringValue"},
+  {name="Rush2", value="BAttack2", Type="StringValue"},
+  {name="Rush3", value="BAttack1", Type="StringValue"},
+  {name="Rush4", value="BAttack2", Type="StringValue"},
+  {name="Rush5", value="BAttack1", Type="Destroy"},
+  {name="Rush6", value="BAttack2", Type="Destroy"},
+  {name="Rush7", value="BAttack1", Type="Destroy"},
+  {name="Rush8", value="BAttack2", Type="Destroy"}
+}
+
+if _G.DEMoveset == false or _G.DEMoveset == nil then
+    ChangeMoveset(Dragon,Y0Moveset)
+    ChangeConfig(Y0MoveConfig)
+elseif _G.DEMoveset == true then
+    ChangeMoveset(Dragon, Y0Moveset)
+    ChangeConfig(DEMoveConfig)
+    ChangeMoveset(DEMoveset)
+end
+
 moves["H_FastFootworkBack"].Closest.Value = '40'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
-wn.Value = '15'
-moves.TigerDrop.MoveForward.Value += 5
--- Other Move Values --
-if namesChanged == false then
-    moves.Taunt.Name = "FakeTaunt"
-    moves.DragonTaunt.Name = "Taunt"
-    moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
-    moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
-    if not IsInPvp() then
-        moves.BRCounter2.Name = "FakeBRCounter2"
-        moves["龍TigerDrop"].Name = "BRCounter2"
-        moves["BRCounter2"].AniSpeed.Value = 0.75
-        moves["TigerDrop"].AniSpeed.Value = 0.75
-        moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
-        if not moves.BRCounter2:FindFirstChild("HSize") then
-            HSize = Instance.new("NumberValue", moves.BRCounter2)
-            HSize.Name = "HSize"
-            HSize.Value = 2
-        end
-	elseif IsInPvp() then
-            moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
-	    moves.BRGrab.Anim.AnimationId = "rbxassetid://12120052426"
-    end
-end
-
-moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
-moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
-moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
-moves.ShuckyDrop.SF.Value = 0.1
-whenattack = Instance.new("Folder", moves.ShuckyDrop)
-whenattack.Name = "WhenAttacking"
-counter = Instance.new("Folder", moves.ShuckyDrop)
-counter.Name = "CounterAttack" 
--- FUNCTIONS -- 
-local function add_forcefield(duration)
-	local p = game.Players.LocalPlayer
-	local Status = p.Status
-
-	local invun = game.ReplicatedStorage.Invulnerable:Clone()
-	invun.Parent = Status
-
-	if duration then
-		spawn(function()
-			task.wait(duration)
-			invun:Destroy()
-		end)
-	end
-
-	return invun
-end
-
-local function FillHeat()
-	local Event = game:GetService("ReplicatedStorage").Events.ME
-
-	for i=1,6 do
-		local A_1 =  {
-			[1] = "heat", 
-			[2] = game:GetService("ReplicatedStorage").Moves.Taunt
-		}
-		Event:FireServer(A_1)
-	end
+wn.Value = '15'	
+if not IsInPvp() then
+    moves.BRCounter2.Name = "FakeBRCounter2"
+    moves["龍TigerDrop"].Name = "BRCounter2"
+    moves["BRCounter2"].AniSpeed.Value = 0.75
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
+elseif IsInPvp() then
+    moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
+    moves.BRGrab.Anim.AnimationId = "rbxassetid://12120052426"
 end
 
 local feelingheat = Instance.new("BoolValue")
@@ -368,24 +356,6 @@ function UseHeatAction(HeatAction, Style, Bots)
 	end
 
 	game:GetService("ReplicatedStorage").Events.ME:FireServer(unpack(args))
-end
-
-local function Hit(Move, Enemy)
-    local A_1 = {
-                [1] = "damage", 
-                [3] = Enemy, 
-                [4] = plr.Character.RightHand.Position,
-                [5] = game:GetService("ReplicatedStorage").Moves[Move],
-                [6] = "Brawler", 
-                [7] = 0.04611371246065557, 
-                [11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
-                [13] = char.HumanoidRootPart.Position, --rootpart 
-                [14] = CFrame.new(Enemy.Position.X, Enemy.Position.Y, Enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
-    }
-if thing.Value == false then
-        thing.Value = true
-        Event:FireServer(A_1)
-    end
 end
 
 local function play_ingamesound(sfxname)
@@ -430,15 +400,6 @@ local function fetchRandom(instance)
     return random
 end
 
-vpSound = (function(a1) -- PlaySound
-u10.playsound(a1, u9.hrp, nil, nil, true)
-local SoundEvent = {
-    [1] = "repsound",
-    [2] = a1
-}
-u5:FireServer(SoundEvent)
-end)
-
 local A_1 =  {
 	[1] = "heat", 
 	[2] = game:GetService("ReplicatedStorage").Moves.Taunt
@@ -463,19 +424,6 @@ local function depleteHeat(howmany)
 		ME:FireServer(A_2)
 	end
 end
-
-local SlapUlt = false
-local DOD88 = false
-
-status.CurrentMove.Changed:Connect(function()
-    if status.CurrentMove.Value ~= moves["龍Attack2"] then
-	SlapUlt = true
-	DOD88 = false
-    elseif status.CurrentMove.Value == moves["龍Attack2"] then
-	SlapUlt = false
-	DOD88 = true
-    end
-end)
 
 if not status:FindFirstChild("RedDragonSpirit") then
     RDS = Instance.new("BoolValue", status)
@@ -567,19 +515,17 @@ local function AutoSlap()
 end
 
 Main.HeatMove.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-    if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt == true and DOD88 == false then -- dargon of dojima 88 or slap ult.
+    if Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") then -- dargon of dojima 88 or slap ult.
 	local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
         Anim.Priority = Enum.AnimationPriority.Action4
         Anim:AdjustSpeed(1)
         Anim:Play()
-	vpSound(soundr) -- ora doushita??
+	playSound(soundr) -- ora doushita??
         task.wait(1)
         PlaySound("MassiveSlap") -- slap slap slap 
         task.wait(2)
         Anim:Destroy()
-    elseif Main.HeatMove.TextLabel.Text == "Ultimate Essence" and not plr.Character:FindFirstChild("BeingHeated") and SlapUlt == false and DOD88 == true then
-	Main.HeatMove.TextLabel.Text = "Ultimate Essence 88"
     elseif Main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" and not char:FindFirstChild("BeingHeated") then
 	Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
         local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
@@ -667,9 +613,9 @@ local Heat = status.Heat
 local FastMoves = Instance.new("BoolValue", nil)
 
 Heat.Changed:Connect(function()
-    if Heat.Value >= 50 or RDS.Value == true then
+    if Heat.Value >= 50 then
 	FastMoves.Value = true
-    elseif Heat.Value < 50 or RDS.Value == false then
+    elseif Heat.Value < 50 then
 	FastMoves.Value = false
     end
 end)
@@ -723,15 +669,6 @@ local function Animation()
         ts2:Play()
     end)
 end
-
-playSound = (function(a1) -- PlaySound
-u10.playsound(a1, u9.hrp, nil, nil, true)
-local SoundEvent = {
-    [1] = "repsound",
-    [2] = a1
-}
-u5:FireServer(SoundEvent)
-end)
 
 status.ChildRemoved:Connect(function(v)
     if v.Name == "ANGRY" then
@@ -861,10 +798,11 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     anim:Play()
     local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
-    FillHeat()
+    fillHeat(6)
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
     playSound(rage)
+    FastMoves.Value = true
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
@@ -876,7 +814,7 @@ elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
     local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
     anim:Play()
     Animation()
-    FillHeat()
+    fillHeat(6)
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
     if not status:FindFirstChild("Invulnerable") then
@@ -887,6 +825,7 @@ else
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
 	end
+    FastMoves.Value = false
     end
 end)
 
@@ -900,8 +839,7 @@ local IsBoss = false
 local HPCorrect = Instance.new("BoolValue")
 local AlreadyFeltHeat = Instance.new("BoolValue")
 
-local BossHPTable = {"1100/3000", "1100/4200", "1100/1200", "1099/3000", "1099/4200", "1099/1200", "1098/3000", "1098/4200", "1098/1200", "1097/3000", "1097/4200", "1097/1200", "1096/3000", "1096/4200", "1096/1200", "1095/3000", "1095/4200", "1095/1200", "1094/3000", "1094/4200", "1094/1200", "1093/3000", "1093/4200", "1093/1200", "1092/3000", "1092/4200", "1092/1200", "1091/3000", "1091/4200", "1091/1200", "1090/3000", "1090/4200", "1090/1200", "1089/3000", "1089/4200", "1089/1200", "1088/3000", "1088/4200", "1088/1200", "1087/3000", "1087/4200", "1087/1200", "1086/3000", "1086/4200", "1086/1200", "1085/3000", "1085/4200", "1085/1200", "1084/3000", "1084/4200", "1084/1200", "1083/3000", "1083/4200", "1083/1200", "1082/3000", "1082/4200", "1082/1200", "1081/3000", "1081/4200", "1081/1200", "1080/3000", "1080/4200", "1080/1200", "1079/3000", "1079/4200", "1079/1200", "1078/3000", "1078/4200", "1078/1200", "1077/3000", "1077/4200", "1077/1200", "1076/3000", "1076/4200", "1076/1200", "1075/3000", "1075/4200", "1075/1200", "1074/3000", "1074/4200", "1074/1200", "1073/3000", "1073/4200", "1073/1200", "1072/3000", "1072/4200", "1072/1200", "1071/3000", "1071/4200", "1071/1200", "1070/3000", "1070/4200", "1070/1200", "1069/3000", "1069/4200", "1069/1200", "1068/3000", "1068/4200", "1068/1200", "1067/3000", "1067/4200", "1067/1200", "1066/3000", "1066/4200", "1066/1200", "1065/3000", "1065/4200", "1065/1200", "1064/3000", "1064/4200", "1064/1200", "1063/3000", "1063/4200", "1063/1200", "1062/3000", "1062/4200", "1062/1200", "1061/3000", "1061/4200", "1061/1200", "1060/3000", "1060/4200", "1060/1200", "1059/3000", "1059/4200", "1059/1200", "1058/3000", "1058/4200", "1058/1200", "1057/3000", "1057/4200", "1057/1200", "1056/3000", "1056/4200", "1056/1200", "1055/3000", "1055/4200", "1055/1200", "1054/3000", "1054/4200", "1054/1200", "1053/3000", "1053/4200", "1053/1200", "1052/3000", "1052/4200", "1052/1200", "1051/3000", "1051/4200", "1051/1200", "1050/3000", "1050/4200", "1050/1200", "1049/3000", "1049/4200", "1049/1200", "1048/3000", "1048/4200", "1048/1200", "1047/3000", "1047/4200", "1047/1200", "1046/3000", "1046/4200", "1046/1200", "1045/3000", "1045/4200", "1045/1200", "1044/3000", "1044/4200", "1044/1200", "1043/3000", "1043/4200", "1043/1200", "1042/3000", "1042/4200", "1042/1200", "1041/3000", "1041/4200", "1041/1200", "1040/3000", "1040/4200", "1040/1200", "1039/3000", "1039/4200", "1039/1200", "1038/3000", "1038/4200", "1038/1200", "1037/3000", "1037/4200", "1037/1200", "1036/3000", "1036/4200", "1036/1200", "1035/3000", "1035/4200", "1035/1200", "1034/3000", "1034/4200", "1034/1200", "1033/3000", "1033/4200", "1033/1200", "1032/3000", "1032/4200", "1032/1200", "1031/3000", "1031/4200", "1031/1200", "1030/3000", "1030/4200", "1030/1200", "1029/3000", "1029/4200", "1029/1200", "1028/3000", "1028/4200", "1028/1200", "1027/3000", "1027/4200", "1027/1200", "1026/3000", "1026/4200", "1026/1200", "1025/3000", "1025/4200", "1025/1200", "1024/3000", "1024/4200", "1024/1200", "1023/3000", "1023/4200", "1023/1200", "1022/3000", "1022/4200", "1022/1200", "1021/3000", "1021/4200", "1021/1200", "1020/3000", "1020/4200", "1020/1200", "1019/3000", "1019/4200", "1019/1200", "1018/3000", "1018/4200", "1018/1200", "1017/3000", "1017/4200", "1017/1200", "1016/3000", "1016/4200", "1016/1200", "1015/3000", "1015/4200", "1015/1200", "1014/3000", "1014/4200", "1014/1200", "1013/3000", "1013/4200", "1013/1200", "1012/3000", "1012/4200", "1012/1200", "1011/3000", "1011/4200", "1011/1200", "1010/3000", "1010/4200", "1010/1200", "1009/3000", "1009/4200", "1009/1200", "1008/3000", "1008/4200", "1008/1200", "1007/3000", "1007/4200", "1007/1200", "1006/3000", "1006/4200", "1006/1200", "1005/3000", "1005/4200", "1005/1200", "1004/3000", "1004/4200", "1004/1200", "1003/3000", "1003/4200", "1003/1200", "1002/3000", "1002/4200", "1002/1200", "1001/3000", "1001/4200", "1001/1200", "1000/3000", "1000/4200", "1000/1200", "999/3000", "999/4200", "999/1200", "998/3000", "998/4200", "998/1200", "997/3000", "997/4200", "997/1200", "996/3000", "996/4200", "996/1200", "995/3000", "995/4200", "995/1200", "994/3000", "994/4200", "994/1200", "993/3000", "993/4200", "993/1200", "992/3000", "992/4200", "992/1200", "991/3000", "991/4200", "991/1200", "990/3000", "990/4200", "990/1200", "989/3000", "989/4200", "989/1200", "988/3000", "988/4200", "988/1200", "987/3000", "987/4200", "987/1200", "986/3000", "986/4200", "986/1200", "985/3000", "985/4200", "985/1200", "984/3000", "984/4200", "984/1200", "983/3000", "983/4200", "983/1200", "982/3000", "982/4200", "982/1200", "981/3000", "981/4200", "981/1200", "980/3000", "980/4200", "980/1200", "979/3000", "979/4200", "979/1200", "978/3000", "978/4200", "978/1200", "977/3000", "977/4200", "977/1200", "976/3000", "976/4200", "976/1200", "975/3000", "975/4200", "975/1200", "974/3000", "974/4200", "974/1200", "973/3000", "973/4200", "973/1200", "972/3000", "972/4200", "972/1200", "971/3000", "971/4200", "971/1200", "970/3000", "970/4200", "970/1200", "969/3000", "969/4200", "969/1200", "968/3000", "968/4200", "968/1200", "967/3000", "967/4200", "967/1200", "966/3000", "966/4200", "966/1200", "965/3000", "965/4200", "965/1200", "964/3000", "964/4200", "964/1200", "963/3000", "963/4200", "963/1200", "962/3000", "962/4200", "962/1200", "961/3000", "961/4200", "961/1200", "960/3000", "960/4200", "960/1200", "959/3000", "959/4200", "959/1200", "958/3000", "958/4200", "958/1200", "957/3000", "957/4200", "957/1200", "956/3000", "956/4200", "956/1200", "955/3000", "955/4200", "955/1200", "954/3000", "954/4200", "954/1200", "953/3000", "953/4200", "953/1200", "952/3000", "952/4200", "952/1200", "951/3000", "951/4200", "951/1200", "950/3000", "950/4200", "950/1200", "949/3000", "949/4200", "949/1200", "948/3000", "948/4200", "948/1200", "947/3000", "947/4200", "947/1200", "946/3000", "946/4200", "946/1200", "945/3000", "945/4200", "945/1200", "944/3000", "944/4200", "944/1200", "943/3000", "943/4200", "943/1200", "942/3000", "942/4200", "942/1200", "941/3000", "941/4200", "941/1200", "940/3000", "940/4200", "940/1200", "939/3000", "939/4200", "939/1200", "938/3000", "938/4200", "938/1200", "937/3000", "937/4200", "937/1200", "936/3000", "936/4200", "936/1200", "935/3000", "935/4200", "935/1200", "934/3000", "934/4200", "934/1200", "933/3000", "933/4200", "933/1200", "932/3000", "932/4200", "932/1200", "931/3000", "931/4200", "931/1200", "930/3000", "930/4200", "930/1200", "929/3000", "929/4200", "929/1200", "928/3000", "928/4200", "928/1200", "927/3000", "927/4200", "927/1200", "926/3000", "926/4200", "926/1200", "925/3000", "925/4200", "925/1200", "924/3000", "924/4200", "924/1200", "923/3000", "923/4200", "923/1200", "922/3000", "922/4200", "922/1200", "921/3000", "921/4200", "921/1200", "920/3000", "920/4200", "920/1200", "919/3000", "919/4200", "919/1200", "918/3000", "918/4200", "918/1200", "917/3000", "917/4200", "917/1200", "916/3000", "916/4200", "916/1200", "915/3000", "915/4200", "915/1200", "914/3000", "914/4200", "914/1200", "913/3000", "913/4200", "913/1200", "912/3000", "912/4200", "912/1200", "911/3000", "911/4200", "911/1200", "910/3000", "910/4200", "910/1200", "909/3000", "909/4200", "909/1200", "908/3000", "908/4200", "908/1200", "907/3000", "907/4200", "907/1200", "906/3000", "906/4200", "906/1200", "905/3000", "905/4200", "905/1200", "904/3000", "904/4200", "904/1200", "903/3000", "903/4200", "903/1200", "902/3000", "902/4200", "902/1200", "901/3000", "901/4200", "901/1200", "900/3000", "900/4200", "900/1200", "899/3000", "899/4200", "899/1200", "898/3000", "898/4200", "898/1200", "897/3000", "897/4200", "897/1200", "896/3000", "896/4200", "896/1200", "895/3000", "895/4200", "895/1200", "894/3000", "894/4200", "894/1200", "893/3000", "893/4200", "893/1200", "892/3000", "892/4200", "892/1200", "891/3000", "891/4200", "891/1200", "890/3000", "890/4200", "890/1200", "889/3000", "889/4200", "889/1200", "888/3000", "888/4200", "888/1200", "887/3000", "887/4200", "887/1200", "886/3000", "886/4200", "886/1200", "885/3000", "885/4200", "885/1200", "884/3000", "884/4200", "884/1200", "883/3000", "883/4200", "883/1200", "882/3000", "882/4200", "882/1200", "881/3000", "881/4200", "881/1200", "880/3000", "880/4200", "880/1200", "879/3000", "879/4200", "879/1200", "878/3000", "878/4200", "878/1200", "877/3000", "877/4200", "877/1200", "876/3000", "876/4200", "876/1200", "875/3000", "875/4200", "875/1200", "874/3000", "874/4200", "874/1200", "873/3000", "873/4200", "873/1200", "872/3000", "872/4200", "872/1200", "871/3000", "871/4200", "871/1200", "870/3000", "870/4200", "870/1200", "869/3000", "869/4200", "869/1200", "868/3000", "868/4200", "868/1200", "867/3000", "867/4200", "867/1200", "866/3000", "866/4200", "866/1200", "865/3000", "865/4200", "865/1200", "864/3000", "864/4200", "864/1200", "863/3000", "863/4200", "863/1200", "862/3000", "862/4200", "862/1200", "861/3000", "861/4200", "861/1200", "860/3000", "860/4200", "860/1200", "859/3000", "859/4200", "859/1200", "858/3000", "858/4200", "858/1200", "857/3000", "857/4200", "857/1200", "856/3000", "856/4200", "856/1200", "855/3000", "855/4200", "855/1200", "854/3000", "854/4200", "854/1200", "853/3000", "853/4200", "853/1200", "852/3000", "852/4200", "852/1200", "851/3000", "851/4200", "851/1200", "850/3000", "850/4200", "850/1200", "849/3000", "849/4200", "849/1200", "848/3000", "848/4200", "848/1200", "847/3000", "847/4200", "847/1200", "846/3000", "846/4200", "846/1200", "845/3000", "845/4200", "845/1200", "844/3000", "844/4200", "844/1200", "843/3000", "843/4200", "843/1200", "842/3000", "842/4200", "842/1200", "841/3000", "841/4200", "841/1200", "840/3000", "840/4200", "840/1200", "839/3000", "839/4200", "839/1200", "838/3000", "838/4200", "838/1200", "837/3000", "837/4200", "837/1200", "836/3000", "836/4200", "836/1200", "835/3000", "835/4200", "835/1200", "834/3000", "834/4200", "834/1200", "833/3000", "833/4200", "833/1200", "832/3000", "832/4200", "832/1200", "831/3000", "831/4200", "831/1200", "830/3000", "830/4200", "830/1200", "829/3000", "829/4200", "829/1200", "828/3000", "828/4200", "828/1200", "827/3000", "827/4200", "827/1200", "826/3000", "826/4200", "826/1200", "825/3000", "825/4200", "825/1200", "824/3000", "824/4200", "824/1200", "823/3000", "823/4200", "823/1200", "822/3000", "822/4200", "822/1200", "821/3000", "821/4200", "821/1200", "820/3000", "820/4200", "820/1200", "819/3000", "819/4200", "819/1200", "818/3000", "818/4200", "818/1200", "817/3000", "817/4200", "817/1200", "816/3000", "816/4200", "816/1200", "815/3000", "815/4200", "815/1200", "814/3000", "814/4200", "814/1200", "813/3000", "813/4200", "813/1200", "812/3000", "812/4200", "812/1200", "811/3000", "811/4200", "811/1200", "810/3000", "810/4200", "810/1200", "809/3000", "809/4200", "809/1200", "808/3000", "808/4200", "808/1200", "807/3000", "807/4200", "807/1200", "806/3000", "806/4200", "806/1200", "805/3000", "805/4200", "805/1200", "804/3000", "804/4200", "804/1200", "803/3000", "803/4200", "803/1200", "802/3000", "802/4200", "802/1200", "801/3000", "801/4200", "801/1200", "800/3000", "800/4200", "800/1200", "799/3000", "799/4200", "799/1200", "798/3000", "798/4200", "798/1200", "797/3000", "797/4200", "797/1200", "796/3000"}
-
+local BossHPTable = loadstring(game:HttpGet("https://pastebin.com/raw/YG4rWKBq"));
 local CanFeelHeat = Instance.new("BoolValue")
 local HPCorrect = Instance.new("BoolValue")
 
@@ -1062,127 +1000,7 @@ char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
 
 if _G.VoiceMod == true then
-		--// Cache
-	local Voice = RPS.Voices:FindFirstChild("Kiryu")
-	local player = game.Players.LocalPlayer
-	local character = player.Character
-	local pgui = player.PlayerGui
-	local status = player.Status
-	local RPS = game.ReplicatedStorage
-        local plr = game.Players.LocalPlayer
-	local pgui = plr.PlayerGui
-	local interf = pgui.Interface
-	local bt = interf.Battle
-	local main = bt.Main
-	
-	local function GetRandom(Instance)
-	    local children = Instance:GetChildren()
-	    local random = children[math.random(1,#children)]
-	    return random
-	end
-	local receivedsound
-	
-	plr.ChildAdded:Connect(function(child)
-	    if child.Name == "InBattle" then
-	        receivedsound = GetRandom(Voice.BattleStart)
-	        playSound(receivedsound)
-	    end 
-	end) 
-	local HeatActionCD = false
-	
-	char.ChildAdded:Connect(function(child)
-	    if child.Name == "Heated" and child:WaitForChild("Heating",0.5).Value ~= character then
-	        local isThrowing = child:WaitForChild("Throwing",0.5)
-	        if not isThrowing then
-		    if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " then
-	            receivedsound = GetRandom(Voice.HeatAction)
-	            playSound(receivedsound)
-		    print(receivedsound)
-		    end
-		end
-	    end
-	    if child.Name == "Hitstunned" and not character:FindFirstChild("Ragdolled") then
-		if hitCD == false then
-		    hitCD = true
-	            receivedsound = GetRandom(Voice.Pain)
-	            playSound(receivedsound)
-		    delay(2,function()
-			hitCD = false
-		    end)
-		end
-	    end
-	    if child.Name == "Ragdolled" then
-	            receivedsound = GetRandom(Voice.Knockdown)
-	            playSound(receivedsound)
-	    end
-	    if child.Name == "ImaDea" then
-	            receivedsound = GetRandom(Voice.Death)
-	            playSound(receivedsound)
-	    end
-		if child.Name == "Stunned" then
-	            receivedsound = GetRandom(Voice.Stun)
-	            playSound(receivedsound)
-	    end
-	end)
-	
-	character.ChildRemoved:Connect(function(child)
-	     if child.Name == "Ragdolled" then
-		wait(0.1)
-		if not string.match(status.CurrentMove.Value.Name, "Getup") then
-		    receivedsound = GetRandom(Voice.Recover)
-	            playSound(receivedsound)
-		end
-	    end
-	end)
-	
-	character.HumanoidRootPart.ChildAdded:Connect(function(child)
-	    if child.Name == "KnockOut" or child.Name == "KnockOutRare" then
-	        child.Volume = 0
-	    end
-	end) 
-	
-	local EvadeCD = false
-	status.FFC.Evading.Changed:Connect(function()
-	    if status.FFC.Evading.Value == true and character:FindFirstChild("BeingHacked") and not EvadeCD then
-	        dodgeCD = true
-	        receivedsound = GetRandom(Voice.Dodge)
-	        playSound(receivedsound)
-	        delay(3,function()
-	            dodgeCD = false
-	        end)
-	    end
-	end)
-	local fakeTauntSound = RPS.Sounds:FindFirstChild("Laugh"):Clone()
-	fakeTauntSound.Parent = RPS.Sounds
-	fakeTauntSound.Name = "FakeLaugh"
-	fakeTauntSound.Volume.Value = 0
-	RPS.Moves.Taunt.Sound.Value = "FakeLaugh"
-	RPS.Moves.RushTaunt.Sound.Value = "FakeLaugh"
-	RPS.Moves.GoonTaunt.Sound.Value = "FakeLaugh"
-	status.Taunting.Changed:Connect(function()
-	    if status.Taunting.Value == true and status.CurrentMove.Value.Name ~= "BeastTaunt" then
-	        receivedsound = GetRandom(Voice.Taunt)
-	        playSound(receivedsound)
-	    end
-	end)
-	local LightAttackCD
-	status.CurrentMove.Changed:Connect(function()
-	    if string.match(status.CurrentMove.Value.Name, "Attack") or string.match(status.CurrentMove.Value.Name, "Punch") then
-	        if LightAttackCD == false then
-	            LightAttackCD = true
-	            receivedsound = GetRandom(Voice.LightAttack)
-	            playSound(receivedsound)
-	            delay(0.35, function()
-	            LightAttackCD = false
-	        end)
-	    end
-	    else
-	        if not string.match(status.CurrentMove.Value.Name, "Taunt") and not string.match(status.CurrentMove.Value.Name, "Grab") and not string.match(status.CurrentMove.Value.Name, "CounterHook") and not string.match(status.CurrentMove.Value.Name, "BRCounter2")then
-	            receivedsound = GetRandom(Voice.HeavyAttack)
-	           playSound(receivedsound)
-	        end
-	    end
-	end)
+    loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"));
     Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255), "Bangers" )
 end
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Brawler.Filled.Title.Text = "Dragon"
