@@ -199,16 +199,16 @@ local Y0MoveConfig = {
 	{move = "BAttack4", property = "ComboAt", value = moves["龍Attack4"].ComboAt.Value},
 	{move = "龍Strike5", property = "HitboxLocations", value = '[["LeftFoot",2,[0,0,0]],["LeftLowerLeg",1.5,[0,0,0]],["LeftUpperLeg",1,[0,0,0]]]'},
 	{move = "龍Strike5", property = "Anim", value = moves.BStrike1.TurnAnim.AnimationId},
-	{move = "BStrike2", property = "ComboAt", value = moves.BStrike2.ComboAt.Value -= 0.15},
-	{move = "BStrike2", property = "MoveForward", value = moves.BStrike2.MoveForward.Value -= 3},
-	{move = "BStrike3", property = "AniSpeed", value = moves.BStrike2.AniSpeed.Value += 0.05},
-	{move = "BStrike3", property = "ComboAt", value = moves.BStrike2.ComboAt.Value -= 0.05},
+	{move = "BStrike2", property = "ComboAt", value = moves.BStrike2.ComboAt.Value - 0.15},
+	{move = "BStrike2", property = "MoveForward", value = moves.BStrike2.MoveForward.Value - 3},
+	{move = "BStrike3", property = "AniSpeed", value = moves.BStrike2.AniSpeed.Value + 0.05},
+	{move = "BStrike3", property = "ComboAt", value = moves.BStrike2.ComboAt.Value - 0.05},
 	{move = "龍2Strike2", property = "AniSpeed", value = 1.45},
 	{move = "龍Strike1", property = "Anim", value = "rbxassetid://13731752257"},
-	{move = "龍2Strike2", property = "MoveForward", value = moves["龍2Strike2"].MoveForward.Value -= 4},
+	{move = "龍2Strike2", property = "MoveForward", value = moves["龍2Strike2"].MoveForward.Value - 4},
 	{move = "BStrike5", property = "Anim", value = moves["龍2Strike1"].Anim.AnimationId},
-	{move = "BStrike5", property = "AniSpeed", value = moves["BStrike5"].AniSpeed.Value += 0.05},
-	{move = "BStrike5", property = "ComboAt", value = moves["BStrike5"].ComboAt.Value -= 0.1}
+	{move = "BStrike5", property = "AniSpeed", value = moves["BStrike5"].AniSpeed.Value + 0.05},
+	{move = "BStrike5", property = "ComboAt", value = moves["BStrike5"].ComboAt.Value - 0.1}
 }
 
 local DEMoveConfig = {
