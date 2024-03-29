@@ -127,7 +127,6 @@ local Y0Moveset = {
 	{name = "Grab", Type = "StringValue", value = "Grab"},
 	{name = "Throw", Type = "StringValue", value = "T_BrawlerToss"},
 	{name = "GrabStrike", Type = "StringValue", value = "T_龍GParry"},
-	{name = "Taunt", Type = "StringValue", value = "DragonTaunt"},
 	{name = "RedHeat", Type = "Folder", value = nil},
 	{name = "Idle", Type = "Animation", value = RPS.AIStyles.Dragon.StanceIdle.AnimationId},
 	{name = "Color", Type = "Color", value = Color3.fromRGB(250,5,10)},
@@ -361,7 +360,7 @@ elseif IsInPvp() then
     moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
     moves.BRGrab.Anim.AnimationId = "rbxassetid://12120052426"
 end
-
+moves.Taunt.Name = "FakeTaunt" moves.DragonTaunt.Name = "Taunt"
 local feelingheat = Instance.new("BoolValue")
 feelingheat.Value = false
 thing = Instance.new("BoolValue")
