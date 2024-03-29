@@ -255,7 +255,7 @@ local function ChangeConfig(Table)
 		    mv[data.property].AnimationId = value
 		end
 		if data.newname then
-		    mv.Name == data.newname
+		    mv.Name = data.newname
 		end
 	    end
 	end
