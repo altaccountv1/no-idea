@@ -836,6 +836,7 @@ status.FFC.Evading.Changed:Connect(Teleport)
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     ChangeMoveset(Dragon, RDSCombo)
+    FastMoves.Value = true
     moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
     moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
     local id = "rbxassetid://10928237540"
@@ -856,6 +857,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
     ChangeMoveset(Dragon, RDSCombo)
+    FastMoves.Value = true
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
