@@ -424,7 +424,7 @@ local Rep = game.ReplicatedStorage
 local Char = Player.Character
 local Main = Player.PlayerGui.Interface.Battle.Main
 
-local function (instance)
+local function fetchRandom(instance)
     local instancechildren = instance:GetChildren()
     local random = instancechildren[math.random(1, #instancechildren)]
     return random
@@ -853,13 +853,13 @@ end
 status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
-if RDS.Value == true then
+if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
     local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
     anim:Play()
-    local rage = (RPS.Voices.Kiryu.Rage)
+    local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
@@ -870,6 +870,11 @@ if RDS.Value == true then
 	invul.Name = "Invulnerable"
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
+    local id = "rbxassetid://10928237540"
+    local SuperCharge = Instance.new("Animation", workspace)
+    SuperCharge.AnimationId = id
+    local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
+    anim:Play()
     Animation()
     FillHeat()
     local invul = Instance.new("Folder",status)
@@ -877,7 +882,7 @@ elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
-    end	
+    end
 else 
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
