@@ -265,9 +265,9 @@ local function ChangeConfig(Table)
     for i,mv in ipairs(moves:GetChildren()) do
 	for i,data in ipairs(Table) do
 	    if mv.Name == data.move then
-		if mv[data.property].Name ~= "Anim" and data.value ~= nil then
+		if data.property ~= "Anim" and data.value ~= nil then
 		    mv[data.property].Value = data.value
-		elseif mv[data.property].Name == "Anim" and data.value ~= nil then
+		elseif data.property == "Anim" and data.value ~= nil then
 		    mv[data.property].AnimationId = data.value
 		end
 	    end
