@@ -249,9 +249,9 @@ local function ChangeConfig(Table)
     for i,mv in ipairs(moves:GetChildren()) do
 	for i,data in ipairs(Table) do
 	    if data.move == mv.Name then
-		if mv[data.property].Name ~= "Anim" and data.value then
+		if mv[data.property].Name ~= "Anim" and data.value ~= nil then
 		    mv[data.property].Value = data.value
-		elseif mv[data.property].Name == "Anim" and data.value then
+		elseif mv[data.property].Name == "Anim" and data.value ~= nil then
 		    mv[data.property].AnimationId = value
 		end
 		if data.newname then
@@ -311,7 +311,7 @@ if _G.DEMoveset == false or _G.DEMoveset == nil then
 elseif _G.DEMoveset == true then
     ChangeMoveset(Dragon, Y0Moveset)
     ChangeConfig(DEMoveConfig)
-    ChangeMoveset(DEMoveset)
+    ChangeMoveset(Dragon, DEMoveset)
 end
 
 moves["H_FastFootworkBack"].Closest.Value = '40'
