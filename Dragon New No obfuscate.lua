@@ -355,8 +355,8 @@ end
 moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
 moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
 moves.ShuckyDrop.SF.Value = 0.1
-Moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
-Moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
+moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
+moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
 moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
 moves.Taunt.Name = "FakeTaunt" moves.DragonTaunt.Name = "Taunt"
 local feelingheat = Instance.new("BoolValue")
