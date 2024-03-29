@@ -344,8 +344,8 @@ ChangeConfig(MoveConfig)
 local NAnims = {
 	{move = "BAttack1", value = moves.BAttack1.Anim.AnimationId},
 	{move = "BAttack2", value = moves.BAttack2.Anim.AnimationId},
-	{move = "BAttack3", value = moves.BAttack1.Anim.AnimationId},
-	{move = "BAttack4", value = moves.BAttack2.Anim.AnimationId}
+	{move = "BAttack3", value = moves.BAttack3.Anim.AnimationId},
+	{move = "BAttack4", value = moves.BAttack4.Anim.AnimationId}
 }
 
 moves["H_FastFootworkBack"].Closest.Value = '40'
@@ -834,12 +834,16 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
+    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12120052426"
     ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
     local oldcframe = char.HumanoidRootPart.CFrame
     interf.Client.Disabled = true
     task.wait()
     interf.Client.Disabled = false
     char.HumanoidRootPart.CFrame = oldcframe
+    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -851,17 +855,22 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
     playSound(rage)
+    FastMoves.Value = true
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
+    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12120052426"
     ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
     local oldcframe = char.HumanoidRootPart.CFrame
     interf.Client.Disabled = true
     task.wait()
     interf.Client.Disabled = false
     char.HumanoidRootPart.CFrame = oldcframe
+    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -878,14 +887,19 @@ elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
 else 
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
-	end
+    end
     ChangeMoveset(Dragon, NCombo)
     ChangeAnims(NAnims)
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
+    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12120052426"
     local oldcframe = char.HumanoidRootPart.CFrame
     interf.Client.Disabled = true
     task.wait()
     interf.Client.Disabled = false
     char.HumanoidRootPart.CFrame = oldcframe
+    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
+    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
+    FastMoves.Value = false
     end
 end)
 
