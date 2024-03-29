@@ -948,12 +948,10 @@ local pgui = plr.PlayerGui
 local interf = pgui.Interface
 
 local oldcframe = char.HumanoidRootPart.CFrame
-if hasReloaded == false then
 interf.Client.Disabled = true
 task.wait()
 interf.Client.Disabled = false
 char.HumanoidRootPart.CFrame = oldcframe
-end
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
@@ -1060,12 +1058,10 @@ abilFolder["Finishing Hold"].Prompt.Value = "Get in Stance with LOCK ON and whil
 abilFolder["Ultimate Essence"].Prompt.Value = "Get in Stance with LOCK ON and with Full Heat, HEAVY ATTACK"
 abilFolder["Ultimate Essence"].Description.Value = "The Ultimate Komaki Ability. Gain the Power to destroy every type of enemy."
 
-if hasReloaded == false then
-	local startsound = Instance.new("Sound")
-	startsound.SoundId = "rbxassetid://9085027122"
-	game:GetService("SoundService"):PlayLocalSound(startsound)
-        Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
-	Forcefield:Destroy()
-	startsound.Ended:Wait()
-	startsound:Destroy()
-end
+local startsound = Instance.new("Sound")
+startsound.SoundId = "rbxassetid://9085027122"
+game:GetService("SoundService"):PlayLocalSound(startsound)
+Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
+Forcefield:Destroy()
+startsound.Ended:Wait()
+startsound:Destroy()
