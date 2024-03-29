@@ -188,10 +188,10 @@ local DEMoveset = {
 }
 
 local RDSAnims = {
-	{move = "龍Attack1", value = moves.BAttack1.Anim.AnimationId},
-	{move = "龍Attack2", value = moves.BAttack2.Anim.AnimationId},
-	{move = "龍Attack3", value = moves.BAttack1.Anim.AnimationId},
-	{move = "龍Attack4", value = moves.BAttack2.Anim.AnimationId}
+	{move = "龍Attack1", value = moves.BAttack2.Anim.AnimationId},
+	{move = "龍Attack2", value = moves.BAttack1.Anim.AnimationId},
+	{move = "龍Attack3", value = moves.BAttack2.Anim.AnimationId},
+	{move = "龍Attack4", value = moves.BAttack1.Anim.AnimationId}
 }
 local Y0MoveConfig = {
 	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
