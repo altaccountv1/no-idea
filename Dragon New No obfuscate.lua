@@ -241,8 +241,8 @@ local MoveConfig = {
     {name = "ShuckyDrop", property = "MoveForward", value = moves.GuruStumble.MoveForward.Value},
     {name = "ShuckyDrop", property = "SF", value = 0.1},
     {name = "H_FastFootworkBack", property = "Closest", value = '40'},
-    {name = "BGetup", property = "Anim", value = moves.RSweep.Anim.AnimationId}
-    {name = "BGetup", property = "HitboxLocations", value = moves.RSweep.HitboxLocations.Value}
+    {name = "BGetup", property = "Anim", value = moves.RSweep.Anim.AnimationId},
+    {name = "BGetup", property = "HitboxLocations", value = moves.RSweep.HitboxLocations.Value},
 }
 	
 local function ChangeConfig(Table)
@@ -297,8 +297,8 @@ local RDSCombo = {
 local NCombo = {
   {name="Rush1", value="BAttack1", Type="StringValue"},
   {name="Rush2", value="BAttack2", Type="StringValue"},
-  {name="Rush3", value="BAttack1", Type="StringValue"},
-  {name="Rush4", value="BAttack2", Type="StringValue"},
+  {name="Rush3", value="BAttack3", Type="StringValue"},
+  {name="Rush4", value="BAttack4", Type="StringValue"},
   {name="Rush5", value="BAttack1", Type="Destroy"},
   {name="Rush6", value="BAttack2", Type="Destroy"},
   {name="Rush7", value="BAttack1", Type="Destroy"},
@@ -791,6 +791,7 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
+    ChangeMoveset(RDSCombo)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -808,6 +809,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 	invul.Name = "Invulnerable"
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
+    ChangeMoveset(RDSCombo)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -825,6 +827,7 @@ else
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
 	end
+    ChangeMoveset(NCombo)
     FastMoves.Value = false
     end
 end)
