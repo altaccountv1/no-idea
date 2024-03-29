@@ -661,9 +661,9 @@ local Heat = status.Heat
 local FastMoves = Instance.new("BoolValue", nil)
 
 Heat.Changed:Connect(function()
-    if Heat.Value >= 50 or RDS.Value == true then
+    if Heat.Value >= 50 then
 	FastMoves.Value = true
-    elseif Heat.Value < 50 and RDS.Value == false then
+    elseif Heat.Value < 50 then
 	FastMoves.Value = false
     end
 end)
@@ -682,7 +682,6 @@ FastMoves.Changed:Connect(function()
 	moves[Dragon.Strike3.Value].AniSpeed.Value += 0.1
 	moves[Dragon.Strike4.Value].AniSpeed.Value += 0.1
 	moves[Dragon.Strike5.Value].AniSpeed.Value += 0.1
-	moves[Dragon.Strike5.Value].AniSpeed.Value += 0.1
     elseif FastMoves.Value == false then
 	moves[Dragon.Rush1.Value].ComboAt.Value += 0.05
 	moves[Dragon.Rush2.Value].ComboAt.Value += 0.05
@@ -695,7 +694,6 @@ FastMoves.Changed:Connect(function()
 	moves[Dragon.Strike2.Value].AniSpeed.Value -= 0.1
 	moves[Dragon.Strike3.Value].AniSpeed.Value -= 0.1
 	moves[Dragon.Strike4.Value].AniSpeed.Value -= 0.1
-	moves[Dragon.Strike5.Value].AniSpeed.Value -= 0.1
 	moves[Dragon.Strike5.Value].AniSpeed.Value -= 0.1
     end
 end)
