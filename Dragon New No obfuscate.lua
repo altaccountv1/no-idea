@@ -315,7 +315,7 @@ local RDSCombo = {
   {name="Rush5", value="龍Attack1", Type="StringValue"},
   {name="Rush6", value="龍Attack2", Type="StringValue"},
   {name="Rush7", value="龍Attack1", Type="StringValue"},
-  {name="Rush8", value="BAttack2", Type="StringValue"},
+  {name="Rush8", value="龍Attack2", Type="StringValue"},
   {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
   {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
   {name = "Strike8", Type = "StringValue", value = "B2Strike2"},
@@ -657,9 +657,9 @@ local Heat = status.Heat
 local FastMoves = Instance.new("BoolValue", nil)
 
 Heat.Changed:Connect(function()
-    if Heat.Value >= 50 then
+    if Heat.Value >= 50 or RDS.Value == true then
 	FastMoves.Value = true
-    elseif Heat.Value < 50 then
+    elseif Heat.Value < 50 and RDS.Value == false then
 	FastMoves.Value = false
     end
 end)
