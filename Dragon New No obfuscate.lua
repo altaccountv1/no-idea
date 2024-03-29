@@ -1005,13 +1005,6 @@ local characterToChangeTo = "Kiryu Morph"
 if _G.MorphMod == true and not hasReloaded then
 _G.Morph = "Legendary Dragon"          
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
-if not sentNotifs then
-game.StarterGui:SetCore("",{
-    Title = characterToChange.." Is Invisible";
-    Text = characterToChangeTo.."Has Replaced "..characterToChange..".";
-    Button1 = "OK!";
-})
-    end
 end
 
 status.Resets.Changed:Connect(function()
