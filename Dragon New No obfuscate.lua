@@ -319,14 +319,14 @@ local RDSCombo = {
   {name="Rush8", value="BAttack2", Type="StringValue"}
 }
 local NCombo = {
-  {name="Rush1", value="BAttack1", Type="StringValue"},
-  {name="Rush2", value="BAttack2", Type="StringValue"},
-  {name="Rush3", value="BAttack3", Type="StringValue"},
-  {name="Rush4", value="BAttack4", Type="StringValue"},
-  {name="Rush5", value="BAttack1", Type="Destroy"},
-  {name="Rush6", value="BAttack2", Type="Destroy"},
-  {name="Rush7", value="BAttack1", Type="Destroy"},
-  {name="Rush8", value="BAttack2", Type="Destroy"}
+  {name = "Rush1", value = "BAttack1", Type = "StringValue"},
+  {name = "Rush2", value = "BAttack2", Type = "StringValue"},
+  {name = "Rush3", value = "BAttack3", Type = "StringValue"},
+  {name = "Rush4", value = "BAttack4", Type = "StringValue"},
+  {name = "Rush5", value = nil, Type = "Destroy"},
+  {name = "Rush6", value = nil, Type = "Destroy"},
+  {name = "Rush7", value = nil, Type = "Destroy"},
+  {name = "Rush8", value = nil, Type = "Destroy"}
 }
 
 if _G.DEMoveset == false or _G.DEMoveset == nil then
@@ -851,7 +851,6 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
     playSound(rage)
-    FastMoves.Value = true
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
@@ -887,7 +886,6 @@ else
     task.wait()
     interf.Client.Disabled = false
     char.HumanoidRootPart.CFrame = oldcframe
-    FastMoves.Value = false
     end
 end)
 
