@@ -133,6 +133,7 @@ local Y0Moveset = {
         {name = "Speed", Type = "NumberValue", value = 1.25},
 	{name = "Pummel", Type = "StringValue", value = "T_龍GParry"},
 	{name = "VisualName", Type = "StringValue", value = "Dragon"},
+	{name = "Taunt", Type = "StringValue", value = "Taunt"},
 	
 	{name = "Rush1", Type = "StringValue", value = "BAttack1"},
 	{name = "Rush2", Type = "StringValue", value = "BAttack2"},
@@ -187,10 +188,10 @@ local DEMoveset = {
 }
 
 local RDSAnims = {
-	{move = "BAttack1", value = moves.BAttack1.Anim.AnimationId},
-	{move = "BAttack2", value = moves.BAttack2.Anim.AnimationId},
-	{move = "BAttack3", value = moves.BAttack1.Anim.AnimationId},
-	{move = "BAttack4", value = moves.BAttack2.Anim.AnimationId}
+	{move = "龍Attack1", value = moves.BAttack1.Anim.AnimationId},
+	{move = "龍Attack2", value = moves.BAttack2.Anim.AnimationId},
+	{move = "龍Attack3", value = moves.BAttack1.Anim.AnimationId},
+	{move = "龍Attack4", value = moves.BAttack2.Anim.AnimationId}
 }
 local Y0MoveConfig = {
 	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
@@ -264,14 +265,11 @@ local MoveConfig = {
 local function ChangeConfig(Table)
     for i,mv in ipairs(moves:GetChildren()) do
 	for i,data in ipairs(Table) do
-	    if data.move == mv.Name then
+	    if mv.Name == data.move then
 		if mv[data.property].Name ~= "Anim" and data.value ~= nil then
 		    mv[data.property].Value = data.value
 		elseif mv[data.property].Name == "Anim" and data.value ~= nil then
-		    mv[data.property].AnimationId = value
-		end
-		if data.newname then
-		    mv.Name = data.newname
+		    mv[data.property].AnimationId = data.value
 		end
 	    end
 	end
@@ -311,14 +309,19 @@ function ChangeMoveset(Style, Table)
 end
 
 local RDSCombo = {
-  {name="Rush1", value="BAttack1", Type="StringValue"},
-  {name="Rush2", value="BAttack2", Type="StringValue"},
-  {name="Rush3", value="BAttack1", Type="StringValue"},
-  {name="Rush4", value="BAttack2", Type="StringValue"},
-  {name="Rush5", value="BAttack1", Type="StringValue"},
-  {name="Rush6", value="BAttack2", Type="StringValue"},
-  {name="Rush7", value="BAttack1", Type="StringValue"},
-  {name="Rush8", value="BAttack2", Type="StringValue"}
+  {name="Rush1", value="龍Attack1", Type="StringValue"},
+  {name="Rush2", value="龍Attack2", Type="StringValue"},
+  {name="Rush3", value="龍Attack1", Type="StringValue"},
+  {name="Rush4", value="龍Attack2", Type="StringValue"},
+  {name="Rush5", value="龍Attack1", Type="StringValue"},
+  {name="Rush6", value="龍Attack2", Type="StringValue"},
+  {name="Rush7", value="龍Attack1", Type="StringValue"},
+  {name="Rush8", value="BAttack2", Type="StringValue"},
+  {name = "Strike5", Type = "StringValue", value = "B2Strike3"},
+  {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
+  {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
+  {name = "Strike8", Type = "StringValue", value = "B2Strike2"},
+  {name = "Strike9", Type = "StringValue", value = "龍2Strike4"}
 }
 local NCombo = {
   {name = "Rush1", value = "BAttack1", Type = "StringValue"},
@@ -328,7 +331,12 @@ local NCombo = {
   {name = "Rush5", value = nil, Type = "Destroy"},
   {name = "Rush6", value = nil, Type = "Destroy"},
   {name = "Rush7", value = nil, Type = "Destroy"},
-  {name = "Rush8", value = nil, Type = "Destroy"}
+  {name = "Rush8", value = nil, Type = "Destroy"},
+  {name = "Strike5", Type = "Destroy", value = "B2Strike3"},
+  {name = "Strike6", Type = "Destroy", value = "龍Strike5"},
+  {name = "Strike7", Type = "Destroy", value = "B2Strike1"},
+  {name = "Strike8", Type = "Destroy", value = "B2Strike2"},
+  {name = "Strike9", Type = "Destroy", value = "龍2Strike4"}
 }
 
 if _G.DEMoveset == false or _G.DEMoveset == nil then
@@ -343,13 +351,6 @@ elseif _G.DEMoveset == true then
 end
 
 ChangeConfig(MoveConfig)
-local NAnims = {
-	{move = "BAttack1", value = moves.BAttack1.Anim.AnimationId},
-	{move = "BAttack2", value = moves.BAttack2.Anim.AnimationId},
-	{move = "BAttack3", value = moves.BAttack3.Anim.AnimationId},
-	{move = "BAttack4", value = moves.BAttack4.Anim.AnimationId}
-}
-
 moves["H_FastFootworkBack"].Closest.Value = '40'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
@@ -836,14 +837,7 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
-    moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
-    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12120052426"
-    ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
-    local oldcframe = char.HumanoidRootPart.CFrame
-    interf.Client.Disabled = true
-    task.wait()
-    interf.Client.Disabled = false
-    char.HumanoidRootPart.CFrame = oldcframe
+    ChangeMoveset(Dragon, RDSCombo)
     moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
     moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
     local id = "rbxassetid://10928237540"
@@ -863,16 +857,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 	invul.Name = "Invulnerable"
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
-    moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
-    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12120052426"
-    ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
-    local oldcframe = char.HumanoidRootPart.CFrame
-    interf.Client.Disabled = true
-    task.wait()
-    interf.Client.Disabled = false
-    char.HumanoidRootPart.CFrame = oldcframe
-    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
-    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
+    ChangeMoveset(Dragon, RDSCombo)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -891,16 +876,6 @@ else
 	status.Invulnerable:Destroy()
     end
     ChangeMoveset(Dragon, NCombo)
-    ChangeAnims(NAnims)
-    moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
-    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12120052426"
-    local oldcframe = char.HumanoidRootPart.CFrame
-    interf.Client.Disabled = true
-    task.wait()
-    interf.Client.Disabled = false
-    char.HumanoidRootPart.CFrame = oldcframe
-    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
-    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
     FastMoves.Value = false
     end
 end)
