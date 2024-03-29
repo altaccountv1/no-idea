@@ -271,7 +271,7 @@ function ChangeMoveset(Style, Table)
 		new.Value = data.value
 	    end	
 	elseif Style:FindFirstChild(data.name) then
-	    if data.value ~= nil or data.Type ~= "Animation" then
+	    if data.value ~= nil and data.Type ~= "Animation" then
 		Style[data.name].Value = data.value
 	    elseif data.Type == "Destroy" then
                 Style[data.name]:Destroy()
@@ -791,7 +791,7 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
-    ChangeMoveset(RDSCombo)
+    ChangeMoveset(Dragon, RDSCombo)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -809,7 +809,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 	invul.Name = "Invulnerable"
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
-    ChangeMoveset(RDSCombo)
+    ChangeMoveset(Dragon, RDSCombo)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -827,7 +827,7 @@ else
     if status:FindFirstChild("Invulnerable") then
 	status.Invulnerable:Destroy()
 	end
-    ChangeMoveset(NCombo)
+    ChangeMoveset(Dragon, NCombo)
     FastMoves.Value = false
     end
 end)
