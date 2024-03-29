@@ -326,10 +326,12 @@ local NCombo = {
 if _G.DEMoveset == false or _G.DEMoveset == nil then
     ChangeMoveset(Dragon,Y0Moveset)
     ChangeConfig(Y0MoveConfig)
+    ChangeAnims(Y0Anims)
 elseif _G.DEMoveset == true then
     ChangeMoveset(Dragon, Y0Moveset)
     ChangeConfig(DEMoveConfig)
     ChangeMoveset(Dragon, DEMoveset)
+    ChangeAnims(DEAnims)
 end
 
 moves["H_FastFootworkBack"].Closest.Value = '40'
@@ -860,7 +862,7 @@ local IsBoss = false
 local HPCorrect = Instance.new("BoolValue")
 local AlreadyFeltHeat = Instance.new("BoolValue")
 
-local BossHPTable = loadstring(game:HttpGet("https://pastebin.com/raw/YG4rWKBq"));
+local BossHPTable = loadstring(game:HttpGet("https://pastebin.com/raw/YG4rWKBq"))();
 local CanFeelHeat = Instance.new("BoolValue")
 local HPCorrect = Instance.new("BoolValue")
 
@@ -1021,7 +1023,7 @@ char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
 
 if _G.VoiceMod == true then
-    loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"));
+    loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"))();
     Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255), "Bangers" )
 end
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Brawler.Filled.Title.Text = "Dragon"
