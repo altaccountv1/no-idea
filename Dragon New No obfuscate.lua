@@ -668,33 +668,30 @@ Heat.Changed:Connect(function()
     end
 end)
 
+local MoveSpeed = {
+	{Move = "BAttack1", NewComboAt = moves["BAttack1"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack1"].ComboAt.Value},
+	{Move = "BAttack2", NewComboAt = moves["BAttack2"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack2"].ComboAt.Value},
+	{Move = "BAttack3", NewComboAt = moves["BAttack3"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack3"].ComboAt.Value},
+	{Move = "BAttack4", NewComboAt = moves["BAttack4"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack4"].ComboAt.Value}
+}
+function ChangeSpeed(Type, Table)
+    for i,mv in moves:GetChildren() do
+        for i,data in Table do
+	    if mv.Name == data.Move then
+		if Type == "Fast" then
+		    mv.ComboAt.Value = data.NewComboAt
+		elseif Type == "Slow" then
+		    mv.ComboAt.Value = data.OldComboAt
+		end
+	    end
+	end
+    end
+end
 FastMoves.Changed:Connect(function()
     if FastMoves.Value == true then
-	moves[Dragon.Rush1.Value].ComboAt.Value -= 0.05
-	moves[Dragon.Rush2.Value].ComboAt.Value -= 0.05
-	moves[Dragon.Rush3.Value].ComboAt.Value -= 0.05
-	moves[Dragon.Rush4.Value].ComboAt.Value -= 0.05
-	moves[Dragon.Strike2.Value].ComboAt.Value -= 0.1
-	moves[Dragon.Strike3.Value].ComboAt.Value -= 0.15
-	moves[Dragon.Strike4.Value].ComboAt.Value -= 0.05
-	moves[Dragon.Strike5.Value].ComboAt.Value -= 0.075
-	moves[Dragon.Strike2.Value].AniSpeed.Value += 0.1
-	moves[Dragon.Strike3.Value].AniSpeed.Value += 0.1
-	moves[Dragon.Strike4.Value].AniSpeed.Value += 0.1
-	moves[Dragon.Strike5.Value].AniSpeed.Value += 0.1
+	ChangeSpeed("Fast", MoveSpeed)
     elseif FastMoves.Value == false then
-	moves[Dragon.Rush1.Value].ComboAt.Value += 0.05
-	moves[Dragon.Rush2.Value].ComboAt.Value += 0.05
-	moves[Dragon.Rush3.Value].ComboAt.Value += 0.05
-	moves[Dragon.Rush4.Value].ComboAt.Value += 0.05
-	moves[Dragon.Strike2.Value].ComboAt.Value += 0.1
-	moves[Dragon.Strike3.Value].ComboAt.Value += 0.15
-	moves[Dragon.Strike4.Value].ComboAt.Value += 0.05
-	moves[Dragon.Strike5.Value].ComboAt.Value += 0.075
-	moves[Dragon.Strike2.Value].AniSpeed.Value -= 0.1
-	moves[Dragon.Strike3.Value].AniSpeed.Value -= 0.1
-	moves[Dragon.Strike4.Value].AniSpeed.Value -= 0.1
-	moves[Dragon.Strike5.Value].AniSpeed.Value -= 0.1
+	ChangeSpeed("Slow", MoveSpeed)
     end
 end)
 
