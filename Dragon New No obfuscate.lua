@@ -252,7 +252,6 @@ local DEMoveConfig = {
 }
 
 local MoveConfig = {
-    {name = "ShuckyDrop", property = "Anim", value = moves.GuruStumble.Anim.AnimationId},
     {name = "ShuckyDrop", property = "AniSpeed", value = moves.GuruStumble.AniSpeed.Value},
     {name = "ShuckyDrop", property = "MoveForward", value = moves.GuruStumble.MoveForward.Value},
     {name = "ShuckyDrop", property = "SF", value = 0.1},
@@ -260,7 +259,11 @@ local MoveConfig = {
     {name = "BGetup", property = "Anim", value = moves.RSweep.Anim.AnimationId},
     {name = "BGetup", property = "HitboxLocations", value = moves.RSweep.HitboxLocations.Value}
 }
-	
+local MoveAnims = {
+    {name = "ShuckyDrop", value = moves.GuruStumble.Anim.AnimationId},
+    {name = "BGetup", value = moves.RSweep.Anim.AnimationId}
+}
+
 local function ChangeConfig(Table)
     for i,mv in ipairs(moves:GetChildren()) do
 	for i,data in ipairs(Table) do
@@ -349,6 +352,7 @@ end
 
 ChangeConfig(MoveConfig)
 ChangeAnims(RDSAnims)
+ChangeAnims(MoveAnims)
 moves["H_FastFootworkBack"].Closest.Value = '40'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
