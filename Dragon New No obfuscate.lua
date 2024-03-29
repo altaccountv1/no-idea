@@ -1006,7 +1006,7 @@ if _G.MorphMod == true and not hasReloaded then
 _G.Morph = "Legendary Dragon"          
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 if not sentNotifs then
-game.StarterGui:SetCore("SendNotification",{
+game.StarterGui:SetCore("",{
     Title = characterToChange.." Is Invisible";
     Text = characterToChangeTo.."Has Replaced "..characterToChange..".";
     Button1 = "OK!";
@@ -1015,22 +1015,22 @@ game.StarterGui:SetCore("SendNotification",{
 end
 
 status.Resets.Changed:Connect(function()
-	sendNotification("You have prestiged [" .. status.Resets.Value .. "] times !",nil, Color3.fromRGB(0, 200, 0))
+	Notify("You have prestiged [" .. status.Resets.Value .. "] times !",nil, Color3.fromRGB(0, 200, 0))
 end)
  
 status.Level.Changed:Connect(function()
 	if status.Level.Value % 5 == 0 then
-		sendNotification("You are now level [" .. status.Level.Value .. "]",nil, Color3.fromRGB(0, 200, 0))
+		Notify("You are now level [" .. status.Level.Value .. "]",nil, Color3.fromRGB(0, 200, 0))
 	end
 end)
  
 status.Stats.Deaths.Changed:Connect(function()
-	sendNotification("How are you dying??" , "HeatDepleted", Color3.fromRGB(250,5,10))
+	Notify("How are you dying??" , "HeatDepleted", Color3.fromRGB(250,5,10))
 end)
  
 status.Stats.Kills.Changed:Connect(function()
 	if status.Stats.Kills.Value % 50 == 0 then
-		sendNotification("You have defeated [" .. status.Stats.Kills.Value .. "] enemies, damn",nil, Color3.fromRGB(0, 200, 0))
+		Notify("You have defeated [" .. status.Stats.Kills.Value .. "] enemies, damn",nil, Color3.fromRGB(0, 200, 0))
 	end
 end)
 
