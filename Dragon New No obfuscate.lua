@@ -235,7 +235,6 @@ local DEAnims = {
 }
 
 local DEMoveConfig = {
-	
 	{move = "龍Strike5", property = "AniSpeed", value = 1.5},
 	{move = "龍Strike5", property = "MoveForward", value = 12},
 	{move = "BStrike4", property = "ComboAt", value = 0.6},
@@ -317,7 +316,6 @@ local RDSCombo = {
   {name="Rush6", value="龍Attack2", Type="StringValue"},
   {name="Rush7", value="龍Attack1", Type="StringValue"},
   {name="Rush8", value="BAttack2", Type="StringValue"},
-  {name = "Strike5", Type = "StringValue", value = "B2Strike3"},
   {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
   {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
   {name = "Strike8", Type = "StringValue", value = "B2Strike2"},
@@ -332,7 +330,6 @@ local NCombo = {
   {name = "Rush6", value = nil, Type = "Destroy"},
   {name = "Rush7", value = nil, Type = "Destroy"},
   {name = "Rush8", value = nil, Type = "Destroy"},
-  {name = "Strike5", Type = "Destroy", value = "B2Strike3"},
   {name = "Strike6", Type = "Destroy", value = "龍Strike5"},
   {name = "Strike7", Type = "Destroy", value = "B2Strike1"},
   {name = "Strike8", Type = "Destroy", value = "B2Strike2"},
@@ -351,6 +348,7 @@ elseif _G.DEMoveset == true then
 end
 
 ChangeConfig(MoveConfig)
+ChangeAnims(RDSAnims)
 moves["H_FastFootworkBack"].Closest.Value = '40'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
