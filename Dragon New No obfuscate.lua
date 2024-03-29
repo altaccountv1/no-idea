@@ -340,6 +340,7 @@ elseif _G.DEMoveset == true then
     ChangeAnims(DEAnims)
 end
 
+ChangeConfig(MoveConfig)
 local NAnims = {
 	{move = "BAttack1", value = moves.BAttack1.Anim.AnimationId},
 	{move = "BAttack2", value = moves.BAttack2.Anim.AnimationId},
@@ -418,6 +419,15 @@ local function playsound(id)
 		task.wait(sfx.TimeLength)
 		sfx:Destroy()
 	end)
+end
+
+local function playSound(Instance)
+    SoundModule.playsound(Instance, Variables.hrp, nil, nil, true)
+    local SoundEvent = {
+        [1] = "repsound",
+        [2] = Instance
+    }
+    ME:FireServer(SoundEvent)
 end
 
 -- Ultimate Essence and Essence of Sumo Slapping --
@@ -825,6 +835,11 @@ status.FFC.Evading.Changed:Connect(Teleport)
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
+    local oldcframe = char.HumanoidRootPart.CFrame
+    interf.Client.Disabled = true
+    task.wait()
+    interf.Client.Disabled = false
+    char.HumanoidRootPart.CFrame = oldcframe
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -843,6 +858,11 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
     ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
+    local oldcframe = char.HumanoidRootPart.CFrame
+    interf.Client.Disabled = true
+    task.wait()
+    interf.Client.Disabled = false
+    char.HumanoidRootPart.CFrame = oldcframe
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -862,6 +882,11 @@ else
 	end
     ChangeMoveset(Dragon, NCombo)
     ChangeAnims(NAnims)
+    local oldcframe = char.HumanoidRootPart.CFrame
+    interf.Client.Disabled = true
+    task.wait()
+    interf.Client.Disabled = false
+    char.HumanoidRootPart.CFrame = oldcframe
     FastMoves.Value = false
     end
 end)
