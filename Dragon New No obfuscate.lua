@@ -574,6 +574,7 @@ function Hacts()
         	task.wait(2)
         	Anim:Destroy()
    	    elseif whatHact.Value == "Essence of Fast Footwork [Back]" and debounce == false and status.Style.Value == "Brawler" then
+		debounce = true
 		Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
         	local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
         	Anim.Priority = Enum.AnimationPriority.Action4
