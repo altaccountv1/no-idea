@@ -132,7 +132,7 @@ local Y0Moveset = {
 	{name = "Color", Type = "Color", value = Color3.fromRGB(250,5,10)},
         {name = "Speed", Type = "NumberValue", value = 1.25},
 	{name = "Pummel", Type = "StringValue", value = "T_龍GParry"},
-	{name = "VisualName", Type = "StringValue", value = "Dragon"}
+	{name = "VisualName", Type = "StringValue", value = "Dragon"},
 	
 	{name = "Rush1", Type = "StringValue", value = "BAttack1"},
 	{name = "Rush2", Type = "StringValue", value = "BAttack2"},
