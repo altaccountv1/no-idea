@@ -132,6 +132,7 @@ local Y0Moveset = {
 	{name = "Color", Type = "Color", value = Color3.fromRGB(250,5,10)},
         {name = "Speed", Type = "NumberValue", value = 1.25},
 	{name = "Pummel", Type = "StringValue", value = "T_龍GParry"},
+	{name = "VisualName", Type = "StringValue", value = "Dragon"}
 	
 	{name = "Rush1", Type = "StringValue", value = "BAttack1"},
 	{name = "Rush2", Type = "StringValue", value = "BAttack2"},
@@ -163,7 +164,9 @@ local Y0Moveset = {
 	{name = "H_CounterSoloAllBack", Type = "StringValue", value = "H_TSpinCounterBack"},
 	{name = "H_CounterSoloAllLeft", Type = "StringValue", value = "H_TSpinCounterLeft"},
 	{name = "H_CounterSoloAllRight", Type = "StringValue", value = "H_TSpinCounterRight"},
-	{name = "H_CounterSolo", Type = "StringValue", value = "H_Escape"}
+	{name = "H_CounterSolo", Type = "StringValue", value = "H_Escape"},
+        {name = "H_Distanced", Type = "StringValue", value = "H_FastFootworkBack"},
+	{name = "H_FullHeat", Type = "StringValue", value = "H_GUltimateEssence"}
 }
 local DEMoveset = {
 	{name = "Rush1", Type = "StringValue", value = "BAttack1"},
