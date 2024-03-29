@@ -242,7 +242,7 @@ local MoveConfig = {
     {name = "ShuckyDrop", property = "SF", value = 0.1},
     {name = "H_FastFootworkBack", property = "Closest", value = '40'},
     {name = "BGetup", property = "Anim", value = moves.RSweep.Anim.AnimationId},
-    {name = "BGetup", property = "HitboxLocations", value = moves.RSweep.HitboxLocations.Value},
+    {name = "BGetup", property = "HitboxLocations", value = moves.RSweep.HitboxLocations.Value}
 }
 	
 local function ChangeConfig(Table)
