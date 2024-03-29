@@ -287,8 +287,6 @@ local function UpdateStyleOnce()
  
 	abil.Tabs.Tabs.Brawler.Filled.Title.Text = DragonText
  
-	game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "rbxassetid://12120052426"
- 
 	local function updateEncounterTitle()
 		if interf.BattleStart.Text == "LEGENDARY DRAGON" then
 			interf.BattleStart.Text = "THE TRUE DRAGON"
@@ -500,6 +498,7 @@ local function UpdateStyleOnce()
 
 	if hasReloaded == false then
 		hasReloaded = true
+		game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "rbxassetid://12120052426"
 		local cframe = plr.Character.HumanoidRootPart.CFrame
 		sendNotification("reloading character...")
 		interf.Client.Disabled = true
