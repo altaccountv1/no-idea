@@ -184,6 +184,12 @@ local DEMoveset = {
 	{name = "2Strike5", Type = "StringValue", value = "龍Strike5"}
 }
 
+local RDSAnims = {
+	{move = "BAttack1", value = moves.BAttack1.Anim.AnimationId},
+	{move = "BAttack2", value = moves.BAttack2.Anim.AnimationId},
+	{move = "BAttack3", value = moves.BAttack1.Anim.AnimationId},
+	{move = "BAttack4", value = moves.BAttack2.Anim.AnimationId}
+}
 local Y0MoveConfig = {
 	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
 	{move = "BAttack2", property = "HitboxLocations", value = moves["龍Attack2"].HitboxLocations.Value},
@@ -273,7 +279,7 @@ end
 function ChangeAnims(Table)
     for i,Move in ipairs(moves:GetChildren()) do
 	for i,v in ipairs(Table) do
-	    if v.Name == Move.Name then
+	    if v.move == Move.Name then
 		Move.Anim.AnimationId = v.value
 	    end
 	end
@@ -333,6 +339,13 @@ elseif _G.DEMoveset == true then
     ChangeMoveset(Dragon, DEMoveset)
     ChangeAnims(DEAnims)
 end
+
+local NAnims = {
+	{move = "BAttack1", value = moves.BAttack1.Anim.AnimationId},
+	{move = "BAttack2", value = moves.BAttack2.Anim.AnimationId},
+	{move = "BAttack3", value = moves.BAttack1.Anim.AnimationId},
+	{move = "BAttack4", value = moves.BAttack2.Anim.AnimationId}
+}
 
 moves["H_FastFootworkBack"].Closest.Value = '40'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
@@ -811,7 +824,7 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
-    ChangeMoveset(Dragon, RDSCombo)
+    ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -829,7 +842,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 	invul.Name = "Invulnerable"
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
-    ChangeMoveset(Dragon, RDSCombo)
+    ChangeMoveset(Dragon, RDSCombo) ChangeAnims(RDSAnims)
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -848,6 +861,7 @@ else
 	status.Invulnerable:Destroy()
 	end
     ChangeMoveset(Dragon, NCombo)
+    ChangeAnims(NAnims)
     FastMoves.Value = false
     end
 end)
