@@ -953,7 +953,7 @@ end)
 	
 status.RedDragonSpirit.Changed:Connect(function()
     if status.RedDragonSpirit.Value == true then
-	_G.DEMoveset == true then
+	if _G.DEMoveset == true then
 	    Dragon.Strike1.Value = "ShuckyStun"
 	    task.wait(0.5)
 	    Dragon.Strike1.Value = "龍Strike1"
