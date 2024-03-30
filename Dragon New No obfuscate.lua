@@ -348,9 +348,6 @@ if not IsInPvp() then
     moves["龍TigerDrop"].Name = "BRCounter2"
     moves["BRCounter2"].AniSpeed.Value = 0.75
     moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
-elseif IsInPvp() then
-    moves["BRGrab"].Name = "FakeGrab" moves["CounterHook"].Name = "BRGrab"
-    moves.BRGrab.Anim.AnimationId = "rbxassetid://12120052426"
 end
 moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
 moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
@@ -561,7 +558,7 @@ function Hacts()
 	if status.Style.Value == "Brawler" then
 	    local heatthing = plr.Character:FindFirstChild("Heated")
 	    local whatHact = heatthing:WaitForChild("MoveName")
-	    if whatHact.Value == "Ultimate Essence" and debounce == false then
+	    if whatHact.Value == "Ultimate Essence" and debounce == false and not char:FindFirstChild("BeingHeated") then
 		debounce = true
 		local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
         	local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
@@ -573,7 +570,7 @@ function Hacts()
         	PlaySound("MassiveSlap") -- slap slap slap 
         	task.wait(2)
         	Anim:Destroy()
-   	    elseif whatHact.Value == "Essence of Fast Footwork [Back]" and debounce == false and status.Style.Value == "Brawler" then
+   	    elseif whatHact.Value == "Essence of Fast Footwork [Back]" and debounce == false and status.Style.Value == "Brawler" and not char:FindFirstChild("BeingHeated") then
 		debounce = true
 		Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
         	local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
@@ -836,8 +833,6 @@ RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     ChangeMoveset(Dragon, RDSCombo)
     FastMoves.Value = true
-    moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
-    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
     local id = "rbxassetid://10928237540"
     local SuperCharge = Instance.new("Animation", workspace)
     SuperCharge.AnimationId = id
@@ -980,11 +975,8 @@ interf.Client.Disabled = false
 char.HumanoidRootPart.CFrame = oldcframe
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
-if moves:FindFirstChild("CounterHook") then
-    moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
-else
-    moves.BRGrab.Anim.AnimationId = "rbxassetid://12338275115"
-end
+moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
+
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
@@ -1017,7 +1009,7 @@ end)
 
 status.AttackBegan.Changed:Connect(function() 
     if status.AttackBegan.Value == true then 
-	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" then
+	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" and _G.VoiceMod == true then
 	    playSound(RPS.Voices.Kiryu.HeatAction["heataction1 (2)"])
 	end 
     end 
