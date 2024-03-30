@@ -981,7 +981,7 @@ char.HumanoidRootPart.CFrame = oldcframe
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
-moves.ShuckyStun.Anim.AnimationId = moves.Taunt.AnimationId
+moves.ShuckyStun.Anim.AnimationId = moves.Taunt.Anim.AnimationId
 
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
