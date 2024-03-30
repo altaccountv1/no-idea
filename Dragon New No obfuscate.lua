@@ -988,7 +988,7 @@ local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
 local characterToChangeTo = "Kiryu Morph"
 
-if _G.MorphMod == true and then
+if _G.MorphMod == true then
     _G.Morph = "Legendary Dragon"          
     loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 end
