@@ -41,7 +41,7 @@ function isInBattle()
 	return (plr:FindFirstChild("InBattle") and true or false)
 end
 
-function isDungeon()
+function IsInDungeon()
 	return game.ReplicatedStorage.Dungeon.Value
 end
 
@@ -952,15 +952,20 @@ if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
 end)
 	
 status.RedDragonSpirit.Changed:Connect(function()
-if status.RedDragonSpirit.Value == true then
-	local id = "rbxassetid://10928237540"
-			local anim = Instance.new("Animation")
-			anim.AnimationId = id
-			game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim):Play()
-
-			task.wait(5)
-            anim:Destroy()
+    if status.RedDragonSpirit.Value == true then
+	_G.DEMoveset == true then
+	    Dragon.Strike1.Value = "ShuckyStun"
+	    task.wait(0.5)
+	    Dragon.Strike1.Value = "龍Strike1"
+	else
+	    local id = "rbxassetid://10928237540"
+	    local anim = Instance.new("Animation")
+	    anim.AnimationId = id
+	    game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim):Play()
 	end
+	task.wait(5)
+        anim:Destroy()
+    end
 end)
 
 -- Reload 
@@ -976,13 +981,14 @@ char.HumanoidRootPart.CFrame = oldcframe
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
+moves.ShuckyStun.Anim.AnimationId = moves.Taunt.AnimationId
 
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
 local characterToChangeTo = "Kiryu Morph"
 
-if _G.MorphMod == true and not hasReloaded then
+if _G.MorphMod == true and then
     _G.Morph = "Legendary Dragon"          
     loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 end
@@ -1079,10 +1085,12 @@ abilFolder["Finishing Hold"].Prompt.Value = "Get in Stance with LOCK ON and whil
 abilFolder["Ultimate Essence"].Prompt.Value = "Get in Stance with LOCK ON and with Full Heat, HEAVY ATTACK"
 abilFolder["Ultimate Essence"].Description.Value = "The Ultimate Komaki Ability. Gain the Power to destroy every type of enemy."
 
-local startsound = Instance.new("Sound")
-startsound.SoundId = "rbxassetid://9085027122"
-game:GetService("SoundService"):PlayLocalSound(startsound)
-Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
-Forcefield:Destroy()
-startsound.Ended:Wait()
-startsound:Destroy()
+if not IsInPvp() and not IsInDungeon() then
+    local startsound = Instance.new("Sound")
+    startsound.SoundId = "rbxassetid://9085027122"
+    game:GetService("SoundService"):PlayLocalSound(startsound)
+    Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
+    Forcefield:Destroy()
+    startsound.Ended:Wait()
+    startsound:Destroy()
+end
