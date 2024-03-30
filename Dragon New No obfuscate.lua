@@ -983,12 +983,12 @@ local characterToChange = "Your Avatar"
 local characterToChangeTo = "Kiryu Morph"
 
 if _G.MorphMod == true and not hasReloaded then
-_G.Morph = "Legendary Dragon"          
-loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
+    _G.Morph = "Legendary Dragon"          
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 end
 
 status.Resets.Changed:Connect(function()
-	Notify("You have prestiged [" .. status.Resets.Value .. "] times !",nil, Color3.fromRGB(0, 200, 0))
+	Notify("You have prestiged [" .. status.Resets.Value .. "] times !",nil, Color3.fromRGB(255, 196, 0))
 end)
  
 status.Level.Changed:Connect(function()
@@ -1003,7 +1003,7 @@ end)
  
 status.Stats.Kills.Changed:Connect(function()
 	if status.Stats.Kills.Value % 50 == 0 then
-		Notify("You have defeated [" .. status.Stats.Kills.Value .. "] enemies, damn",nil, Color3.fromRGB(0, 200, 0))
+		Notify("You have defeated [" .. status.Stats.Kills.Value .. "] enemies.",nil, Color3.fromRGB(232, 9, 9))
 	end
 end)
 
