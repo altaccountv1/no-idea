@@ -159,7 +159,7 @@ local Y0Moveset = {
 	{name = "H_GrabStanding3", Type = "StringValue", value = "H_Entangle"},
 	{name = "H_Running4", Type = "StringValue", value = "H_Terror"},
 	{name = "H_EvadedL", Type = "StringValue", value = "H_FastFootworkLeft"},
-	{name = "H_EvadedR", Type = "StringValue", value = "H_FastFootworkRight"},
+	{name = "H_EvadedR", Type = "StringValue", value = "H_SpinCounterLeft"},
 	{name = "H_EvadedF", Type = "StringValue", value = "H_FastFootworkFront"},
 	{name = "H_CounterSoloAllFront", Type = "StringValue", value = "H_TSpinCounterFront"},
 	{name = "H_CounterSoloAllBack", Type = "StringValue", value = "H_TSpinCounterBack"},
@@ -325,8 +325,7 @@ local NCombo = {
   {name = "Rush8", value = nil, Type = "Destroy"},
   {name = "Rush9", value=nil, Type = "Destroy"},
   {name = "Rush10", value=nil, Type = "Destroy"},
-  {name = "Rush11", value=nil, Type = "Destroy"},
-  {name = "Rush12", value=nil, Type = "Destroy"},
+  {name = "Strike1", Type = "StringValue", value = "龍Strike1"},
   {name = "Strike6", Type = "Destroy", value = "龍Strike5"},
   {name = "Strike7", Type = "Destroy", value = "B2Strike1"},
   {name = "Strike8", Type = "Destroy", value = "B2Strike2"},
@@ -593,6 +592,8 @@ function Hacts()
         	task.wait(0.9)
         	PlaySound("MassiveSlap")
         	Anim:Destroy()
+	    elseif whatHact.Value == "Guru Spin Counter [Left]" and debounce == false and status.Style.Value == "Brawler" and not char:FindFirstChild("BeingHeated") then
+	        Main.HeatMove.TextLabel.Text = "Essence of Fast Footwork [Right]"
 	    end
 	end
     end
