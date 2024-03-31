@@ -957,7 +957,12 @@ status.AttackBegan.Changed:Connect(function()
 	elseif status.CurrentMove.Value.Name == "龍Attack4" then
 	    if char.LockedOn.Value and status.Heat.Value >= 75 then
 		UseHeatAction("H_Fisticuffs","Brawler",{char.LockedOn.Value})
-		Main.HeatMove.TextLabel.Text = "Essence of Hundred Fist Rush"
+		local con
+		con = game:GetService("RunService").RenderStepped:Connect(function()
+		    Main.HeatMove.TextLabel.Text = "Essence of Hundred Fist Rush"
+		end)
+	        task.wait(3)
+		con:Disconnect()
 	    end
 	end 
     end 
@@ -998,11 +1003,11 @@ menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Rush.Filled.Title.Text = "Rush"
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Beast.Filled.Title.Text = "Beast"
                     --Ability Names--
 local list = {
-["Counter Hook"] = "Komaki Tiger Drop (Lvl. 25)",
+["Counter Hook"] = "Komaki Tiger Drop",
 ["Guru Parry"] = "Komaki Parry",
-["Time for Resolve"] = "Red Dragon Spirit (Lvl. 20)",
-["Finishing Hold"] = "Essence of Sumo Slapping (Lvl. 15)",
-["Ultimate Essence"] = "Ultimate Essence (Lvl. 30)",
+["Time for Resolve"] = "Red Dragon Spirit",
+["Finishing Hold"] = "Essence of Sumo Slapping",
+["Ultimate Essence"] = "Ultimate Essence",
 ["Guru Dodge Shot"] = "Komaki Evade & Strike",
 ["Guru Spin Counter"] = "Komaki Fist Reversal",
 ["Guru Firearm Flip"] = "Komaki Shot Stopper",
