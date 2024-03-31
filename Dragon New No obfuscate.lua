@@ -308,7 +308,7 @@ local RDSCombo = {
   {name = "Rush8", value="龍Attack2", Type="StringValue"},
   {name = "Rush9", value="龍Attack1", Type="StringValue"},
   {name = "Rush10", value="HueDrop", Type="StringValue"},
-  {name = "Strike1", valu ="ShuckyStun", Type="StringValue"},
+  {name = "Strike1", value ="ShuckyStun", Type="StringValue"},
   {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
   {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
   {name = "Strike8", Type = "StringValue", value = "B2Strike2"},
