@@ -307,7 +307,7 @@ local RDSCombo = {
   {name = "Rush7", value="龍Attack1", Type="StringValue"},
   {name = "Rush8", value="龍Attack2", Type="StringValue"},
   {name = "Rush9", value="龍Attack1", Type="StringValue"},
-  {name = "Rush10", value="HueDrop", Type="StringValue"},
+  {name = "Rush10", value="龍Attack4", Type="StringValue"},
   {name = "Strike1", value ="ShuckyStun", Type="StringValue"},
   {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
   {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
@@ -323,8 +323,8 @@ local NCombo = {
   {name = "Rush6", value = nil, Type = "Destroy"},
   {name = "Rush7", value = nil, Type = "Destroy"},
   {name = "Rush8", value = nil, Type = "Destroy"},
-  {name = "Rush9", value=nil, Type = "Destroy"},
-  {name = "Rush10", value=nil, Type = "Destroy"},
+  {name = "Rush9", value = nil, Type = "Destroy"},
+  {name = "Rush10", value = nil, Type = "Destroy"},
   {name = "Strike1", Type = "StringValue", value = "龍Strike1"},
   {name = "Strike6", Type = "Destroy", value = "龍Strike5"},
   {name = "Strike7", Type = "Destroy", value = "B2Strike1"},
@@ -639,7 +639,7 @@ if status.Style.Value == "Brawler" then
 		main.HeatMove.TextLabel.Text = "Komaki Shot Stopper"
         elseif main.HeatMove.TextLabel.Text == "Ultimate Essence" then
 		main.HeatMove.TextLabel.Text = "Ultimate Essence "
-	    end
+	end
     end
     main.Heat.noheattho.Text = "Heat Actions Disabled"
 	main.Heat.noheattho.Size = UDim2.new(10, 0, 1, 0)
@@ -880,84 +880,6 @@ else
     ChangeMoveset(Dragon, NCombo)
     end
 end)
-
-
--- Feel The Heat
-
-local EnemyText = pgui.EInterface.EnemyHP.TextLabel
-
-local CanFeelHeat = Instance.new("BoolValue")
-local IsBoss = false
-local HPCorrect = Instance.new("BoolValue")
-local AlreadyFeltHeat = Instance.new("BoolValue")
-
-local BossHPTable = loadstring(game:HttpGet("https://pastebin.com/raw/YG4rWKBq"))();
-local CanFeelHeat = Instance.new("BoolValue")
-local HPCorrect = Instance.new("BoolValue")
-
-pgui.EInterface.EnemyHP.BG.Meter.HPTxt:GetPropertyChangedSignal("Text"):Connect(function()
-if table.find(BossHPTable, pgui.EInterface.EnemyHP.BG.Meter.HPTxt.Text) then
-    CanFeelHeat.Value = true
-    else
-    CanFeelHeat.Value = false
-    end
-end)
-
-CanFeelHeat.Changed:Connect(function()
-if CanFeelHeat.Value == true and AlreadyFeltHeat.Value == false then
-    AlreadyFeltHeat.Value = true
-    if doingHact() then
-	task.wait(4)
-    end
-    if char.LockedOn.Value then
-        Stun(char.LockedOn.Value)
-    end
-    local whichfinisher
-    if char.LockedOn.Value.Parent.Name == "Silent Stranger" or char.LockedOn.Value.Parent.Name == "Parker" or char.LockedOn.Value.Parent.Name == "Sensei Jeff Jefferson" then
-	whichfinisher = "Kicks"
-    elseif char.LockedOn.Value.Parent.Name == "Hue" or char.LockedOn.Value.Parent.Name == "Spoiled Brat" or char.LockedOn.Value.Parent.Name == "Bloodsucker" then
-        whichfinisher = "Punches"
-    elseif char.LockedOn.Value.Parent.Name == "Derek" or char.LockedOn.Value.Parent.Name == "The Foreman" then
-	whichfinisher = "Brutal"
-    end
-    depleteHeat(6)
-    task.wait()
-    Notify("Feel the heat!!", "HeatDepleted", Color3.new(1,0,0))
-    local anim = char.Humanoid:LoadAnimation(styles.Beast.Block)
-    anim.Priority = Enum.AnimationPriority.Action4
-    local id = "rbxassetid://10928237540"
-    local SuperCharge = Instance.new("Animation", workspace)
-    SuperCharge.AnimationId = id
-    anim:Play()
-    v = Instance.new("Folder", status)
-    v.Name = "Invulnerable"
-    char.HumanoidRootPart.Anchored = true
-    fillHeat(2)
-    task.wait(1.5)
-    fillHeat(2)
-    task.wait(1.5)
-    anim:Stop()
-    local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
-    anim:Play()
-    anim.Looped = false
-    PlaySound("Yell")
-    fillHeat(6)
-    task.wait(1)
-    char.HumanoidRootPart.Anchored = false
-    if whichfinisher == "Kicks" then
-	UseHeatAction("H_Relentless", "Brawler", {char.LockedOn.Value})
-    elseif whichfinisher == "Punches" then
-	UseHeatAction("H_Fisticuffs", "Brawler", {char.LockedOn.Value})
-    elseif whichfinisher == "Brutal" then
-	UseHeatAction("H_Torment", "Brawler", {char.LockedOn.Value})
-    end
-    SuperCharge:Destroy()
-    task.wait(2)
-    v:Destroy()
-    feelingheat.Value = false
-    AlreadyFeltHeat.Value = false
-    end
-end)
 	
 status.RedDragonSpirit.Changed:Connect(function()
     if status.RedDragonSpirit.Value == true then
@@ -1034,6 +956,11 @@ status.AttackBegan.Changed:Connect(function()
     if status.AttackBegan.Value == true then 
 	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" and _G.VoiceMod == true then
 	    playSound(RPS.Voices.Kiryu.HeatAction["heataction1 (2)"])
+	elseif status.CurrentMove.Value.Name == "龍Attack4" then
+	    if char.LockedOn.Value and status.Heat.Value >= 75 then
+		UseHeatAction("H_Fisticuffs","Brawler",{char.LockedOn.Value})
+		Main.HeatMove.TextLabel.Text = "Essence of Hundred Fist Rush"
+	    end
 	end 
     end 
 end)
