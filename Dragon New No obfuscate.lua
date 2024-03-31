@@ -307,10 +307,8 @@ local RDSCombo = {
   {name = "Rush7", value="龍Attack1", Type="StringValue"},
   {name = "Rush8", value="龍Attack2", Type="StringValue"},
   {name = "Rush9", value="龍Attack1", Type="StringValue"},
-  {name = "Rush10", value="龍Attack2", Type="StringValue"},
-  {name = "Rush11", value="龍Attack1", Type="StringValue"},
-  {name = "Rush12", value="HueDrop", Type="StringValue"},
-  {name = "Strike1", valu ="ShuckyStun", Type="StringValue"
+  {name = "Rush10", value="HueDrop", Type="StringValue"},
+  {name = "Strike1", valu ="ShuckyStun", Type="StringValue"},
   {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
   {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
   {name = "Strike8", Type = "StringValue", value = "B2Strike2"},
@@ -962,16 +960,10 @@ end)
 	
 status.RedDragonSpirit.Changed:Connect(function()
     if status.RedDragonSpirit.Value == true then
-	if _G.DEMoveset == true then
-	    Dragon.Strike1.Value = "ShuckyStun"
-	    task.wait(0.5)
-	    Dragon.Strike1.Value = "龍Strike1"
-	else
-	    local id = "rbxassetid://10928237540"
-	    local anim = Instance.new("Animation")
-	    anim.AnimationId = id
-	    game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim):Play()
-	end
+	local id = "rbxassetid://10928237540"
+	local anim = Instance.new("Animation")
+	anim.AnimationId = id
+	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim):Play()
 	task.wait(5)
         anim:Destroy()
     end
