@@ -298,14 +298,18 @@ function ChangeMoveset(Style, Table)
 end
 
 local RDSCombo = {
-  {name="Rush1", value="龍Attack1", Type="StringValue"},
-  {name="Rush2", value="龍Attack2", Type="StringValue"},
-  {name="Rush3", value="龍Attack1", Type="StringValue"},
-  {name="Rush4", value="龍Attack2", Type="StringValue"},
-  {name="Rush5", value="龍Attack1", Type="StringValue"},
-  {name="Rush6", value="龍Attack2", Type="StringValue"},
-  {name="Rush7", value="龍Attack1", Type="StringValue"},
-  {name="Rush8", value="龍Attack2", Type="StringValue"},
+  {name = "Rush1", value="龍Attack1", Type="StringValue"},
+  {name = "Rush2", value="龍Attack2", Type="StringValue"},
+  {name = "Rush3", value="龍Attack1", Type="StringValue"},
+  {name = "Rush4", value="龍Attack2", Type="StringValue"},
+  {name = "Rush5", value="龍Attack1", Type="StringValue"},
+  {name = "Rush6", value="龍Attack2", Type="StringValue"},
+  {name = "Rush7", value="龍Attack1", Type="StringValue"},
+  {name = "Rush8", value="龍Attack2", Type="StringValue"},
+  {name = "Rush9", value="龍Attack1", Type="StringValue"},
+  {name = "Rush10", value="龍Attack2", Type="StringValue"},
+  {name = "Rush11", value="龍Attack1", Type="StringValue"},
+  {name = "Rush12", value="HueDrop", Type="StringValue"},
   {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
   {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
   {name = "Strike8", Type = "StringValue", value = "B2Strike2"},
@@ -320,6 +324,10 @@ local NCombo = {
   {name = "Rush6", value = nil, Type = "Destroy"},
   {name = "Rush7", value = nil, Type = "Destroy"},
   {name = "Rush8", value = nil, Type = "Destroy"},
+  {name = "Rush9", value=nil, Type = "Destroy"},
+  {name = "Rush10", value=nil, Type = "Destroy"},
+  {name = "Rush11", value=nil, Type = "Destroy"},
+  {name = "Rush12", value=nil, Type = "Destroy"},
   {name = "Strike6", Type = "Destroy", value = "龍Strike5"},
   {name = "Strike7", Type = "Destroy", value = "B2Strike1"},
   {name = "Strike8", Type = "Destroy", value = "B2Strike2"},
@@ -524,7 +532,7 @@ local function AutoSlap()
                     if enemy.Parent.AttackBegan.Value == true then
                         enemy.Parent.AttackBegan.Value = false
                         thing.Value = false
-                        Slap(enemy) Slap(enemy) Slap(enemy)  
+                        Slap(enemy)
                     end
                     if enemy.Parent.TookAim.Value == true then
                         enemy.Parent.TookAim.Value = false
@@ -981,8 +989,8 @@ char.HumanoidRootPart.CFrame = oldcframe
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
-moves.ShuckyStun.Anim.AnimationId = moves.Taunt.Anim.AnimationId
-
+moves.ShuckyStun.Anim.AnimationId = moves.BTStrike4.Anim.AnimationId
+moves.HueDrop.Anim.AnimationId = moves.TigerDrop.Anim.AnimationId
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
@@ -993,6 +1001,21 @@ if _G.MorphMod == true then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 end
 
+status.Style.Changed:Connect(function()
+    if status.Style.Value == "Brawler" then
+        moves["H_FastFootworkBack"].Closest.Value = '40'
+        if not moves["H_FastFootworkBack"]:FindFirstChild("Within") then
+            wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
+            wn.Name = "Within"
+            wn.Value = '15'
+        end
+    elseif status.Style.Value == "Rush" then
+       if moves["H_FastFootworkBack"]:FindFirstChild("Within") then
+	    moves["H_FastFootworkBack"]:FindFirstChild("Within"):Destroy()
+	    moves["H_FastFootworkBack"].Closest.Value = '15'
+        end
+    end
+end)
 status.Resets.Changed:Connect(function()
 	Notify("You have prestiged [" .. status.Resets.Value .. "] times !",nil, Color3.fromRGB(255, 196, 0))
 end)
