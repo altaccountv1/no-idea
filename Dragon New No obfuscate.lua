@@ -633,9 +633,7 @@ if status.Style.Value == "Brawler" then
         char.UpperTorso["r2f_aura_burst"].Flare.Color = DSeq
         char.UpperTorso["r2f_aura_burst"].Smoke.Color = DSeq
         char.UpperTorso.Evading.Color = NoTrail
-  	if main.HeatMove.TextLabel.Text == "Essence of Fisticuffs" then
-		main.HeatMove.TextLabel.Text = "Essence of Battery"
-	elseif main.HeatMove.TextLabel.Text == "Guru Firearm Flip" then
+	if main.HeatMove.TextLabel.Text == "Guru Firearm Flip" then
 		main.HeatMove.TextLabel.Text = "Komaki Shot Stopper"
         elseif main.HeatMove.TextLabel.Text == "Ultimate Essence" then
 		main.HeatMove.TextLabel.Text = "Ultimate Essence "
