@@ -308,7 +308,7 @@ local RDSCombo = {
   {name = "Rush8", value="龍Attack2", Type="StringValue"},
   {name = "Rush9", value="龍Attack1", Type="StringValue"},
   {name = "Rush10", value="龍Attack4", Type="StringValue"},
-  {name = "Strike1", value ="ShuckyStun", Type="StringValue"},
+  {name = "Strike1", value ="龍Strike5", Type="StringValue"},
   {name = "Strike6", Type = "StringValue", value = "龍Strike5"},
   {name = "Strike7", Type = "StringValue", value = "B2Strike1"},
   {name = "Strike8", Type = "StringValue", value = "B2Strike2"},
@@ -880,12 +880,22 @@ else
 end)
 	
 status.RedDragonSpirit.Changed:Connect(function()
-    if status.RedDragonSpirit.Value == true then
+    if status.RedDragonSpirit.Value == true and _G.DEMoveset ~= true then
 	local id = "rbxassetid://10928237540"
 	local anim = Instance.new("Animation")
 	anim.AnimationId = id
+	char.HumanoidRootPart.Anchored = true
+	task.wait(3)
+	char.HumanoidRootPart.Anchored = false
+        anim:Destroy()
+    elseif status.RedDragonSpirit.Value == true and _G.DEMoveset == true then
+	local id = "http://www.roblox.com/asset/?id=15505459811"
+	local anim = Instance.new("Animation")
+	anim.AnimationId = id
 	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim):Play()
-	task.wait(5)
+	char.HumanoidRootPart.Anchored = true
+	task.wait(3)
+	char.HumanoidRootPart.Anchored = false
         anim:Destroy()
     end
 end)
@@ -903,7 +913,6 @@ char.HumanoidRootPart.CFrame = oldcframe
 
 moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
 moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
-moves.ShuckyStun.Anim.AnimationId = moves.BTStrike4.Anim.AnimationId
 moves.HueDrop.Anim.AnimationId = moves.TigerDrop.Anim.AnimationId
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
@@ -955,7 +964,7 @@ status.AttackBegan.Changed:Connect(function()
 	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" and _G.VoiceMod == true then
 	    playSound(RPS.Voices.Kiryu.HeatAction["heataction1 (2)"])
 	elseif status.CurrentMove.Value.Name == "龍Attack4" then
-	    if char.LockedOn.Value and status.Heat.Value >= 75 then
+	    if char.LockedOn.Value and status.Heat.Value >= 75 and (char.HumanoidRootPart.CFrame.Position - char.LockedOn.Value.CFrame.Position).Magnitude <= 15 then
 		UseHeatAction("H_Fisticuffs","Brawler",{char.LockedOn.Value})
 		local con
 		con = game:GetService("RunService").RenderStepped:Connect(function()
@@ -969,29 +978,29 @@ status.AttackBegan.Changed:Connect(function()
 end)
 	
 if _G.CustomMorphSkin == true and _G.MorphMod == true then
-char.Ignore.FakeUpperTorso["Kiryu_Buttons"].Color = Color3.fromRGB(228,212,0)
-char.Ignore.FakeUpperTorso["Kiryu_Shirt"].Color = Color3.fromRGB(255,255,255)
-char.Ignore.FakeUpperTorso["Kiryu_Suit"].Color = Color3.fromRGB(42,42,42)
-char.Ignore.FakeLeftLowerArm["Suit_CuffSL"].Color = Color3.fromRGB(237,220,0)
-char.Ignore.FakeLeftLowerArm["Suit_CuffL"].Color = Color3.fromRGB(42,42,42)
-char.Ignore.FakeRightLowerArm["Suit_CuffSR"].Color = Color3.fromRGB(237,220,0)
-char.Ignore.FakeRightLowerArm["Suit_CuffR"].Color = Color3.fromRGB(42,42,42)
-char.Ignore.FakeLeftLowerLeg["Suit_PantL"].Color = Color3.fromRGB(42,42,42)
-char.Ignore.FakeRightLowerLeg["Suit_PantR"].Color = Color3.fromRGB(42,42,42)
-char.Ignore.FakeLowerTorso["Kiryu_Belt"].Color = Color3.fromRGB(42,42,42)
-char.Ignore.FakeLowerTorso["Kiryu_BeltLoop"].Color = Color3.fromRGB(237,220,0)
-char.Ignore.FakeLowerTorso["Kiryu_Tail"].Color = Color3.fromRGB(42,42,42)
-char.LowerTorso.Color = Color3.fromRGB(42,42,42)
-char.UpperTorso.Color = Color3.fromRGB(42,42,42)
-char.RightUpperArm.Color = Color3.fromRGB(42,42,42)
-char.LeftUpperArm.Color = Color3.fromRGB(42,42,42)
-char.RightLowerArm.Color = Color3.fromRGB(42,42,42)
-char.LeftLowerArm.Color = Color3.fromRGB(42,42,42)
-char.LowerTorso.Color = Color3.fromRGB(42,42,42)
-char.LeftUpperLeg.Color = Color3.fromRGB(42,42,42)
-char.LeftLowerLeg.Color = Color3.fromRGB(42,42,42)
-char.RightUpperLeg.Color = Color3.fromRGB(42,42,42)
-char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
+    char.Ignore.FakeUpperTorso["Kiryu_Buttons"].Color = Color3.fromRGB(228,212,0)
+    char.Ignore.FakeUpperTorso["Kiryu_Shirt"].Color = Color3.fromRGB(255,255,255)
+    char.Ignore.FakeUpperTorso["Kiryu_Suit"].Color = Color3.fromRGB(42,42,42)
+    char.Ignore.FakeLeftLowerArm["Suit_CuffSL"].Color = Color3.fromRGB(237,220,0)
+    char.Ignore.FakeLeftLowerArm["Suit_CuffL"].Color = Color3.fromRGB(42,42,42)
+    char.Ignore.FakeRightLowerArm["Suit_CuffSR"].Color = Color3.fromRGB(237,220,0)
+    char.Ignore.FakeRightLowerArm["Suit_CuffR"].Color = Color3.fromRGB(42,42,42)
+    char.Ignore.FakeLeftLowerLeg["Suit_PantL"].Color = Color3.fromRGB(42,42,42)
+    char.Ignore.FakeRightLowerLeg["Suit_PantR"].Color = Color3.fromRGB(42,42,42)
+    char.Ignore.FakeLowerTorso["Kiryu_Belt"].Color = Color3.fromRGB(42,42,42)
+    char.Ignore.FakeLowerTorso["Kiryu_BeltLoop"].Color = Color3.fromRGB(237,220,0)
+    char.Ignore.FakeLowerTorso["Kiryu_Tail"].Color = Color3.fromRGB(42,42,42)
+    char.LowerTorso.Color = Color3.fromRGB(42,42,42)
+    char.UpperTorso.Color = Color3.fromRGB(42,42,42)
+    char.RightUpperArm.Color = Color3.fromRGB(42,42,42)
+    char.LeftUpperArm.Color = Color3.fromRGB(42,42,42)
+    char.RightLowerArm.Color = Color3.fromRGB(42,42,42)
+    char.LeftLowerArm.Color = Color3.fromRGB(42,42,42)
+    char.LowerTorso.Color = Color3.fromRGB(42,42,42)
+    char.LeftUpperLeg.Color = Color3.fromRGB(42,42,42)
+    char.LeftLowerLeg.Color = Color3.fromRGB(42,42,42)
+    char.RightUpperLeg.Color = Color3.fromRGB(42,42,42)
+    char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
 
 if _G.VoiceMod == true then
@@ -1003,16 +1012,16 @@ menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Rush.Filled.Title.Text = "Rush"
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Beast.Filled.Title.Text = "Beast"
                     --Ability Names--
 local list = {
-["Counter Hook"] = "Komaki Tiger Drop",
-["Guru Parry"] = "Komaki Parry",
-["Time for Resolve"] = "Red Dragon Spirit",
-["Finishing Hold"] = "Essence of Sumo Slapping",
-["Ultimate Essence"] = "Ultimate Essence",
-["Guru Dodge Shot"] = "Komaki Evade & Strike",
-["Guru Spin Counter"] = "Komaki Fist Reversal",
-["Guru Firearm Flip"] = "Komaki Shot Stopper",
-["Guru Knockback"] = "Komaki Knockback",
-["Guru Safety Roll"] = "Komaki Dharma Tumbler"
+    ["Counter Hook"] = "Komaki Tiger Drop",
+    ["Guru Parry"] = "Komaki Parry",
+    ["Time for Resolve"] = "Red Dragon Spirit",
+    ["Finishing Hold"] = "Essence of Sumo Slapping",
+    ["Ultimate Essence"] = "Ultimate Essence",
+    ["Guru Dodge Shot"] = "Komaki Evade & Strike",
+    ["Guru Spin Counter"] = "Komaki Fist Reversal",
+    ["Guru Firearm Flip"] = "Komaki Shot Stopper",
+    ["Guru Knockback"] = "Komaki Knockback",
+    ["Guru Safety Roll"] = "Komaki Dharma Tumbler"
 }
 
 menu.Abilities.Frame.Frame.Frame.List.ListFrame.ChildAdded:Connect(function(v)
@@ -1032,10 +1041,10 @@ abilFolder["Finishing Hold"].Prompt.Value = "Get in Stance with LOCK ON and whil
 abilFolder["Ultimate Essence"].Prompt.Value = "Get in Stance with LOCK ON and with Full Heat, HEAVY ATTACK"
 abilFolder["Ultimate Essence"].Description.Value = "The Ultimate Komaki Ability. Gain the Power to destroy every type of enemy."
 
-    local startsound = Instance.new("Sound")
-    startsound.SoundId = "rbxassetid://9085027122"
-    game:GetService("SoundService"):PlayLocalSound(startsound)
-    Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
-    Forcefield:Destroy()
-    startsound.Ended:Wait()
-    startsound:Destroy()
+local startsound = Instance.new("Sound")
+startsound.SoundId = "rbxassetid://9085027122"
+game:GetService("SoundService"):PlayLocalSound(startsound)
+Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
+Forcefield:Destroy()
+startsound.Ended:Wait()
+startsound:Destroy()
