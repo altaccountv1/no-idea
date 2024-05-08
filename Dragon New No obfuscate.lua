@@ -889,10 +889,12 @@ status.RedDragonSpirit.Changed:Connect(function()
 	char.HumanoidRootPart.Anchored = false
         anim:Destroy()
     elseif status.RedDragonSpirit.Value == true and _G.DEMoveset == true then
-	local id = "http://www.roblox.com/asset/?id=15505459811"
+	local id = "http://www.roblox.com/asset/?id=10714360164"
 	local anim = Instance.new("Animation")
 	anim.AnimationId = id
-	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim):Play()
+	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+	track.Looped = false
+	track:Play()
 	char.HumanoidRootPart.Anchored = true
 	task.wait(3)
 	char.HumanoidRootPart.Anchored = false
