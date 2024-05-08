@@ -571,7 +571,9 @@ function Hacts()
         	Anim.Priority = Enum.AnimationPriority.Action4
        		Anim:AdjustSpeed(1)
         	Anim:Play()
-		playSound(soundr) -- ora doushita??
+		if _G.VoiceMod == true then
+		    playSound(soundr) -- ora doushita??
+		end
         	task.wait(1)
         	PlaySound("MassiveSlap") -- slap slap slap 
         	task.wait(2)
@@ -839,11 +841,13 @@ RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     ChangeMoveset(Dragon, RDSCombo)
     FastMoves.Value = true
-    local id = "rbxassetid://10928237540"
-    local SuperCharge = Instance.new("Animation", workspace)
-    SuperCharge.AnimationId = id
-    local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
-    anim:Play()
+    if _G.DEMoveset ~= true then
+        local id = "rbxassetid://10928237540"
+        local SuperCharge = Instance.new("Animation", workspace)
+        SuperCharge.AnimationId = id
+        local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
+        anim:Play()
+    end
     local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
     Animation()
     fillHeat(6)
@@ -858,11 +862,13 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
     ChangeMoveset(Dragon, RDSCombo)
     FastMoves.Value = true
-    local id = "rbxassetid://10928237540"
-    local SuperCharge = Instance.new("Animation", workspace)
-    SuperCharge.AnimationId = id
-    local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
-    anim:Play()
+    if _G.DEMoveset ~= true then
+        local id = "rbxassetid://10928237540"
+        local SuperCharge = Instance.new("Animation", workspace)
+        SuperCharge.AnimationId = id
+        local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
+        anim:Play()
+    end
     Animation()
     fillHeat(6)
     local invul = Instance.new("Folder",status)
@@ -893,6 +899,7 @@ status.RedDragonSpirit.Changed:Connect(function()
 	local anim = Instance.new("Animation")
 	anim.AnimationId = id
 	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+	track.Priority = Enum.AnimationPriority.Action4
 	track.Looped = false
 	track:Play()
 	char.HumanoidRootPart.Anchored = true
