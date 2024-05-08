@@ -848,12 +848,15 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
         local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
         anim:Play()
     end
-    local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
+    if _G.VoiceMod == true then
+        local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
+        playSound(rage)
+    end
     Animation()
     fillHeat(6)
     local invul = Instance.new("Folder",status)
     invul.Name = "Invulnerable" 
-    playSound(rage)
+    
     FastMoves.Value = true
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
@@ -902,9 +905,11 @@ status.RedDragonSpirit.Changed:Connect(function()
 	track.Priority = Enum.AnimationPriority.Action4
 	track.Looped = false
 	track:Play()
+	track:AdjustSpeed(2)
 	char.HumanoidRootPart.Anchored = true
-	task.wait(3)
+	task.wait(1.5)
 	char.HumanoidRootPart.Anchored = false
+	track:Destroy()
         anim:Destroy()
     end
 end)
