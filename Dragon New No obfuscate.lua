@@ -21,19 +21,37 @@ local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
+local PlaySound
 local ME = ReplicatedStorage.Events.ME
+if UserInputService.MouseEnabled and UserInputServer.KeyboardEnabled then
+    PlaySound = function(sfxname)
+	local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
+	local sfx = Instance.new("Sound", nil)
+	local id = v.Value
 
-local Ambassador = require(ReplicatedFirst.Ambassador)
-local Variables = require(ReplicatedFirst.Variables)
-local SoundModule = require(ReplicatedStorage.Modules.Sound)
+	sfx.SoundId = id
 
-local function PlaySound(SoundName) -- rplaysound
-    SoundModule.playsound(ReplicatedStorage.Sounds[SoundName], Variables.hrp, nil, nil, true)
-    local SoundEvent = {
-        [1] = "repsound",
-        [2] = SoundName
-    }
-    ME:FireServer(SoundEvent)
+	for i,v in pairs(v:GetChildren()) do
+		sfx[v.Name] = v.Value
+	end
+
+	game.SoundService:PlayLocalSound(sfx)
+	task.delay(15, function()
+		sfx:Destroy()
+	end)
+    end
+else
+    local Ambassador = require(ReplicatedFirst.Ambassador)
+    local Variables = require(ReplicatedFirst.Variables)
+    local SoundModule = require(ReplicatedStorage.Modules.Sound)
+    PlaySound = function(SoundName) -- rplaysound
+        SoundModule.playsound(ReplicatedStorage.Sounds[SoundName], Variables.hrp, nil, nil, true)
+        local SoundEvent = {
+            [1] = "repsound",
+            [2] = SoundName
+        }
+        ME:FireServer(SoundEvent)
+    end
 end
 
 char.Head:FindFirstChild("HeavyYell"):Destroy()
@@ -422,12 +440,17 @@ local function playsound(id)
 end
 
 local function playSound(Instance)
-    SoundModule.playsound(Instance, Variables.hrp, nil, nil, true)
-    local SoundEvent = {
-        [1] = "repsound",
-        [2] = Instance
-    }
-    ME:FireServer(SoundEvent)
+    local id = Instance.Value
+    local s = Instance.new("Sound", char.Head)
+    for i,v in Instance:GetChildren() do
+	s[v.Name] = v.Value
+    end
+
+    s:Play()
+    task.spawn(function()
+    	task.wait(s.TimeLength + 0.05)
+	s:Destroy()
+    end)
 end
 
 -- Ultimate Essence and Essence of Sumo Slapping --
