@@ -23,7 +23,7 @@ local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
 local PlaySound
 local ME = ReplicatedStorage.Events.ME
-if UserInputService.MouseEnabled and UserInputServer.KeyboardEnabled then
+if UserInputService.MouseEnabled and UserInputService.KeyboardEnabled then
     PlaySound = function(sfxname)
 	local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
 	local sfx = Instance.new("Sound", nil)
