@@ -28,7 +28,7 @@ if UserInputService.MouseEnabled and UserInputService.KeyboardEnabled then
 	local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
 	local sfx = Instance.new("Sound", nil)
 	local id = v.Value
-
+	
 	sfx.SoundId = id
 
 	for i,v in pairs(v:GetChildren()) do
@@ -442,15 +442,15 @@ end
 local function playSound(Instance)
     local id = Instance.Value
     local s = Instance.new("Sound", char.Head)
+    s.SoundId = id
+	
     for i,v in Instance:GetChildren() do
 	s[v.Name] = v.Value
     end
 
     s:Play()
-    task.spawn(function()
-    	task.wait(s.TimeLength + 0.05)
-	s:Destroy()
-    end)
+
+    task.delay(s.Timelength + 0.05, game.Destroy, s)
 end
 
 -- Ultimate Essence and Essence of Sumo Slapping --
@@ -862,7 +862,6 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
-    ChangeMoveset(Dragon, RDSCombo)
     FastMoves.Value = true
     if _G.DEMoveset ~= true then
         local id = "rbxassetid://10928237540"
@@ -870,6 +869,24 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
         SuperCharge.AnimationId = id
         local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
         anim:Play()
+	anim.Ended:Wait()
+	SuperCharge:Destroy()
+	anim:Destroy()
+    elseif _G.DEMoveset == true then
+	ChangeMoveset(Dragon, RDSCombo)
+	local id = "http://www.roblox.com/asset/?id=10714360164"
+	local anim = Instance.new("Animation")
+	anim.AnimationId = id
+	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+	track.Priority = Enum.AnimationPriority.Action4
+	track.Looped = false
+	track:Play()
+	track:AdjustSpeed(2)
+	char.HumanoidRootPart.Anchored = true
+	task.wait(1.5)
+	char.HumanoidRootPart.Anchored = false
+	track:Destroy()
+        anim:Destroy()
     end
     if _G.VoiceMod == true then
         local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
@@ -877,23 +894,37 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     end
     Animation()
     fillHeat(6)
-    local invul = Instance.new("Folder",status)
-    invul.Name = "Invulnerable" 
-    
     FastMoves.Value = true
     if not status:FindFirstChild("Invulnerable") then
 	local invul = Instance.new("Folder",status)
 	invul.Name = "Invulnerable"
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
-    ChangeMoveset(Dragon, RDSCombo)
     FastMoves.Value = true
-    if _G.DEMoveset ~= true then
+     if _G.DEMoveset ~= true then
         local id = "rbxassetid://10928237540"
         local SuperCharge = Instance.new("Animation", workspace)
         SuperCharge.AnimationId = id
         local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
         anim:Play()
+	anim.Ended:Wait()
+	SuperCharge:Destroy()
+	anim:Destroy()
+    elseif _G.DEMoveset == true then
+	ChangeMoveset(Dragon, RDSCombo)
+	local id = "http://www.roblox.com/asset/?id=10714360164"
+	local anim = Instance.new("Animation")
+	anim.AnimationId = id
+	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+	track.Priority = Enum.AnimationPriority.Action4
+	track.Looped = false
+	track:Play()
+	track:AdjustSpeed(2)
+	char.HumanoidRootPart.Anchored = true
+	task.wait(1.5)
+	char.HumanoidRootPart.Anchored = false
+	track:Destroy()
+        anim:Destroy()
     end
     Animation()
     fillHeat(6)
@@ -908,32 +939,6 @@ else
 	status.Invulnerable:Destroy()
     end
     ChangeMoveset(Dragon, NCombo)
-    end
-end)
-	
-status.RedDragonSpirit.Changed:Connect(function()
-    if status.RedDragonSpirit.Value == true and _G.DEMoveset ~= true then
-	local id = "rbxassetid://10928237540"
-	local anim = Instance.new("Animation")
-	anim.AnimationId = id
-	char.HumanoidRootPart.Anchored = true
-	task.wait(3)
-	char.HumanoidRootPart.Anchored = false
-        anim:Destroy()
-    elseif status.RedDragonSpirit.Value == true and _G.DEMoveset == true then
-	local id = "http://www.roblox.com/asset/?id=10714360164"
-	local anim = Instance.new("Animation")
-	anim.AnimationId = id
-	local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
-	track.Priority = Enum.AnimationPriority.Action4
-	track.Looped = false
-	track:Play()
-	track:AdjustSpeed(2)
-	char.HumanoidRootPart.Anchored = true
-	task.wait(1.5)
-	char.HumanoidRootPart.Anchored = false
-	track:Destroy()
-        anim:Destroy()
     end
 end)
 
