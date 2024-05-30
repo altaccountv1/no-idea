@@ -350,11 +350,11 @@ local NCombo = {
   {name = "Strike9", Type = "Destroy", value = "龍2Strike4"}
 }
 
-if _G.DEMoveset == false or _G.DEMoveset == nil then
+if _G.DragonConfigurations.Moveset == "Y0" then
     ChangeMoveset(Dragon,Y0Moveset)
     ChangeConfig(Y0MoveConfig)
     ChangeAnims(Y0Anims)
-elseif _G.DEMoveset == true then
+elseif _G.DragonConfigurations.Moveset == "DE" then
     ChangeMoveset(Dragon, Y0Moveset)
     ChangeConfig(DEMoveConfig)
     ChangeMoveset(Dragon, DEMoveset)
@@ -594,7 +594,7 @@ function Hacts()
         	Anim.Priority = Enum.AnimationPriority.Action4
        		Anim:AdjustSpeed(1)
         	Anim:Play()
-		if _G.VoiceMod == true then
+		if _G.DragonConfigurations.VoiceMod == true then
 		    playSound(soundr) -- ora doushita??
 		end
         	task.wait(1)
@@ -863,7 +863,7 @@ status.FFC.Evading.Changed:Connect(Teleport)
 RDS.Changed:Connect(function()
 if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     FastMoves.Value = true
-    if _G.DEMoveset ~= true then
+    if _G.DragonConfigurations.Moveset == "Y0" then
         local id = "rbxassetid://10928237540"
         local SuperCharge = Instance.new("Animation", workspace)
         SuperCharge.AnimationId = id
@@ -872,7 +872,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 	anim.Ended:Wait()
 	SuperCharge:Destroy()
 	anim:Destroy()
-    elseif _G.DEMoveset == true then
+    elseif _G.DragonConfigurations.Moveset == "DE" then
 	ChangeMoveset(Dragon, RDSCombo)
 	local id = "http://www.roblox.com/asset/?id=10714360164"
 	local anim = Instance.new("Animation")
@@ -888,7 +888,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 	track:Destroy()
         anim:Destroy()
     end
-    if _G.VoiceMod == true then
+    if _G.DragonConfigurations.VoiceMod == true then
         local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
         playSound(rage)
     end
@@ -901,7 +901,7 @@ if RDS.Value == true and not status:FindFirstChild("ANGRY") then
     end
 elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
     FastMoves.Value = true
-     if _G.DEMoveset ~= true then
+     if _G.DragonConfigurations.Moveset == "Y0" then
         local id = "rbxassetid://10928237540"
         local SuperCharge = Instance.new("Animation", workspace)
         SuperCharge.AnimationId = id
@@ -910,7 +910,7 @@ elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
 	anim.Ended:Wait()
 	SuperCharge:Destroy()
 	anim:Destroy()
-    elseif _G.DEMoveset == true then
+    elseif _G.DragonConfigurations.Moveset == "DE" then
 	ChangeMoveset(Dragon, RDSCombo)
 	local id = "http://www.roblox.com/asset/?id=10714360164"
 	local anim = Instance.new("Animation")
@@ -961,7 +961,7 @@ local styleToChangeTo = "堂島の龍" -- is Dragon Style
 local characterToChange = "Your Avatar"
 local characterToChangeTo = "Kiryu Morph"
 
-if _G.MorphMod == true then
+if _G.DragonConfigurations.MorphMod == true then
     _G.Morph = "Legendary Dragon"          
     loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 end
@@ -1003,7 +1003,7 @@ end)
 
 status.AttackBegan.Changed:Connect(function() 
     if status.AttackBegan.Value == true then 
-	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" and _G.VoiceMod == true then
+	if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" and _G.DragonConfigurations.VoiceMod == true then
 	    playSound(RPS.Voices.Kiryu.HeatAction["heataction1 (2)"])
 	elseif status.CurrentMove.Value.Name == "龍Attack4" then
 	    if char.LockedOn.Value and status.Heat.Value >= 75 and (char.HumanoidRootPart.CFrame.Position - char.LockedOn.Value.CFrame.Position).Magnitude <= 15 then
@@ -1019,7 +1019,7 @@ status.AttackBegan.Changed:Connect(function()
     end 
 end)
 	
-if _G.CustomMorphSkin == true and _G.MorphMod == true then
+if _G.DragonConfigurations.CustomMorphSkin == true and _G.DragonConfigurations.MorphMod == true then
     char.Ignore.FakeUpperTorso["Kiryu_Buttons"].Color = Color3.fromRGB(228,212,0)
     char.Ignore.FakeUpperTorso["Kiryu_Shirt"].Color = Color3.fromRGB(255,255,255)
     char.Ignore.FakeUpperTorso["Kiryu_Suit"].Color = Color3.fromRGB(42,42,42)
@@ -1045,7 +1045,7 @@ if _G.CustomMorphSkin == true and _G.MorphMod == true then
     char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
 
-if _G.VoiceMod == true then
+if _G.DragonConfigurations.VoiceMod == true then
     loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"))();
     Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255), "Bangers" )
 end
