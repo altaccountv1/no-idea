@@ -78,7 +78,7 @@ end
 function InCriticalHp()
     if plr.Status.Health.Value <= plr.Status.MaxHealth.Value * 0.25 then
 	return true
-    elseif plr.Status.MaxHealth.Value * 0.25 <= plr.Status.Health.Value
+    elseif plr.Status.MaxHealth.Value * 0.25 <= plr.Status.Health.Value then
 	return false
     end
 end
