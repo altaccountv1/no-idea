@@ -76,7 +76,11 @@ function hasWeaponInHand()
 end
 
 function InCriticalHp()
-    return plr.Status.Health.Value <= plr.Status.MaxHealth * 0.25
+    if plr.Status.Health.Value <= plr.Status.MaxHealth.Value * 0.25 then
+	return true
+    elseif plr.Status.MaxHealth.Value * 0.25 <= plr.Status.Health.Value
+	return false
+    end
 end
 
 function IsInPvp()
