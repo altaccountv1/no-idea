@@ -75,6 +75,10 @@ function hasWeaponInHand()
 	return (plr.Character:FindFirstChild("Holding") and true or false) 
 end
 
+function InCriticalHp()
+    return plr.Status.Health.Value <= plr.Status.MaxHealth * 0.25
+end
+
 function IsInPvp()
     if plr:FindFirstChild("PvPed") then
         return true
@@ -373,6 +377,7 @@ if not IsInPvp() then
     moves["BRCounter2"].AniSpeed.Value = 0.75
     moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 end
+
 moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
 moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
 moves.ShuckyDrop.SF.Value = 0.1
@@ -380,6 +385,7 @@ moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
 moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
 moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
 moves.Taunt.Name = "FakeTaunt" moves.DragonTaunt.Name = "Taunt"
+
 local feelingheat = Instance.new("BoolValue")
 feelingheat.Value = false
 thing = Instance.new("BoolValue")
@@ -500,10 +506,10 @@ else
 end
 
 local function HealthChanged()
-if status.Health.Value <= 150 then
-    RDS.Value = true
-elseif status.Health.Value >= 150 then
-    RDS.Value = false
+    if InCriticalHp() then
+        RDS.Value = true
+    elseif not InCriticalHp() then
+        RDS.Value = false
     end
 end
 
