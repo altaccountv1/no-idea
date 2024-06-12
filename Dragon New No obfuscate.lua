@@ -1046,8 +1046,152 @@ if _G.DragonConfigurations.CustomMorphSkin == true and _G.DragonConfigurations.M
 end
 
 if _G.DragonConfigurations.VoiceMod == true then
-    loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"))();
-    Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255), "Bangers" )
+    local UserInputService = game:GetService("UserInputService")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local ReplicatedFirst = game:GetService("ReplicatedFirst")
+
+    local ME = ReplicatedStorage.Events.ME
+
+    --// Cache
+    local RPS = game.ReplicatedStorage
+    local Voice = RPS.Voices:FindFirstChild("Kiryu")
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    local pgui = player.PlayerGui
+    local status = player.Status
+    local plr = game.Players.LocalPlayer
+    local char = plr.Character
+    local pgui = plr.PlayerGui
+    local interf = pgui.Interface
+    local bt = interf.Battle
+    local main = bt.Main
+
+    local function playSound(sound)
+	local soundclone = Instance.new("Sound")
+	soundclone.Parent = character.Head
+	soundclone.Name = sound.Name
+	soundclone.SoundId = sound.Value
+        if not sound.Name:find("taunt") then
+	        soundclone.Volume = 0.35
+        elseif sound.Name:find("taunt") then
+            soundclone.Volume = 0.5
+        end
+	soundclone:Play()
+	soundclone.Ended:Connect(function()
+	    game:GetService("Debris"):AddItem(soundclone)
+	end)
+    end
+
+    local function GetRandom(Instance)
+	local children = Instance:GetChildren()
+        local random = children[math.random(1,#children)]
+	return random
+    end
+	local receivedsound
+	
+	plr.ChildAdded:Connect(function(child)
+	    if child.Name == "InBattle" then
+	        receivedsound = GetRandom(Voice.BattleStart)
+	        playSound(receivedsound)
+	    end 
+	end) 
+	local HeatActionCD = false
+	
+	char.ChildAdded:Connect(function(child)
+	    if child.Name == "Heated" and child:WaitForChild("Heating",0.5).Value ~= character then
+	        local isThrowing = child:WaitForChild("Throwing",0.5)
+	        if not isThrowing then
+		    if main.HeatMove.TextLabel.Text ~= "Ultimate Essence " then
+	            receivedsound = GetRandom(Voice.HeatAction)
+	            playSound(receivedsound)
+		    print(receivedsound)
+		    end
+		end
+	    end
+	    if child.Name == "Hitstunned" and not character:FindFirstChild("Ragdolled") then
+		    if hitCD == false then
+		        hitCD = true
+	            receivedsound = GetRandom(Voice.Pain)
+	            playSound(receivedsound)
+		        delay(2,function()
+			        hitCD = false
+		        end)
+		    end
+	    end
+	    if child.Name == "Ragdolled" then
+	            receivedsound = GetRandom(Voice.Knockdown)
+	            playSound(receivedsound)
+	    end
+	    if child.Name == "ImaDea" then
+	            receivedsound = GetRandom(Voice.Death)
+	            playSound(receivedsound)
+	    end
+		if child.Name == "Stunned" then
+	            receivedsound = GetRandom(Voice.Stun)
+	            playSound(receivedsound)
+	    end
+	end)
+	
+	character.ChildRemoved:Connect(function(child)
+	     if child.Name == "Ragdolled" then
+		wait(0.1)
+		if not string.match(status.CurrentMove.Value.Name, "Getup") then
+		    receivedsound = GetRandom(Voice.Recover)
+	            playSound(receivedsound)
+		end
+	    end
+	end)
+	
+	character.HumanoidRootPart.ChildAdded:Connect(function(child)
+	    if child.Name == "KnockOut" or child.Name == "KnockOutRare" then
+	        child.Volume = 0
+	    end
+	end) 
+	
+	local EvadeCD = false
+	status.FFC.Evading.Changed:Connect(function()
+	    if status.FFC.Evading.Value == true and character:FindFirstChild("BeingHacked") and not EvadeCD then
+	        dodgeCD = true
+	        receivedsound = GetRandom(Voice.Dodge)
+	        playSound(receivedsound)
+	        delay(3,function()
+	            dodgeCD = false
+	        end)
+	    end
+	end)
+	local fakeTauntSound = RPS.Sounds:FindFirstChild("Laugh"):Clone()
+	fakeTauntSound.Parent = RPS.Sounds
+	fakeTauntSound.Name = "FakeLaugh"
+	fakeTauntSound.Volume.Value = 0
+	RPS.Moves.Taunt.Sound.Value = "FakeLaugh"
+	RPS.Moves.RushTaunt.Sound.Value = "FakeLaugh"
+	RPS.Moves.GoonTaunt.Sound.Value = "FakeLaugh"
+	status.Taunting.Changed:Connect(function()
+	    if status.Taunting.Value == true and status.CurrentMove.Value.Name ~= "BeastTaunt" then
+	        receivedsound = GetRandom(Voice.Taunt)
+	        playSound(receivedsound)
+	    end
+	end)
+	local LightAttackCD
+	status.CurrentMove.Changed:Connect(function()
+	    if string.match(status.CurrentMove.Value.Name, "Attack") or string.match(status.CurrentMove.Value.Name, "Punch") then
+	        if LightAttackCD == false then
+	            LightAttackCD = true
+	            receivedsound = GetRandom(Voice.LightAttack)
+	            playSound(receivedsound)
+	            delay(0.35, function()
+	            LightAttackCD = false
+	        end)
+	    end
+	    else
+	        if not string.match(status.CurrentMove.Value.Name, "Taunt") and not string.match(status.CurrentMove.Value.Name, "Grab") and not string.match(status.CurrentMove.Value.Name, "CounterHook") and not string.match(status.CurrentMove.Value.Name, "BRCounter2")then
+	            receivedsound = GetRandom(Voice.HeavyAttack)
+	           playSound(receivedsound)
+				
+	        end
+	    end
+	end)
+	Notify("Voice Mod loaded",nil, Color3.fromRGB(255, 255, 255),"RobotoMono")
 end
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Brawler.Filled.Title.Text = "Dragon"
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Rush.Filled.Title.Text = "Rush"
@@ -1086,7 +1230,7 @@ abilFolder["Ultimate Essence"].Description.Value = "The Ultimate Komaki Ability.
 local startsound = Instance.new("Sound")
 startsound.SoundId = "rbxassetid://9085027122"
 game:GetService("SoundService"):PlayLocalSound(startsound)
-Notify("dragon loaded :3",nil,Color3.fromRGB(3,161,252),"Bangers")
+Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
