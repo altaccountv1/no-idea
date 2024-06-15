@@ -75,7 +75,7 @@ alreadyRunning.Value = true
 alreadyRunning.Name = "DragonOfSteel"
  
  
-sendNotification("loading mod...")
+sendNotification("Loading mod...")
  
 local menu = pgui.MenuUI.Menu 
 local abil = menu.Abilities.Frame.Frame.Frame
@@ -202,15 +202,15 @@ local function UpdateStyle()
 	end
 	-- Hact Names
 	if main.HeatMove.TextLabel.Text == "Guru Spin Counter [Front]" then
-		main.HeatMove.TextLabel.Text = "Essence of Arm Counter [Front]"
+		main.HeatMove.TextLabel.Text = "Komaki Fist Reversal [Front]"
 	elseif main.HeatMove.TextLabel.Text == "Guru Spin Counter [Left]" then
-		main.HeatMove.TextLabel.Text = "Essence of Arm Counter [Left]"
+		main.HeatMove.TextLabel.Text = "Komaki Fist Reversal [Left]"
 	elseif main.HeatMove.TextLabel.Text == "Guru Spin Counter [Right]" then
-		main.HeatMove.TextLabel.Text = "Essence of Arm Counter [Right]"
+		main.HeatMove.TextLabel.Text = "Komaki Fist Reversal [Right]"
 	elseif main.HeatMove.TextLabel.Text == "Guru Spin Counter [Back]" then
-		main.HeatMove.TextLabel.Text = "Essence of Arm Counter [Back]"
+		main.HeatMove.TextLabel.Text = "Komaki Fist Reversal [Back]"
 	elseif main.HeatMove.TextLabel.Text == "Essence of Fisticuffs" then
-		main.HeatMove.TextLabel.Text = "Essence of Knockdown"
+		main.HeatMove.TextLabel.Text = "Essence of Pummeling"
 	elseif main.HeatMove.TextLabel.Text == "Guru Firearm Flip" then
 		main.HeatMove.TextLabel.Text = "Komaki Shot Stopper"
 	end
@@ -505,7 +505,7 @@ local function UpdateStyleOnce()
 		task.wait()
 		interf.Client.Disabled = false
 		plr.Character.HumanoidRootPart.CFrame = cframe
-    game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "0"
+    game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = moves[styles.Brawler.Rush2.Value].Anim.AnimationId
 	end
 end
 game:GetService("RunService").RenderStepped:Connect(function()
@@ -579,7 +579,7 @@ status.AttackBegan.Changed:Connect(function()
 		if status.CurrentMove.Value.Name == "TigerDrop" then
 			tigerDropsSession += 1
 			if tigerDropsSession % 10 == 0 then
-				sendNotification("tiger drops (this session): [" .. tigerDropsSession .. "]", Color3.fromRGB(0, 200, 0))
+				sendNotification("Tiger Drops (this session): [" .. tigerDropsSession .. "]", Color3.fromRGB(0, 200, 0))
 				if tigerDropsSession == 100 then
 					sendNotification("DAAAAAAAAAAAMN")
 				end
@@ -588,6 +588,6 @@ status.AttackBegan.Changed:Connect(function()
 	end
 end)
  
-sendNotification("mod loaded", Color3.fromRGB(0, 200, 0))
+sendNotification("Mod loaded", Color3.fromRGB(0, 200, 0))
 task.wait(3)
 sendNotification("press [L] to switch between legend/dragon styles", Color3.fromRGB(255, 255, 255))
