@@ -23,35 +23,21 @@ local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
 local PlaySound
 local ME = ReplicatedStorage.Events.ME
-if UserInputService.MouseEnabled and UserInputService.KeyboardEnabled then
-    PlaySound = function(sfxname)
-	local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
-	local sfx = Instance.new("Sound", nil)
-	local id = v.Value
+PlaySound = function(sfxname)
+    local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
+    local sfx = Instance.new("Sound", nil)
+    local id = v.Value
 	
-	sfx.SoundId = id
+    sfx.SoundId = id
 
-	for i,v in pairs(v:GetChildren()) do
-		sfx[v.Name] = v.Value
-	end
-
-	game.SoundService:PlayLocalSound(sfx)
-	task.delay(15, function()
-		sfx:Destroy()
-	end)
+    for i,v in pairs(v:GetChildren()) do
+	sfx[v.Name] = v.Value
     end
-else
-    local Ambassador = require(ReplicatedFirst.Ambassador)
-    local Variables = require(ReplicatedFirst.Variables)
-    local SoundModule = require(ReplicatedStorage.Modules.Sound)
-    PlaySound = function(SoundName) -- rplaysound
-        SoundModule.playsound(ReplicatedStorage.Sounds[SoundName], Variables.hrp, nil, nil, true)
-        local SoundEvent = {
-            [1] = "repsound",
-            [2] = SoundName
-        }
-        ME:FireServer(SoundEvent)
-    end
+    ME:FireServer({"repsound",sfxmame})
+    game.SoundService:PlayLocalSound(sfx)
+    task.delay(15, function()
+	sfx:Destroy()
+    end)
 end
 
 char.Head:FindFirstChild("HeavyYell"):Destroy()
@@ -368,6 +354,10 @@ elseif _G.DragonConfigurations.Moveset == "DE" then
     ChangeMoveset(Dragon, DEMoveset)
     ChangeAnims(DEAnims)
 end
+
+Beast.Strike2.Value = "DashAttack"
+Beast.Strike4.Value = "BEvadeStrikeForward"
+Beast.H_Fallen.Value = "H_FallenBeatdown
 
 ChangeAnims(RDSAnims)
 
