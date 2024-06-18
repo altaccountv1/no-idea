@@ -23,21 +23,18 @@ local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
 local PlaySound
 local ME = ReplicatedStorage.Events.ME
-PlaySound = function(sfxname)
-    local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
-    local sfx = Instance.new("Sound", nil)
-    local id = v.Value
-	
-    sfx.SoundId = id
 
-    for i,v in pairs(v:GetChildren()) do
-	sfx[v.Name] = v.Value
-    end
-    ME:FireServer({"repsound",sfxname})
-    game.SoundService:PlayLocalSound(sfx)
-    task.delay(15, function()
-	sfx:Destroy()
-    end)
+local function Playsound(sound)
+	local soundclone = Instance.new("Sound")
+	soundclone.Parent = char.Head
+	soundclone.Name = sound
+	soundclone.SoundId = ReplicatedStorage.Sounds:FindFirstChild(sound).Value
+	soundclone.Volume = 0.35
+	soundclone:Play()
+	ME:FireServer({"repsound",sound})
+	soundclone.Ended:Connect(function()
+		game:GetService("Debris"):AddItem(soundclone)
+	end)
 end
 
 char.Head:FindFirstChild("HeavyYell"):Destroy()
