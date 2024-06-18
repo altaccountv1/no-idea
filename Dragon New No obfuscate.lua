@@ -33,7 +33,7 @@ PlaySound = function(sfxname)
     for i,v in pairs(v:GetChildren()) do
 	sfx[v.Name] = v.Value
     end
-    ME:FireServer({"repsound",sfxmame})
+    ME:FireServer({"repsound",sfxname})
     game.SoundService:PlayLocalSound(sfx)
     task.delay(15, function()
 	sfx:Destroy()
