@@ -24,12 +24,13 @@ local ReplicatedFirst = game:GetService("ReplicatedFirst")
 local PlaySound
 local ME = ReplicatedStorage.Events.ME
 
-local function PlaySound(sound)
+local function Playsound(sound)
 	local soundclone = Instance.new("Sound")
-	soundclone.Parent = char.Head
+     soundclone.Parent = char.Head
 	soundclone.Name = sound
-	soundclone.SoundId = ReplicatedStorage.Sounds:FindFirstChild(sound).Value
+	soundclone.SoundId = rps.Sounds:FindFirstChild(sound).Value
 	soundclone.Volume = 0.35
+        soundclone.PlaybackSpeed = rps.Sounds:FindFirstChild(sound).PlaybackSpeed.Value
 	soundclone:Play()
 	ME:FireServer({"repsound",sound})
 	soundclone.Ended:Connect(function()
