@@ -1042,9 +1042,6 @@ if _G.DragonConfigurations.CustomMorphSkin == true and _G.DragonConfigurations.M
 	char.RightLowerLeg.Color = Color3.fromRGB(42,42,42)
 end
 
-if _G.DragonConfigurations.VoiceMod == true then
-	loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"))();
-end
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Brawler.Filled.Title.Text = "Dragon"
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Rush.Filled.Title.Text = "Rush"
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Beast.Filled.Title.Text = "Beast"
