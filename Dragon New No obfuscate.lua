@@ -436,18 +436,20 @@ local function playsound(id)
 	end)
 end
 
-local function playSound(Instance)
-	local id = Instance.Value
-	local s = Instance.new("Sound", char.Head)
-	s.SoundId = id
-
-	for i,v in Instance:GetChildren() do
-		s[v.Name] = v.Value
-	end
-
-	s:Play()
-
-	task.delay(s.Timelength + 0.05, game.Destroy, s)
+local function playSound(sound)
+    local soundclone = Instance.new("Sound")
+    soundclone.Parent = character.Head
+    soundclone.Name = sound.Name
+    soundclone.SoundId = sound.Value
+    if not sound.Name:find("taunt") then
+        soundclone.Volume = 0.35
+    elseif sound.Name:find("taunt") then
+        soundclone.Volume = 0.5
+    end
+    soundclone:Play()
+    soundclone.Ended:Connect(function()
+        game:GetService("Debris"):AddItem(soundclone)
+    end)
 end
 
 -- Ultimate Essence and Essence of Sumo Slapping --
