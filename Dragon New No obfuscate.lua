@@ -438,7 +438,7 @@ end
 
 local function playSound(sound)
     local soundclone = Instance.new("Sound")
-    soundclone.Parent = character.Head
+    soundclone.Parent = char.Head
     soundclone.Name = sound.Name
     soundclone.SoundId = sound.Value
     if not sound.Name:find("taunt") then
