@@ -507,11 +507,11 @@ game.UserInputService.InputBegan:Connect(function(key)
 		if key.KeyCode == Enum.KeyCode.ButtonR3 then
 			if DragonText == "Dragon" then
 				DragonText = "Legend"
-				DragonColor = Color3.new(0.760784, 0.898039, 1)
+				DragonColor = Color3.new(1,1,1)
 				sendNotification("Legend", DragonColor)
 			elseif DragonText == "Legend" then
 				DragonText = "Dragon"
-				DragonColor = Color3.new(0.9, 0.05, 0.15)
+				DragonColor = Color3.new(1,0,0)
 				sendNotification("Dragon of steel", DragonColor)
 			end
 			UpdateStyleOnce()
