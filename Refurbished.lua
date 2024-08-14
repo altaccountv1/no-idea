@@ -496,17 +496,7 @@ local function UpdateStyleOnce()
 	menu.Bars.Mobile_Title.Text = "Refurbished Dragon of steel by MisterMax228"
 	menu.Bars.Mobile_Title.Visible = true
 
-	if hasReloaded == false then
-		hasReloaded = true
-		game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "rbxassetid://12120052426"
-		local cframe = plr.Character.HumanoidRootPart.CFrame
-		sendNotification("reloading character...")
-		interf.Client.Disabled = true
-		task.wait()
-		interf.Client.Disabled = false
-		plr.Character.HumanoidRootPart.CFrame = cframe
-    game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = moves[styles.Brawler.Rush2.Value].Anim.AnimationId
-	end
+	
 end
 game:GetService("RunService").RenderStepped:Connect(function()
 	UpdateStyle()
@@ -514,15 +504,15 @@ end)
  
 game.UserInputService.InputBegan:Connect(function(key)
 	if game.UserInputService:GetFocusedTextBox() == nil then
-		if key.KeyCode == Enum.KeyCode.L then
+		if key.KeyCode == Enum.KeyCode.ButtonR3 then
 			if DragonText == "Dragon" then
 				DragonText = "Legend"
 				DragonColor = Color3.new(0.760784, 0.898039, 1)
-				sendNotification("legend", DragonColor)
+				sendNotification("Legend", DragonColor)
 			elseif DragonText == "Legend" then
 				DragonText = "Dragon"
 				DragonColor = Color3.new(0.9, 0.05, 0.15)
-				sendNotification("dragon of steel", DragonColor)
+				sendNotification("Dragon of steel", DragonColor)
 			end
 			UpdateStyleOnce()
 		end
@@ -587,7 +577,20 @@ status.AttackBegan.Changed:Connect(function()
 		end
 	end
 end)
- 
+local styles = game.ReplicatedStorage.Styles
+if hasReloaded == false then
+		hasReloaded = true
+		game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "rbxassetid://12120052426"
+		local cframe = plr.Character.HumanoidRootPart.CFrame
+		sendNotification("reloading character...")
+		interf.Client.Disabled = true
+		task.wait()
+		interf.Client.Disabled = false
+		plr.Character.HumanoidRootPart.CFrame = cframe
+    game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = moves[styles.Brawler.Rush2.Value].Anim.AnimationId
+end
+
 sendNotification("Mod loaded", Color3.fromRGB(0, 200, 0))
 task.wait(3)
-sendNotification("press [L] to switch between legend/dragon styles", Color3.fromRGB(255, 255, 255))
+sendNotification("Press [R3] to switch between legend/dragon styles", Color3.fromRGB(255, 255, 255))
+
