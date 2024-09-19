@@ -1,0 +1,719 @@
+local plr = game.Players.LocalPlayer
+local char = plr.Character or plr.CharacterAdded:Wait()
+local status = plr.Status
+local pgui = plr.PlayerGui
+local inter = pgui.Interface
+local rps = game.ReplicatedStorage
+local styles = rps.Styles
+local moves = rps.Moves
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./refs/heads/main/c4"))();
+local AuraEnabled = false
+local AuraSlot = "Brawler"
+local AuraColor = Color3.fromRGB(255,0,0)
+
+local connections = {
+	aura = nil,
+	forcefield = nil
+}
+
+local oldauras = {
+	brawler = styles.Brawler.Color.Value,
+	rush = styles.Rush.Color.Value,
+	beast = styles.Beast.Color.Value
+}
+
+function IsInBattle()
+	return (plr:FindFirstChild("InBattle") and true or false)
+end
+
+function IsInDungeon()
+	return game.ReplicatedStorage.Dungeon.Value
+end
+
+function DoingHact()
+	return (plr.Character:FindFirstChild("Heated") and true or false)
+end
+
+function showMaxHeatEffect()
+	return (IsInBattle() and not DoingHact() and plr.Status.Heat.Value >= 100) and true or false
+end
+
+function hasWeaponInHand()
+	return (plr.Character:FindFirstChild("Holding") and true or false)
+end
+
+function IsInPvp()
+	if plr:FindFirstChild("PvPed") then
+		return true
+	else
+		return false
+	end
+end
+
+local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
+	local Text1 = string.upper(Text)
+	if Sound then
+		pgui.Notify:Fire(Text,Sound)
+	else
+		pgui.Notify:Fire(Text)
+	end
+	if Color then
+		for i,v in pairs(pgui.NotifyUI.Awards:GetChildren()) do
+			if v.Name == "XPEx" and v.Text == Text1 then
+				v.Text = Text
+				v.TextColor3 = Color
+				if Fonts then
+					v.Font = Enum.Font[Fonts]
+				end
+			end
+		end
+	end
+end
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "R2F Explorer", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest",  IntroText = "R2F Explorer"})
+
+local win
+game.Players.LocalPlayer.Chatted:Connect(function(msg)
+    if msg == "/e open" then
+        for i,v in game.CoreGui.Orion:GetChildren() do
+            if v:FindFirstChild("TopBar") then
+               win = v
+            end
+        end
+     win.Visible = true
+    end
+end)
+
+local Tab = Window:MakeTab({
+	Name = "Player",
+	Icon = "",
+	PremiumOnly = false
+})
+
+local Activated = false
+local FillHeatCoroutine
+
+local ME = rps.Events.ME
+
+local function Playsound(sound)
+	local soundclone = Instance.new("Sound")
+	soundclone.Parent = char.Head
+	soundclone.Name = sound
+	soundclone.SoundId = rps.Sounds:FindFirstChild(sound).Value
+	soundclone.Volume = 0.35
+	soundclone.PlaybackSpeed = rps.Sounds:FindFirstChild(sound).PlaybackSpeed.Value
+	soundclone:Play()
+	ME:FireServer({"repsound",sound})
+	soundclone.Ended:Connect(function()
+		game:GetService("Debris"):AddItem(soundclone)
+	end)
+end
+
+local A_1 =  {
+	[1] = "heat", 
+	[2] = game:GetService("ReplicatedStorage").Moves.Taunt
+}
+
+local thing = Instance.new("BoolValue")
+thing.Value = false
+
+local function Slap(enemy)
+	local A_1 = {
+		[1] = "damage", 
+		[3] = enemy, 
+		[4] = plr.Character.RightHand.Position, --right hand
+		[5] = game:GetService("ReplicatedStorage").Moves.Slapper, --Slapper
+		[6] = "Brawler", 
+		[7] = 0.04611371246065557, 
+		[11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
+		[13] = plr.Character.HumanoidRootPart.Position, --rootpart 
+		[14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
+	}
+	if thing.Value == false then
+		thing.Value = true
+		ME:FireServer(A_1)
+	end
+end
+
+local function Stun(enemy)
+	local A_1 = {
+		[1] = "damage", 
+		[3] = enemy, 
+		[4] = plr.Character.RightHand.Position, --right hand
+		[5] = game:GetService("ReplicatedStorage").Moves.ShuckyDrop, --Slapper
+		[6] = "Brawler", 
+		[7] = 0.04611371246065557, 
+		[11] = Vector3.new(-0.9940911531448364, -0, 0.10854917764663696), 
+		[13] = plr.Character.HumanoidRootPart.Position, --rootpart 
+		[14] = CFrame.new(enemy.Position.X, enemy.Position.Y, enemy.Position.Z, -0.108549215, -1.1197094e-05, 0.994091153, 0.000829752884, 0.999999642, 0.000101868049, -0.994090796, 0.000835907587, -0.108549178)
+	}
+	if thing.Value == false then
+		thing.Value = true
+		ME:FireServer(A_1)
+	end
+end
+
+local function FillHeat()
+	while Activated do
+		ME:FireServer(A_1)
+		task.wait() 
+	end
+end
+
+function GiveHeat(Amount)
+	for i = 1,6 do
+		ME:FireServer(A_1)
+	end
+end
+
+local infheattoggle = Tab:AddToggle({
+	Name = "Infinite Heat",
+	Default = false,
+	Callback = function(Value)
+          Activated = Value
+		if Activated then
+			FillHeatCoroutine = coroutine.create(FillHeat)
+			coroutine.resume(FillHeatCoroutine)
+		else
+			if FillHeatCoroutine then
+				coroutine.yield(FillHeatCoroutine)
+				FillHeatCoroutine = nil
+			end
+		end
+	end    
+})
+
+function CreateForcefield(Duration)
+	local Forcefield
+	if not status:FindFirstChild("Invulnerable") then
+		Forcefield = rps.Invulnerable:Clone()
+		Forcefield.Parent = status
+	end
+	if Duration ~= 0 and Forcefield ~= nil then
+		task.spawn(function()
+			task.wait(Duration)
+			Forcefield:Destroy()
+		end)
+	end
+end
+
+function DestroyForcefield()
+	if status:FindFirstChild("Invulnerable") then
+		status.Invulnerable:Destroy()
+	end
+end
+
+local ffenabled = Instance.new("BoolValue")
+
+local fftoggle = Tab:AddToggle({
+	Name = "Forcefield",
+	Default = false,
+	Callback = function(Value)
+        ffenabled.Value = Value
+     end
+})
+
+ffenabled.Changed:Connect(function()
+    if ffenabled.Value == true then
+			if connections.forcefield == nil then
+				connections.forcefield = game:GetService("RunService").Heartbeat:Connect(function()
+					CreateForcefield(nil)
+				end)
+			end
+         elseif ffenabled.Value == false then
+			if connections.forcefield then connections.forcefield:Disconnect() connections.forcefield = nil
+			    DestroyForcefield() 
+                end
+        end
+end)
+
+local sect1 = Tab:AddSection({
+    Name = "Moveset"
+})
+local ServerTab = Window:MakeTab({
+	Name = "Server",
+	Icon = "rbxassetid://12490660432",
+	PremiumOnly = false
+})
+
+local sound = nil
+
+ local box = ServerTab:AddTextbox({
+	Name = "Sound Name",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		sound = Value
+    end	  
+})
+
+local playsound = ServerTab:AddButton({
+	Name = "Play Sound",
+	Callback = function()
+          Playsound(sound)
+  	end    
+})
+
+local Section = ServerTab:AddSection({
+	Name = "Shop"
+})
+
+local args = {}
+local selecteditem = "e"
+local place
+
+local menu = ServerTab:AddDropdown({
+	Name = "Item Menu",
+	Default = "1",
+	Options = {"Premium Sushi Tray A", "Sonic Energy Cola", "Bottle of Mystery Liquid"},
+	Callback = function(Value)
+		selecteditem = Value
+           if selecteditem == "Premium Sushi Tray A" or selecteditem == "Sonic Energy Cola" then
+               place = "4-Store"
+           elseif selecteditem == "Bottle of Mystery Liquid" then
+               place = "Fisherman"
+           end
+	end    
+})
+
+local howmuch = "1"
+ local txtbox = ServerTab:AddTextbox({
+	Name = "How Many?",
+	Default = "1",
+	TextDisappear = false,
+	Callback = function(Value)
+		howmuch = tonumber(Value)
+    end	  
+})
+
+
+local Purchase = ServerTab:AddButton({
+	Name = "Purchase",
+	Callback = function()
+        local notif = "Purchased "..tostring(howmuch).." "..selecteditem
+         OrionLib:MakeNotification({
+	Name = "Shop",
+	Content = notif,
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+     local args = {
+    [1] = {
+        [selecteditem] = howmuch
+    },
+    [2] = place
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("BuyCart"):InvokeServer(unpack(args))
+       
+  	end    
+})
+
+local sect2 = ServerTab:AddSection({
+    Name = "Props and Weapons"
+})
+
+local useditems = { }
+
+local WeaponSummon = ServerTab:AddButton({
+	Name = "Summon Prop/Weapon",
+	Callback = function()
+         
+local weapon = nil
+       
+        for i,v in workspace.Props:GetDescendants() do
+            if (v.Name:find("gun_") and v:IsA("Model")) or (v.Name:find("wep_") and v:IsA("MeshPart")) or (v.Name:find("prop_") and v:IsA("Model")) and not table.find(useditems, v) then 
+                    weapon = v
+                    break
+            end
+        end
+        local args = {
+            [1] = {
+                [1] = "pickup",
+                [2] = weapon
+            }
+        }
+game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME"):FireServer(unpack(args))
+        table.insert(useditems, weapon) 
+  	end    
+})
+
+local CombatTab = Window:MakeTab({
+	Name = "Combat",
+	Icon = "",
+	PremiumOnly = false
+})
+
+local stunenabled = false
+
+local function autostun()
+    for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+				if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == char.HumanoidRootPart then  
+                thing.Value = false
+                Stun(enemy)
+                thing.Value = true
+            end
+        end
+end
+
+local Stunenemy = CombatTab:AddButton({
+	Name = "Stun Enemies",
+	Callback = function() 
+         autostun()
+  	end    
+})
+
+local DeflectEnabled = false
+
+local function DeflectAttacks()
+	if DeflectEnabled == true then
+		if not IsInPvp() then
+			for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+				if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+					if enemy.Parent.AttackBegan.Value == true then
+						enemy.Parent.AttackBegan.Value = false
+						thing.Value = false
+						Slap(enemy)
+					end
+					if enemy.Parent.TookAim.Value == true then
+						enemy.Parent.TookAim.Value = false
+						wait(0.6)
+						thing.Value = false                 
+						Slap(enemy)                         
+					end                                     
+				end                                         
+			end                                             
+		end                                                 
+		if IsInPvp() then                                   
+			for i,opp in game.Players:GetPlayers() do       
+				if opp ~= plr then                                         
+					if opp.Status.AttackBegan.Value == true then
+						opp.Status.AttackBegan.Value = false
+						thing.Value = false                 
+						Slap(opp.Character.HumanoidRootPart)
+                                thing.Value = true
+					end
+				end
+			end
+		end
+	end
+end
+
+game:GetService("RunService").RenderStepped:Connect(DeflectAttacks)
+
+
+local AttackDef = CombatTab:AddToggle({
+	Name = "Attack Deflection",
+     Default = false,
+	Callback = function(Value)
+         DeflectEnabled = Value
+  	end    
+})
+
+local StyleTab = Tab
+
+local SelectedStyle = "Brawler"
+local styleobj = styles[SelectedStyle]
+
+local menu = StyleTab:AddDropdown({
+	Name = "Select Style",
+	Default = "Brawler",
+	Options = {"Brawler","Rush","Beast"},
+	Callback = function(Value)
+		SelectedStyle = Value 
+           styleobj = styles[SelectedStyle]
+	end    
+})
+
+local ValueName
+local NewValue
+
+ local valuename = StyleTab:AddTextbox({
+	Name = "Object Name",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		ValueName = Value
+    end	  
+})
+
+ local valuetext = StyleTab:AddTextbox({
+	Name = "Object Value",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		NewValue = Value
+    end	  
+})
+
+local ValueButton = StyleTab:AddButton({
+	Name = "Set Value",
+	Callback = function() 
+         if styleobj:FindFirstChild(ValueName) and styleobj:FindFirstChild(ValueName):IsA("StringValue") then
+			styleobj[ValueName].Value = NewValue
+			OrionLib:MakeNotification({
+	Name = "StringValue Change",
+	Content = "Value changed successfully.",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+		elseif styleobj:FindFirstChild(ValueName) and styleobj:FindFirstChild(ValueName):IsA("Animation") then
+			styleobj[NameText].AnimationId = NewValue
+			OrionLib:MakeNotification({
+	Name = "Animation Change",
+	Content = "Animation successfully changed.",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
+		elseif not styleobj:FindFirstChild(ValueName) then
+			OrionLib:MakeNotification({
+	Name = "Value Change",
+	Content = "Object not found..",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+		end
+
+  	end    
+})
+
+local function sub(str, gsubs)
+	local new = str
+
+	for i,v in pairs(gsubs) do
+		new = new:gsub(i, v)
+	end
+
+	return new
+end
+
+local oldstyles = { }
+
+for i,v in styles:GetChildren() do
+	oldstyles[v.Name] = v:GetChildren()
+end
+
+local function Save(Object)
+	local actions = {}  -- Table to hold each action
+
+	for i,v in pairs(Object:GetChildren()) do
+		local name = v.Name
+		local class = v.ClassName
+		local value
+
+		if v:IsA("Animation") then
+			value = v.AnimationId
+		elseif v.ClassName:lower():find('value') and not v:IsA("Color3Value") then
+			value = v.Value
+		elseif v.ClassName:lower():find('value') and v:IsA("Color3Value") then
+			local r, g, b = v.Value.R * 255, v.Value.G * 255, v.Value.B * 255
+			value = string.format("Color3.fromRGB(%d, %d, %d)", r, g, b)
+		end
+
+		local action = {
+			Name = name,
+			Class = class,
+			Value = value,
+			IsOld = table.find(oldstyles[Object.Name], v) and true or false,
+		}
+		table.insert(actions, action)
+	end
+
+	local actionsCode = "local actions = " .. game:GetService("HttpService"):JSONEncode(actions)
+	local executeCode = [[
+for _, action in ipairs(actions) do
+    local new
+    if action.IsOld then
+        new = game.ReplicatedStorage.Styles[']] .. Object.Name .. [[']:FindFirstChild(action.Name)
+    else
+        new = Instance.new(action.Class, game.ReplicatedStorage.Styles[']] .. Object.Name .. [[')
+    end
+    new.Name = action.Name
+    if action.Class:lower():find('value') and action.Class ~= "Color3Value" then
+        new.Value = action.Value
+    elseif action.Class == "Color3Value" then
+        new.Value = loadstring("return " .. action.Value)()
+    elseif action.Class == "Animation" then
+        new.AnimationId = action.Value
+    end
+end
+]]
+	local completeCode = actionsCode .. "\n\n" .. executeCode
+	setclipboard(completeCode)
+end
+
+local ValueButton = StyleTab:AddButton({
+	Name = "Compile Code",
+	Callback = function() 
+        Save(styleobj)
+        OrionLib:MakeNotification({
+	Name = "Script Compiled",
+	Content = "Script copied to clipboard",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+     })
+     end
+})
+local NpcTab  = Window:MakeTab({
+	Name = "NPCS",
+	Icon = "rbxassetid://12490660432",
+	PremiumOnly = false
+})
+
+local ScriptsTab = Window:MakeTab({
+	Name = "Scripts",
+	Icon = "rbxassetid://12490660432",
+	PremiumOnly = false
+})
+
+local allabilities = ScriptsTab:AddButton({
+	Name = "All Abilities",
+	Callback = function()
+          local player = game.Players.LocalPlayer
+    local pgui = player.PlayerGui
+    local menuUI = player:WaitForChild("PlayerGui"):WaitForChild("MenuUI")
+    local menu = menuUI:WaitForChild("Menu")
+    local abilitiesFrame = menu:WaitForChild("Abilities")
+    local frame = abilitiesFrame:WaitForChild("Frame"):WaitForChild("Frame")
+    local listFrame =  frame:WaitForChild("Frame"):WaitForChild("List"):WaitForChild("ListFrame")
+
+    if player.Status:FindFirstChild("AbilitiesRan") then
+	    return pgui.Notify:Fire("You have all abilities already", "buzz")
+    end
+
+    OrionLib:MakeNotification({
+	Name = "Abilities",
+	Content = "Please open abilities menu.",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
+    listFrame.ChildAdded:Wait()
+    task.wait(1)
+    for _, ability in ipairs(listFrame:GetChildren()) do
+	    local styValue = ability:FindFirstChild("sty")
+	    if styValue and styValue:IsA("StringValue") then
+		    local styleName = styValue.Value
+		    local styleFolder = player.Status.Styles:FindFirstChild(styleName)
+
+		    if styleFolder then
+			    local newFolder = Instance.new("Folder", styleFolder)
+			    newFolder.Name = ability.Name
+		    else
+			    print("Style '" .. styleName .. "' not found for ability '" .. ability.Name .. "'")
+                    
+		    end
+	    end
+    end
+
+    Instance.new("Folder", player.Status).Name = "AbilitiesRan"
+   OrionLib:MakeNotification({
+	Name = "Abilities",
+	Content = "You now have all abilities.",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
+  	end    
+})
+
+local koistyle = ScriptsTab:AddButton({
+	Name = "Koi Style",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/ducksy9340/R2FModding/main/KoiStyle.lua"))();
+  	end    
+})
+
+local reload = ScriptsTab:AddButton({
+	Name = "Reload Character",
+	Callback = function()
+                local cf = char.HumanoidRootPart.CFrame
+      		interf.Client.Disabled = true
+                task.wait()
+                interf.Client.Disabled = true
+                char.HumanoidRootPart.CFrame = cf
+  	end    
+})
+
+task.spawn(function()
+    while task.wait(300) do
+        table.clear(useditems) -- clears table of summoned items
+    end
+end)
+
+local bottable = { }
+local tableofbots = {} 
+local selectedbot = nil
+local botlist = NpcTab:AddDropdown({
+	Name = "NPC List",
+	Default = "Legendary Dragon",
+	Options = {"Legendary Dragon"},
+	Callback = function(Value)
+		selectedbot = workspace.Bots.AI[Value]
+	end    
+})
+
+task.spawn(function()
+    while task.wait(2) do
+    botlist:Refresh(tableofbots,true)
+        for _,v in pairs(workspace.Bots.AI:GetChildren()) do
+            if v:IsA("Actor") and (v:FindFirstChild("InBattle") or table.find(bottable, v.Name)) then
+                table.remove(bottable, table.find(bottable, v.Name))
+            end
+        end
+        for _,v in pairs(workspace.Bots.AI:GetChildren()) do
+            if v:IsA("Actor") and not v:FindFirstChild("InBattle") and not table.find(bottable, v.Name) then
+                table.insert(bottable,v.Name)
+            end
+        end
+        for i,v in bottable do print(i,v) end
+        botlist:Refresh(bottable,false)
+       
+    end
+end)
+
+local TPDebounce = false
+local CanTP = false
+local Bots = workspace.Bots.AI
+local bottp = NpcTab:AddButton({
+	Name = "Warp To Bot",
+	Callback = function()
+      	if selectedbot and not selectedbot:FindFirstChild("InBattle") and not TPDebounce then
+			TPDebounce = true
+			CanTP = false
+			local botpos = selectedbot:GetPivot()
+			local oldpos = char:GetPivot()
+			char:PivotTo(botpos)
+			task.wait()
+			char:PivotTo(oldpos)
+			task.wait(3)
+			TPDebounce = false
+		end
+  	end    
+})
+
+local Abouttab = Window:MakeTab({
+	Name = "About",
+	Icon = "",
+	PremiumOnly = false
+})
+
+local Creators = Abouttab:AddSection({
+	Name = "Creators"
+})
+
+Abouttab:AddLabel("ducksy and MadnessMyth")
+
+
+Abouttab:AddParagraph("About","If you have your hands on this bad boy, you’re in for a treat. This is the most powerful R2F GUI. Specifically handed out by Me (ducksy). It has all you need. NPC spawning, Infinite heat, Attack Deflection, Being able to purchase products from shops, Play sounds server sidedly, and more.")
+
+local Creators = Abouttab:AddSection({
+	Name = "Special Thanks to"
+})
+
+Abouttab:AddLabel("Nein and Zlompyz for testing.")
+
+
