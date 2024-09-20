@@ -187,23 +187,13 @@ local infheattoggle = Tab:AddToggle({
 })
 
 function CreateForcefield(Duration)
-	local Forcefield
-	if not status:FindFirstChild("Invulnerable") then
-		Forcefield = rps.Invulnerable:Clone()
-		Forcefield.Parent = status
-	end
-	if Duration ~= 0 and Forcefield ~= nil then
-		task.spawn(function()
-			task.wait(Duration)
-			Forcefield:Destroy()
-		end)
-	end
+   
+	rps.Invulnerable:Clone().Parent = status
+   
 end
 
 function DestroyForcefield()
-	if status:FindFirstChild("Invulnerable") then
-		status.Invulnerable:Destroy()
-	end
+	status.Invulnerable:Destroy()
 end
 
 local ffenabled = Instance.new("BoolValue")
@@ -216,20 +206,24 @@ local fftoggle = Tab:AddToggle({
      end
 })
 
+local doforcefield
 ffenabled.Changed:Connect(function()
     if ffenabled.Value == true then
-			if connections.forcefield == nil then
-				connections.forcefield = game:GetService("RunService").Heartbeat:Connect(function()
-					CreateForcefield(nil)
-				end)
-			end
+			doforcefield = true
+                CreateForcefield()
          elseif ffenabled.Value == false then
-			if connections.forcefield then connections.forcefield:Disconnect() connections.forcefield = nil
-			    DestroyForcefield() 
-                end
+			doforcefield = false
+                DestroyForcefield()
         end
 end)
 
+game:GetService("RunService").RenderStepped:Connect(function()
+    if doforcefield == true then
+        if not status:FindFirstChild("Invulnerable") then
+            CreateForcefield()
+        end
+    end
+end)
 local sect1 = Tab:AddSection({
     Name = "Moveset"
 })
@@ -337,78 +331,6 @@ local weapon = nil
         }
 game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME"):FireServer(unpack(args))
         table.insert(useditems, weapon) 
-  	end    
-})
-
-local CombatTab = Window:MakeTab({
-	Name = "Combat",
-	Icon = "",
-	PremiumOnly = false
-})
-
-local stunenabled = false
-
-local function autostun()
-    for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-				if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == char.HumanoidRootPart then  
-                thing.Value = false
-                Stun(enemy)
-                thing.Value = true
-            end
-        end
-end
-
-local Stunenemy = CombatTab:AddButton({
-	Name = "Stun Enemies",
-	Callback = function() 
-         autostun()
-  	end    
-})
-
-local DeflectEnabled = false
-
-local function DeflectAttacks()
-	if DeflectEnabled == true then
-		if not IsInPvp() then
-			for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-				if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
-					if enemy.Parent.AttackBegan.Value == true then
-						enemy.Parent.AttackBegan.Value = false
-						thing.Value = false
-						Slap(enemy)
-					end
-					if enemy.Parent.TookAim.Value == true then
-						enemy.Parent.TookAim.Value = false
-						wait(0.6)
-						thing.Value = false                 
-						Slap(enemy)                         
-					end                                     
-				end                                         
-			end                                             
-		end                                                 
-		if IsInPvp() then                                   
-			for i,opp in game.Players:GetPlayers() do       
-				if opp ~= plr then                                         
-					if opp.Status.AttackBegan.Value == true then
-						opp.Status.AttackBegan.Value = false
-						thing.Value = false                 
-						Slap(opp.Character.HumanoidRootPart)
-                                thing.Value = true
-					end
-				end
-			end
-		end
-	end
-end
-
-game:GetService("RunService").RenderStepped:Connect(DeflectAttacks)
-
-
-local AttackDef = CombatTab:AddToggle({
-	Name = "Attack Deflection",
-     Default = false,
-	Callback = function(Value)
-         DeflectEnabled = Value
   	end    
 })
 
@@ -669,7 +591,7 @@ task.spawn(function()
                 table.insert(bottable,v.Name)
             end
         end
-        for i,v in bottable do print(i,v) end
+       
         botlist:Refresh(bottable,false)
        
     end
@@ -695,6 +617,118 @@ local bottp = NpcTab:AddButton({
   	end    
 })
 
+local TPDebounce = false
+local CanTP = false
+local Bots = workspace.Bots.AI
+
+local parkertp = NpcTab:AddButton({
+	Name = "Teleport to Parker",
+	Callback = function()
+          if TPDebounce then return end TPDebounce = true
+	     local botpos = workspace.Map.MiniQuests.Parker:GetPivot()
+		local oldpos = char:GetPivot()
+		char:PivotTo(botpos)
+		task.wait(3)
+		TPDebounce = false
+  	end    
+})
+
+local CombatTab = NpcTab
+
+local stunenabled = false
+
+local function autostun()
+    for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+				if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == char.HumanoidRootPart then  
+                thing.Value = false
+                Stun(enemy)
+                thing.Value = true
+            end
+        end
+end
+
+local sec4 = CombatTab:AddSection({Name = "Attacks"})
+
+local Stunenemy = CombatTab:AddButton({
+	Name = "Stun Enemies",
+	Callback = function() 
+         autostun()
+  	end    
+})
+
+local DeflectEnabled = false
+
+local function DeflectAttacks()
+	if DeflectEnabled == true then
+		if not IsInPvp() then
+			for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
+				if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
+					if enemy.Parent.AttackBegan.Value == true then
+						enemy.Parent.AttackBegan.Value = false
+						thing.Value = false
+						Slap(enemy)
+					end
+					if enemy.Parent.TookAim.Value == true then
+						enemy.Parent.TookAim.Value = false
+						wait(0.6)
+						thing.Value = false                 
+						Slap(enemy)                         
+					end                                     
+				end                                         
+			end                                             
+		end                                                 
+		if IsInPvp() then                                   
+			for i,opp in game.Players:GetPlayers() do       
+				if opp ~= plr then                                         
+					if opp.Status.AttackBegan.Value == true then
+						opp.Status.AttackBegan.Value = false
+						thing.Value = false                 
+						Slap(opp.Character.HumanoidRootPart)
+                                thing.Value = true
+					end
+				end
+			end
+		end
+	end
+end
+
+game:GetService("RunService").RenderStepped:Connect(DeflectAttacks)
+
+
+local AttackDef = CombatTab:AddToggle({
+	Name = "Attack Deflection",
+     Default = false,
+	Callback = function(Value)
+         DeflectEnabled = Value
+  	end    
+})
+
+local dungeontab = Window:MakeTab({
+	Name = "Dungeons",
+	Icon = "",
+	PremiumOnly = false
+})
+
+local selecteddungeon = nil
+
+local selection = dungeontab:AddDropdown({
+	Name = "Dungeon List",
+	Default = "Steel Dungeon",
+	Options = {"Steel Dungeon", "Mob Hotel", "Mob Office", "Skyrise Tower", "Coliseum", "Sewers","Jeff Dojo","PvP"},
+	Callback = function(Value)
+		selecteddungeon = Value
+	end    
+})
+
+local tpdungeon = dungeontab:AddButton({
+	Name = "Activate Selected Dungeon",
+	Callback = function()
+          if workspace.Map.Dungeons:FindFirstChild(selecteddungeon) then
+fireproximityprompt(workspace.Map.Dungeons:FindFirstChild(selecteddungeon).Prompt.DungeonPrompt)
+        end
+  	end    
+})
+
 local Abouttab = Window:MakeTab({
 	Name = "About",
 	Icon = "",
@@ -715,5 +749,7 @@ local Creators = Abouttab:AddSection({
 })
 
 Abouttab:AddLabel("Nein and Zlompyz for testing.")
+
+
 
 
