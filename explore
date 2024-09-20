@@ -391,9 +391,10 @@ local ValueButton = StyleTab:AddButton({
 })
 
 		elseif not styleobj:FindFirstChild(ValueName) then
+             local new = Instance.new("StringValue", styleobj) new.Name = ValueName new.Value = NewValue
 			OrionLib:MakeNotification({
-	Name = "Value Change",
-	Content = "Object not found..",
+	Name = "Value Created",
+	Content = "Created New Value.",
 	Image = "rbxassetid://4483345998",
 	Time = 5
 })
@@ -483,6 +484,32 @@ local NpcTab  = Window:MakeTab({
 	Name = "NPCS",
 	Icon = "rbxassetid://12490660432",
 	PremiumOnly = false
+})
+
+local dungeontab = Window:MakeTab({
+	Name = "Dungeons",
+	Icon = "",
+	PremiumOnly = false
+})
+
+local selecteddungeon = nil
+
+local selection = dungeontab:AddDropdown({
+	Name = "Dungeon List",
+	Default = "Steel Dungeon",
+	Options = {"Steel Dungeon", "Mob Hotel", "Mob Office", "Skyrise Tower", "Coliseum", "Sewers","Jeff Dojo","PvP"},
+	Callback = function(Value)
+		selecteddungeon = Value
+	end    
+})
+
+local tpdungeon = dungeontab:AddButton({
+	Name = "Activate Selected Dungeon",
+	Callback = function()
+          if workspace.Map.Dungeons:FindFirstChild(selecteddungeon) then
+fireproximityprompt(workspace.Map.Dungeons:FindFirstChild(selecteddungeon).Prompt.DungeonPrompt)
+        end
+  	end    
 })
 
 local ScriptsTab = Window:MakeTab({
@@ -703,32 +730,6 @@ local AttackDef = CombatTab:AddToggle({
   	end    
 })
 
-local dungeontab = Window:MakeTab({
-	Name = "Dungeons",
-	Icon = "",
-	PremiumOnly = false
-})
-
-local selecteddungeon = nil
-
-local selection = dungeontab:AddDropdown({
-	Name = "Dungeon List",
-	Default = "Steel Dungeon",
-	Options = {"Steel Dungeon", "Mob Hotel", "Mob Office", "Skyrise Tower", "Coliseum", "Sewers","Jeff Dojo","PvP"},
-	Callback = function(Value)
-		selecteddungeon = Value
-	end    
-})
-
-local tpdungeon = dungeontab:AddButton({
-	Name = "Activate Selected Dungeon",
-	Callback = function()
-          if workspace.Map.Dungeons:FindFirstChild(selecteddungeon) then
-fireproximityprompt(workspace.Map.Dungeons:FindFirstChild(selecteddungeon).Prompt.DungeonPrompt)
-        end
-  	end    
-})
-
 local Abouttab = Window:MakeTab({
 	Name = "About",
 	Icon = "",
@@ -749,7 +750,4 @@ local Creators = Abouttab:AddSection({
 })
 
 Abouttab:AddLabel("Nein and Zlompyz for testing.")
-
-
-
 
