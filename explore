@@ -602,7 +602,7 @@ local botlist = NpcTab:AddDropdown({
 	Options = {""},
 	Callback = function(Value)
 		selectedbot = workspace.Bots.AI[Value]
-                if not selectedbot then selectedbot = nil
+                if not selectedbot then selectedbot = nil end
 	end    
 })
 
