@@ -756,3 +756,5 @@ local Creators = Abouttab:AddSection({
 
 Abouttab:AddLabel("Nein and Zlompyz for testing.")
 
+OrionLib:Init()
+
