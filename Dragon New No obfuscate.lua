@@ -861,32 +861,6 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 RDS.Changed:Connect(function()
 	if RDS.Value == true and not status:FindFirstChild("ANGRY") then
-		FastMoves.Value = true
-		if _G.DragonConfigurations.Moveset == "Y0" then
-			local id = "rbxassetid://10928237540"
-			local SuperCharge = Instance.new("Animation", workspace)
-			SuperCharge.AnimationId = id
-			local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
-			anim:Play()
-			anim.Ended:Wait()
-			SuperCharge:Destroy()
-			anim:Destroy()
-		elseif _G.DragonConfigurations.Moveset == "DE" then
-			ChangeMoveset(Dragon, RDSCombo)
-			local id = "http://www.roblox.com/asset/?id=10714360164"
-			local anim = Instance.new("Animation")
-			anim.AnimationId = id
-			local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
-			track.Priority = Enum.AnimationPriority.Action4
-			track.Looped = false
-			track:Play()
-			track:AdjustSpeed(2)
-			char.HumanoidRootPart.Anchored = true
-			task.wait(1.5)
-			char.HumanoidRootPart.Anchored = false
-			track:Destroy()
-			anim:Destroy()
-		end
 		if _G.DragonConfigurations.VoiceMod == true then
 			local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
 			playSound(rage)
@@ -898,7 +872,6 @@ RDS.Changed:Connect(function()
 			local invul = Instance.new("Folder",status)
 			invul.Name = "Invulnerable"
 		end
-	elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
 		FastMoves.Value = true
 		if _G.DragonConfigurations.Moveset == "Y0" then
 			local id = "rbxassetid://10928237540"
@@ -925,13 +898,43 @@ RDS.Changed:Connect(function()
 			track:Destroy()
 			anim:Destroy()
 		end
+	elseif RDS.Value == true and status:FindFirstChild("ANGRY") then
+		if _G.DragonConfigurations.VoiceMod == true then
+			local rage = fetchRandom(RPS.Voices.Kiryu.Rage)
+			playSound(rage)
+		end
 		Animation()
 		fillHeat(6)
-		local invul = Instance.new("Folder",status)
-		invul.Name = "Invulnerable" 
+		FastMoves.Value = true
 		if not status:FindFirstChild("Invulnerable") then
 			local invul = Instance.new("Folder",status)
 			invul.Name = "Invulnerable"
+		end
+		FastMoves.Value = true
+		if _G.DragonConfigurations.Moveset == "Y0" then
+			local id = "rbxassetid://10928237540"
+			local SuperCharge = Instance.new("Animation", workspace)
+			SuperCharge.AnimationId = id
+			local anim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(SuperCharge)
+			anim:Play()
+			anim.Ended:Wait()
+			SuperCharge:Destroy()
+			anim:Destroy()
+		elseif _G.DragonConfigurations.Moveset == "DE" then
+			ChangeMoveset(Dragon, RDSCombo)
+			local id = "http://www.roblox.com/asset/?id=10714360164"
+			local anim = Instance.new("Animation")
+			anim.AnimationId = id
+			local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+			track.Priority = Enum.AnimationPriority.Action4
+			track.Looped = false
+			track:Play()
+			track:AdjustSpeed(2)
+			char.HumanoidRootPart.Anchored = true
+			task.wait(1.5)
+			char.HumanoidRootPart.Anchored = false
+			track:Destroy()
+			anim:Destroy()
 		end
 	else 
 		if status:FindFirstChild("Invulnerable") then
