@@ -598,10 +598,11 @@ local tableofbots = {}
 local selectedbot = nil
 local botlist = NpcTab:AddDropdown({
 	Name = "NPC List",
-	Default = "Legendary Dragon",
-	Options = {"Legendary Dragon"},
+	Default = "",
+	Options = {""},
 	Callback = function(Value)
 		selectedbot = workspace.Bots.AI[Value]
+                if not selectedbot then selectedbot = nil
 	end    
 })
 
