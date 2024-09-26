@@ -393,7 +393,11 @@ local auratoggle = StyleTab:AddToggle({
 	Name = "Aura Enabled",
 	Default = false,
 	Callback = function(Value)
-            AuraEnabled = Value
+            if Value == true then
+            AuraEnabled = true
+        elseif Value == false then
+            AuraEnabled = false
+        end
      end
 })
 
