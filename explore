@@ -10,7 +10,7 @@ local moves = rps.Moves
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./refs/heads/main/c4"))();
 local AuraEnabled = false
 local AuraSlot = "Brawler"
-local AuraColor = Color3.fromRGB(255,0,0)
+local AuraColor = styles[AuraSlot].Color.Value
 
 local connections = {
 	aura = nil,
@@ -50,6 +50,34 @@ function IsInPvp()
 		return false
 	end
 end
+
+function AuraChange()
+    if AuraEnabled and status.Style.Value == AuraSlot then 
+        local AuraSequence = ColorSequence.new({ColorSequenceKeypoint.new(0, AuraColor), ColorSequenceKeypoint.new(1, AuraColor)})
+        char.HumanoidRootPart.Fire_Main.Color = AuraSequence
+        char.HumanoidRootPart.Fire_Secondary.Color = AuraSequence
+        char.HumanoidRootPart.Fire_Main.Rate = status.Heat.Value >= 100 and 115 or status.Heat.Value >= 75 and 85 or 80
+        char.HumanoidRootPart.Fire_Secondary.Rate = status.Heat.Value >= 100 and 90 or status.Heat.Value >= 75 and 80 or 70
+        char.HumanoidRootPart.Lines1.Color = AuraSequence
+        char.HumanoidRootPart.Lines1.Rate = status.Heat.Value >= 100 and 60 or status.Heat.Value >= 75 and 40 or 20
+        char.HumanoidRootPart.Lines2.Color = AuraSequence
+        char.HumanoidRootPart.Lines2.Rate = status.Heat.Value >= 100 and 60 or status.Heat.Value >= 75 and 40 or 20
+        char.HumanoidRootPart.Sparks.Color = AuraSequence
+        if not char.HumanoidRootPart.TimeFor.Enabled then
+            char.HumanoidRootPart.TimeFor.Color = AuraSequence
+        end
+    
+        char.UpperTorso["r2f_aura_burst"].Lines1.Color = AuraSequence
+        char.UpperTorso["r2f_aura_burst"].Lines2.Color = AuraSequence
+        char.UpperTorso["r2f_aura_burst"].Lines1.Enabled = showMaxHeatEffect()
+        char.UpperTorso["r2f_aura_burst"].Flare.Enabled = showMaxHeatEffect()
+        char.UpperTorso["r2f_aura_burst"].Flare.Color = AuraSequence
+        char.UpperTorso["r2f_aura_burst"].Smoke.Color = AuraSequence
+        char.UpperTorso.Evading.Color = AuraSequence
+    end
+end
+
+game:GetService("RunService").RenderStepped:Connect(AuraChange)
 
 local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
 	local Text1 = string.upper(Text)
@@ -344,8 +372,9 @@ local menu = StyleTab:AddDropdown({
 	Default = "Brawler",
 	Options = {"Brawler","Rush","Beast"},
 	Callback = function(Value)
-		SelectedStyle = Value 
-           styleobj = styles[SelectedStyle]
+            AuraSlot = Value
+	    SelectedStyle = Value 
+            styleobj = styles[SelectedStyle]
 	end    
 })
 
@@ -357,6 +386,14 @@ local stylecolor = StyleTab:AddColorpicker({
 	Callback = function(Value)
             color = Value
 	end	  
+})
+
+local auratoggle = StyleTab:AddToggle({
+	Name = "Aura Enabled",
+	Default = false,
+	Callback = function(Value)
+            AuraEnabled = Value
+     end
 })
 
 local ValueName
@@ -487,6 +524,7 @@ end
 	setclipboard(completeCode)
 end
 
+local plrsect = StyleTab:AddSection({"Style"})
 local ValueButton = StyleTab:AddButton({
 	Name = "Compile Code",
 	Callback = function() 
