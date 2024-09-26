@@ -71,7 +71,7 @@ local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz,
 	end
 end
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/altaccountv1/mc-mods/refs/heads/main/no')))()
 
 local Window = OrionLib:MakeWindow({Name = "R2F Explorer", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest",  IntroText = "R2F Explorer"})
 
