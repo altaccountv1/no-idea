@@ -349,6 +349,16 @@ local menu = StyleTab:AddDropdown({
 	end    
 })
 
+local color = nil
+
+local stylecolor = StyleTab:AddColorpicker({
+	Name = "Style Color",
+	Default = styleobj.Color.Value,
+	Callback = function(Value)
+            color = Value
+	end	  
+})
+
 local ValueName
 local NewValue
 
@@ -395,6 +405,15 @@ local ValueButton = StyleTab:AddButton({
 			OrionLib:MakeNotification({
 	Name = "Value Created",
 	Content = "Created New Value.",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
+        if styleobj:FindFirstChild(ValueName) and styleobj:FindFirstChild(ValueName):IsA("Color3Value") then
+			styleobj[ValueName].Value = color
+			OrionLib:MakeNotification({
+	Name = "Color Change",
+	Content = "Value changed successfully.",
 	Image = "rbxassetid://4483345998",
 	Time = 5
 })
