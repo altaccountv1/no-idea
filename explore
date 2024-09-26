@@ -385,6 +385,7 @@ local stylecolor = StyleTab:AddColorpicker({
 	Default = styleobj.Color.Value,
 	Callback = function(Value)
             color = Value
+            AuraColor = Value
 	end	  
 })
 
