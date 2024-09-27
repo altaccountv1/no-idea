@@ -529,7 +529,7 @@ end
 	setclipboard(completeCode)
 end
 
-local plrsect = StyleTab:AddSection({"Style"})
+local plrsect = StyleTab:AddSection({Name = "Saving"})
 local ValueButton = StyleTab:AddButton({
 	Name = "Compile Code",
 	Callback = function() 
