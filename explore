@@ -8,6 +8,7 @@ local styles = rps.Styles
 local moves = rps.Moves
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/altaccountv1/-CLASSIFIED-./refs/heads/main/c4"))();
+
 local AuraEnabled = false
 local AuraSlot = "Brawler"
 local AuraColor = styles[AuraSlot].Color.Value
@@ -101,7 +102,7 @@ end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/altaccountv1/mc-mods/refs/heads/main/no')))()
 
-local Window = OrionLib:MakeWindow({Name = "R2F Explorer", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest",  IntroText = "R2F Explorer"})
+local Window = OrionLib:MakeWindow({Name = "R2F Explorer", HidePremium = false, SaveConfig = false, ConfigFolder = "OrionTest",  IntroText = "R2F Explorer"})
 
 local win
 game.Players.LocalPlayer.Chatted:Connect(function(msg)
@@ -817,6 +818,13 @@ local Creators = Abouttab:AddSection({
 })
 
 Abouttab:AddLabel("Nein and Zlompyz for testing.")
+
+OrionLib:MakeNotification({
+    Name = "Access Granted",
+    Content = "Welcome back, "..plr.DisplayName,
+    Image = "rbxassetid://4483345998",
+    Time = 5
+})
 
 OrionLib:Init()
 
