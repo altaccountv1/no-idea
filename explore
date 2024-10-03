@@ -810,10 +810,12 @@ local testtab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+-- Create the ViewportFrame
 local function CreateCharacterViewport()
     -- Create a ViewportFrame
     local ViewportFrame = Instance.new("ViewportFrame")
-    ViewportFrame.Size = UDim2.new(0, 300, 0, 300) -- Set desired size
+    ViewportFrame.Size = UDim2.new(0, 150, 0, 150) -- Set smaller size
+    ViewportFrame.Position = UDim2.new(0.5, -75, 0.5, -75) -- Center the frame
     ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
     ViewportFrame.BorderSizePixel = 0
     ViewportFrame.BackgroundTransparency = 0.1
@@ -831,16 +833,21 @@ local function CreateCharacterViewport()
     local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
     local clonedCharacter = character:Clone()
 
-    -- Position the camera to view the character
+    -- Position the camera to view the character, facing the user
     local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
     if humanoidRootPart then
-        Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 2, 5), humanoidRootPart.Position)
+        Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
         clonedCharacter.Parent = ViewportFrame -- Add the cloned character to the viewport
+        
+        -- Ensure the character always faces the camera
+        local orientation = CFrame.Angles(0, math.pi, 0) -- Rotate 180 degrees to face the camera
+        clonedCharacter:SetPrimaryPartCFrame(humanoidRootPart.CFrame * orientation)
     end
 
     -- Return the ViewportFrame
     return ViewportFrame
 end
+
 
 local fram
 
