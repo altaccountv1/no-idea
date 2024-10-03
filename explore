@@ -814,7 +814,7 @@ local testtab = Window:MakeTab({
 local function CreateCharacterViewport()
     -- Create a ViewportFrame
     local ViewportFrame = Instance.new("ViewportFrame")
-    ViewportFrame.Size = UDim2.new(0, 75, 0, 75) -- Set size to 75x75 pixels
+    ViewportFrame.Size = UDim2.new(0, 150, 0,150) -- Set size to 75x75 pixels
     ViewportFrame.Position = UDim2.new(0.5, -37.5, 0.5, -37.5) -- Center the frame
     ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
     ViewportFrame.BorderSizePixel = 0
@@ -837,38 +837,27 @@ local function CreateCharacterViewport()
     -- Add the cloned character to the viewport
     clonedCharacter.Parent = ViewportFrame
 
-    -- Create AlignOrientation to keep the character facing the screen
-    local alignOrientation = Instance.new("AlignOrientation")
-    alignOrientation.Parent = clonedCharacter:FindFirstChild("HumanoidRootPart")
-
-    -- Create a part to serve as the target for the orientation
-    local target = Instance.new("Part")
-    target.Size = Vector3.new(1, 1, 1) -- Small size
-    target.Anchored = true
-    target.CanCollide = false
-    target.Parent = ViewportFrame
-
-    -- Create a RenderStepped loop to update camera and align character
+    -- Create a RenderStepped loop to keep the character facing the user
     game:GetService("RunService").RenderStepped:Connect(function()
         if clonedCharacter and clonedCharacter:FindFirstChild("HumanoidRootPart") then
             local humanoidRootPart = clonedCharacter.HumanoidRootPart
 
-            -- Position the camera to focus on the character
+            -- Set the camera position to focus on the character
             Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
 
-            -- Position the target part to always face the camera
-            target.Position = humanoidRootPart.Position + Vector3.new(0, 1.5, 5)
+            -- Ensure the character always faces the camera (which is effectively the user)
+            local targetPosition = Camera.CFrame.Position -- Camera's position
+            local lookAtCFrame = CFrame.new(humanoidRootPart.Position, targetPosition)
 
-            -- Update AlignOrientation to face the target part
-            alignOrientation.Responsiveness = 20 -- Adjust responsiveness if needed
-            alignOrientation.MaxTorque = Vector3.new(4000, 4000, 4000) -- Adjust max torque if needed
-            alignOrientation.CFrame = target.CFrame
+            -- Update the character's orientation
+            humanoidRootPart.CFrame = lookAtCFrame
         end
     end)
 
     -- Return the ViewportFrame
     return ViewportFrame
 end
+
 
 
 
