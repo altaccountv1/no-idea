@@ -814,7 +814,7 @@ local testtab = Window:MakeTab({
 local function CreateCharacterViewport()
     -- Create a ViewportFrame
     local ViewportFrame = Instance.new("ViewportFrame")
-    ViewportFrame.Size = UDim2.new(0, 150, 0,150) -- Set size to 75x75 pixels
+    ViewportFrame.Size = UDim2.new(0, 75, 0, 75) -- Set size to 75x75 pixels
     ViewportFrame.Position = UDim2.new(0.5, -37.5, 0.5, -37.5) -- Center the frame
     ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
     ViewportFrame.BorderSizePixel = 0
@@ -832,10 +832,20 @@ local function CreateCharacterViewport()
     -- Clone the player's character
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
+
+    -- Temporarily set Archivable to false to avoid freezing issues
+    local originalArchivable = character.Archivable
+    character.Archivable = false
+
+    -- Clone the character
     local clonedCharacter = character:Clone()
+    character.Archivable = originalArchivable -- Restore original Archivable property
+
+    -- Reset position of cloned character
+    clonedCharacter:SetPrimaryPartCFrame(CFrame.new(0, 0, 0)) 
 
     -- Add the cloned character to the viewport
-    clonedCharacter.Parent = ViewportFrame
+    clonedCharacter.Parent = ViewportFrame 
 
     -- Create a RenderStepped loop to keep the character facing the user
     game:GetService("RunService").RenderStepped:Connect(function()
@@ -857,6 +867,7 @@ local function CreateCharacterViewport()
     -- Return the ViewportFrame
     return ViewportFrame
 end
+
 
 
 
