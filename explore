@@ -810,14 +810,7 @@ local testtab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local view = testtab:AddViewport({
-    Name = "Character Viewport",
-    Size = UDim2.new(0, 300, 0, 300),
-    Callback = function(Viewport)
-        -- Optionally load an animation when the viewport is created
-         -- Replace with actual animation ID
-    end
-})
+local view = testtab:AddViewport()
 local Creators = Abouttab:AddSection({
 	Name = "Creators"
 })
