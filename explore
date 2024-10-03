@@ -814,7 +814,7 @@ local testtab = Window:MakeTab({
 local function CreateCharacterViewport()
     -- Create a ViewportFrame
     local ViewportFrame = Instance.new("ViewportFrame")
-    ViewportFrame.Size = UDim2.new(0, 75, 0, 75) -- Set size to 75x75 pixels
+    ViewportFrame.Size = UDim2.new(0, 150, 0,150) -- Set size to 75x75 pixels
     ViewportFrame.Position = UDim2.new(0.5, -37.5, 0.5, -37.5) -- Center the frame
     ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
     ViewportFrame.BorderSizePixel = 0
@@ -829,24 +829,30 @@ local function CreateCharacterViewport()
     local Camera = Instance.new("Camera")
     ViewportFrame.CurrentCamera = Camera
 
+    -- Create a WorldModel for rendering the character
+    local WorldModel = Instance.new("WorldModel")
+    WorldModel.Parent = ViewportFrame
+
     -- Clone the player's character
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
 
     -- Temporarily set Archivable to false to avoid freezing issues
-    character.Archivable = true
+    local originalArchivable = character.Archivable
+    character.Archivable = false
 
     -- Clone the character
     local clonedCharacter = character:Clone()
-    character.Archivable = false -- Restore original Archivable property
+    character.Archivable = originalArchivable -- Restore original Archivable property
 
     -- Check if HumanoidRootPart exists and set it as the PrimaryPart
     local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
     if humanoidRootPart then
-        clonedCharacter:SetPrimaryPartCFrame(CFrame.new(0, 0, 0)) -- Reset position
+        -- Reset position of the cloned character
+        clonedCharacter:SetPrimaryPartCFrame(CFrame.new(0, 0, 0)) 
 
-        -- Add the cloned character to the viewport
-        clonedCharacter.Parent = ViewportFrame 
+        -- Add the cloned character to the WorldModel
+        clonedCharacter.Parent = WorldModel 
 
         -- Create a RenderStepped loop to keep the character facing the user
         game:GetService("RunService").RenderStepped:Connect(function()
@@ -869,12 +875,6 @@ local function CreateCharacterViewport()
     -- Return the ViewportFrame
     return ViewportFrame
 end
-
-
-
-
-
-
 
 local fram
 
