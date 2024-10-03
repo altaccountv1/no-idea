@@ -814,8 +814,8 @@ local testtab = Window:MakeTab({
 local function CreateCharacterViewport()
     -- Create a ViewportFrame
     local ViewportFrame = Instance.new("ViewportFrame")
-    ViewportFrame.Size = UDim2.new(0, 150, 0, 150) -- Set smaller size
-    ViewportFrame.Position = UDim2.new(0.5, -75, 0.5, -75) -- Center the frame
+    ViewportFrame.Size = UDim2.new(0, 75, 0, 75) -- Set size to 75x75 pixels
+    ViewportFrame.Position = UDim2.new(0.5, -37.5, 0.5, -37.5) -- Center the frame
     ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
     ViewportFrame.BorderSizePixel = 0
     ViewportFrame.BackgroundTransparency = 0.1
@@ -833,20 +833,28 @@ local function CreateCharacterViewport()
     local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
     local clonedCharacter = character:Clone()
 
-    -- Position the camera to view the character, facing the user
+    -- Position the camera to view the character
     local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
     if humanoidRootPart then
         Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
         clonedCharacter.Parent = ViewportFrame -- Add the cloned character to the viewport
-        
-        -- Ensure the character always faces the camera
-        local orientation = CFrame.Angles(0, math.pi, 0) -- Rotate 180 degrees to face the camera
-        clonedCharacter:SetPrimaryPartCFrame(humanoidRootPart.CFrame * orientation)
+
+        -- Create a RenderStepped loop to keep the character facing the user
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if humanoidRootPart then
+                -- Update camera position
+                Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
+
+                -- Ensure the character always faces the camera
+                clonedCharacter:SetPrimaryPartCFrame(humanoidRootPart.CFrame * CFrame.Angles(0, math.pi, 0))
+            end
+        end)
     end
 
     -- Return the ViewportFrame
     return ViewportFrame
 end
+
 
 
 local fram
