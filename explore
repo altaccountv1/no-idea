@@ -850,7 +850,7 @@ for i,v in game.CoreGui.Orion:GetDescendants() do
     end
 end
 
-CreateCharacterViewport().Parent = game.CoreGui.Orion.Frame.VPlace
+CreateCharacterViewport().Parent = fram
 
 local Creators = Abouttab:AddSection({
 	Name = "Creators"
