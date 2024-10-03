@@ -834,12 +834,11 @@ local function CreateCharacterViewport()
     local character = player.Character or player.CharacterAdded:Wait()
 
     -- Temporarily set Archivable to false to avoid freezing issues
-    local originalArchivable = character.Archivable
-    character.Archivable = false
+    character.Archivable = true
 
     -- Clone the character
     local clonedCharacter = character:Clone()
-    character.Archivable = originalArchivable -- Restore original Archivable property
+    character.Archivable = false -- Restore original Archivable property
 
     -- Check if HumanoidRootPart exists and set it as the PrimaryPart
     local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
