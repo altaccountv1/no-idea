@@ -805,7 +805,7 @@ local Abouttab = Window:MakeTab({
 })
 
 local testtab = Window:MakeTab({
-	Name = "Test"
+	Name = "Test",
 	Icon = "",
 	PremiumOnly = false
 })
