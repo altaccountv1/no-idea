@@ -844,9 +844,11 @@ end
 
 local fram
 
-for i,v in game.CoreGui.Orion:GetDescendants() do
-    if v.Name == "ItemContainer" and not v:FindFirstChildOfClass("Frame") then
-        fram = v:FindFirstAncestor("ItemContainer")
+for i,v in game.CoreGui.Orion:GetChildfen() do
+    if v:FindFirstChild("TopBar") then
+        for i,p in v:GetChildren() do
+            if not p:FindFirstChildOfClass("Frame") then fram = p end
+        end
     end
 end
 
