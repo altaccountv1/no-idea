@@ -830,30 +830,46 @@ local function CreateCharacterViewport()
     ViewportFrame.CurrentCamera = Camera
 
     -- Clone the player's character
-    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
     local clonedCharacter = character:Clone()
 
-    -- Position the camera to view the character
-    local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
-    if humanoidRootPart then
-        Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
-        clonedCharacter.Parent = ViewportFrame -- Add the cloned character to the viewport
+    -- Add the cloned character to the viewport
+    clonedCharacter.Parent = ViewportFrame
 
-        -- Create a RenderStepped loop to keep the character facing the user
-        game:GetService("RunService").RenderStepped:Connect(function()
-            if humanoidRootPart then
-                -- Update camera position
-                Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
+    -- Create AlignOrientation to keep the character facing the screen
+    local alignOrientation = Instance.new("AlignOrientation")
+    alignOrientation.Parent = clonedCharacter:FindFirstChild("HumanoidRootPart")
 
-                -- Ensure the character always faces the camera
-                clonedCharacter:SetPrimaryPartCFrame(humanoidRootPart.CFrame * CFrame.Angles(0, math.pi, 0))
-            end
-        end)
-    end
+    -- Create a part to serve as the target for the orientation
+    local target = Instance.new("Part")
+    target.Size = Vector3.new(1, 1, 1) -- Small size
+    target.Anchored = true
+    target.CanCollide = false
+    target.Parent = ViewportFrame
+
+    -- Create a RenderStepped loop to update camera and align character
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if clonedCharacter and clonedCharacter:FindFirstChild("HumanoidRootPart") then
+            local humanoidRootPart = clonedCharacter.HumanoidRootPart
+
+            -- Position the camera to focus on the character
+            Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
+
+            -- Position the target part to always face the camera
+            target.Position = humanoidRootPart.Position + Vector3.new(0, 1.5, 5)
+
+            -- Update AlignOrientation to face the target part
+            alignOrientation.Responsiveness = 20 -- Adjust responsiveness if needed
+            alignOrientation.MaxTorque = Vector3.new(4000, 4000, 4000) -- Adjust max torque if needed
+            alignOrientation.CFrame = target.CFrame
+        end
+    end)
 
     -- Return the ViewportFrame
     return ViewportFrame
 end
+
 
 
 
