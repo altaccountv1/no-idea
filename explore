@@ -854,12 +854,12 @@ local function CreateCharacterViewport()
                 -- Set the camera position to focus on the character
                 Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
 
-                -- Ensure the character always faces the camera (which is effectively the user)
-                local targetPosition = Camera.CFrame.Position -- Camera's position
-                local lookAtCFrame = CFrame.new(humanoidRootPart.Position, targetPosition)
+                -- Ensure the character always faces the camera
+                local cameraPosition = Camera.CFrame.Position
+                local lookAtCFrame = CFrame.new(humanoidRootPart.Position, cameraPosition)
 
-                -- Update the character's orientation
-                humanoidRootPart.CFrame = lookAtCFrame
+                -- Update the character's orientation to face the camera
+                humanoidRootPart.CFrame = lookAtCFrame * CFrame.Angles(0, math.pi, 0) -- Rotate 180 degrees to face the camera directly
             end
         end)
     else
