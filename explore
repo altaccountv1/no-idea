@@ -844,7 +844,7 @@ end
 
 local fram
 
-for i,v in game.CoreGui.Orion:GetChildfen() do
+for i,v in game.CoreGui.Orion:GetChildren() do
     if v:FindFirstChild("TopBar") then
         for i,p in v:GetChildren() do
             if not p:FindFirstChildOfClass("Frame") then fram = p end
