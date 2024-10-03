@@ -841,32 +841,36 @@ local function CreateCharacterViewport()
     local clonedCharacter = character:Clone()
     character.Archivable = originalArchivable -- Restore original Archivable property
 
-    -- Reset position of cloned character
-    clonedCharacter:SetPrimaryPartCFrame(CFrame.new(0, 0, 0)) 
+    -- Check if HumanoidRootPart exists and set it as the PrimaryPart
+    local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart then
+        clonedCharacter:SetPrimaryPartCFrame(CFrame.new(0, 0, 0)) -- Reset position
 
-    -- Add the cloned character to the viewport
-    clonedCharacter.Parent = ViewportFrame 
+        -- Add the cloned character to the viewport
+        clonedCharacter.Parent = ViewportFrame 
 
-    -- Create a RenderStepped loop to keep the character facing the user
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if clonedCharacter and clonedCharacter:FindFirstChild("HumanoidRootPart") then
-            local humanoidRootPart = clonedCharacter.HumanoidRootPart
+        -- Create a RenderStepped loop to keep the character facing the user
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if clonedCharacter and clonedCharacter:FindFirstChild("HumanoidRootPart") then
+                -- Set the camera position to focus on the character
+                Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
 
-            -- Set the camera position to focus on the character
-            Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
+                -- Ensure the character always faces the camera (which is effectively the user)
+                local targetPosition = Camera.CFrame.Position -- Camera's position
+                local lookAtCFrame = CFrame.new(humanoidRootPart.Position, targetPosition)
 
-            -- Ensure the character always faces the camera (which is effectively the user)
-            local targetPosition = Camera.CFrame.Position -- Camera's position
-            local lookAtCFrame = CFrame.new(humanoidRootPart.Position, targetPosition)
-
-            -- Update the character's orientation
-            humanoidRootPart.CFrame = lookAtCFrame
-        end
-    end)
+                -- Update the character's orientation
+                humanoidRootPart.CFrame = lookAtCFrame
+            end
+        end)
+    else
+        warn("HumanoidRootPart not found in cloned character.")
+    end
 
     -- Return the ViewportFrame
     return ViewportFrame
 end
+
 
 
 
