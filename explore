@@ -842,6 +842,14 @@ local function CreateCharacterViewport()
     return ViewportFrame
 end
 
+local fram
+
+for i,v in game.CoreGui.Orion:GetDescendants() do
+    if v:IsA("TextLabel") and v.Text == "Moves" then
+        fram = v:FindFirstAncestor("ItemContainer")
+    end
+end
+
 CreateCharacterViewport().Parent = game.CoreGui.Orion.Frame.VPlace
 
 local Creators = Abouttab:AddSection({
