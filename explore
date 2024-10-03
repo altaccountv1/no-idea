@@ -810,7 +810,10 @@ local testtab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local view = testtab:AddViewport()
+local Viewport = testtab:AddViewport() -- Create the viewport
+Viewport.Frame.Parent = testtab.Content
+
+
 local Creators = Abouttab:AddSection({
 	Name = "Creators"
 })
