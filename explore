@@ -805,14 +805,44 @@ local Abouttab = Window:MakeTab({
 })
 
 local testtab = Window:MakeTab({
-	Name = "Test",
+	Name = "Moves",
 	Icon = "",
 	PremiumOnly = false
 })
 
-local Viewport = testtab:AddViewport() -- Create the viewport
-Viewport.Frame.Parent = testtab.Content
+local function CreateCharacterViewport()
+    -- Create a ViewportFrame
+    local ViewportFrame = Instance.new("ViewportFrame")
+    ViewportFrame.Size = UDim2.new(0, 300, 0, 300) -- Set desired size
+    ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
+    ViewportFrame.BorderSizePixel = 0
+    ViewportFrame.BackgroundTransparency = 0.1
 
+    -- Add rounded corners
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 10)
+    Corner.Parent = ViewportFrame
+
+    -- Set up the camera for the viewport
+    local Camera = Instance.new("Camera")
+    ViewportFrame.CurrentCamera = Camera
+
+    -- Clone the player's character
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local clonedCharacter = character:Clone()
+
+    -- Position the camera to view the character
+    local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart then
+        Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 2, 5), humanoidRootPart.Position)
+        clonedCharacter.Parent = ViewportFrame -- Add the cloned character to the viewport
+    end
+
+    -- Return the ViewportFrame
+    return ViewportFrame
+end
+
+CreateCharacterViewport().Parent = game.CoreGui.Orion.Frame.VPlace
 
 local Creators = Abouttab:AddSection({
 	Name = "Creators"
