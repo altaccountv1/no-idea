@@ -856,7 +856,7 @@ local function CreateCharacterViewport()
         clonedCharacter.Parent = WorldModel 
 
         -- Rotate the character to face the camera
-        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, humanoidRootPart.CFrame.Position - Camera.CFrame.Position)
+        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, Camera.CFrame.Position - humanoidRootPart.CFrame.Position)
     else
         warn("HumanoidRootPart not found in cloned character.")
     end
