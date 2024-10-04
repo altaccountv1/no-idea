@@ -826,6 +826,7 @@ local function CreateCharacterViewport()
 
     -- Set up the camera for the viewport
     local Camera = Instance.new("Camera")
+    Camera.CFrame = CFrame.new(Vector3.new(0, 1.5, 7), Vector3.new(0, 1.5, 0)) -- Camera is fixed
     ViewportFrame.CurrentCamera = Camera
 
     -- Create a WorldModel for rendering the character
@@ -852,20 +853,9 @@ local function CreateCharacterViewport()
         -- Add the cloned character to the WorldModel
         clonedCharacter.Parent = WorldModel 
 
-        -- Create a RenderStepped loop to keep the character facing the user
-        game:GetService("RunService").RenderStepped:Connect(function()
-            if clonedCharacter and clonedCharacter:FindFirstChild("HumanoidRootPart") then
-                -- Set the camera position to focus on the character
-                Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 2, 7), humanoidRootPart.Position)
+        -- Rotate the character to face the camera
+        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position) * CFrame.Angles(0, math.pi, 0) -- Rotate 180 degrees to face the camera
 
-                -- Ensure the character always faces the camera
-                local cameraPosition = Camera.CFrame.Position
-                local lookAtCFrame = CFrame.new(humanoidRootPart.Position, cameraPosition)
-
-                -- Rotate the character to face the camera
-                humanoidRootPart.CFrame = lookAtCFrame * CFrame.Angles(0, math.pi, 0) -- Rotate 180 degrees to face the camera directly
-            end
-        end)
     else
         warn("HumanoidRootPart not found in cloned character.")
     end
