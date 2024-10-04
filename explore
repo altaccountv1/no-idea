@@ -875,36 +875,11 @@ for i,v in game.CoreGui.Orion:GetChildren() do
     end
 end
 
-local viewport, animator = CreateCharacterViewport()
-
 -- Assuming 'fram' is the parent frame where the UI should be added
 local fram = -- (Your existing frame setup)
 
 -- Create the viewport and animator
 local viewport, animator = CreateCharacterViewport()
-
--- Create a container frame for the viewport and buttons
-local containerFrame = Instance.new("Frame")
-containerFrame.Size = UDim2.new(1, 0, 1, 0) -- Full size of the parent frame
-containerFrame.BackgroundTransparency = 1 -- Make container invisible
-containerFrame.Parent = fram
-
--- Add UIListLayout to stack elements vertically
-local layout = Instance.new("UIListLayout")
-layout.FillDirection = Enum.FillDirection.Vertical -- Stack elements vertically
-layout.HorizontalAlignment = Enum.HorizontalAlignment.Center -- Center horizontally
-layout.VerticalAlignment = Enum.VerticalAlignment.Top -- Align at the top
-layout.Padding = UDim.new(0, 10) -- Space between elements
-layout.Parent = containerFrame
-
--- Add the viewport to the container frame
-viewport.Parent = containerFrame
-
--- Create a button and add it under the viewport
-local button = Instance.new("TextButton")
-button.Size = UDim2.new(0, 100, 0, 50) -- Set button size
-button.Text = "Action"
-button.Parent = containerFrame -- Add the button under the viewport
 
 -- Additional buttons can be added similarly below the viewport
 
@@ -918,6 +893,8 @@ local movename = testtab:AddTextbox({
         end
      
 })
+
+local viewport, animator = CreateCharacterViewport()
 
 local playanim = testtab:AddButton({
     Name = "Play Animation",
