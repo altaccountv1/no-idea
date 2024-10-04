@@ -899,7 +899,6 @@ local playanim = testtab:AddButton({
 	Time = 5
 })
         else
-             for i,v in animator:GetPlayingAnimationTracks() do v:Stop() end
              local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Anim)
              track:Play()
              track.Looped = true
