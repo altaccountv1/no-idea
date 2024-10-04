@@ -877,6 +877,29 @@ end
 local viewport, animator = CreateCharacterViewport()
 viewport.Parent = fram
 
+local mtp = nil
+local movename = testtab:AddTextbox({
+	Name = "Move",
+	Default = "TigerDrop",
+	TextDisappear = false,
+	Callback = function(Value)
+        mtp = Value
+     
+})
+
+local playanim = testtab:AddButton({
+    Name = "Play Animation",
+    Callback = function() 
+        if not moves:FindFirstChild(mtp) then
+
+        else
+             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Anim)
+             track:Play()
+             track.Looped = true
+             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value)
+        end
+    end    
+})
 local Creators = Abouttab:AddSection({
 	Name = "Creators"
 })
