@@ -886,7 +886,7 @@ for i,v in game.CoreGui.Orion:GetChildren() do
 end
 
 local viewport, animator = CreateCharacterViewport()
-viewport.Parent = fra
+viewport.Parent = fram
 
 local Creators = Abouttab:AddSection({
 	Name = "Creators"
