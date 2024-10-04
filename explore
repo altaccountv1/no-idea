@@ -809,14 +809,16 @@ local testtab = Window:MakeTab({
 	Icon = "",
 	PremiumOnly = false
 })
+
 local function CreateCharacterViewport()
     -- Create a ViewportFrame
     local ViewportFrame = Instance.new("ViewportFrame")
     ViewportFrame.Size = UDim2.new(0, 150, 0, 150) -- Set size to 150x150 pixels
-    ViewportFrame.Position = UDim2.new(0.5, -75, 0.5, -75) -- Center the frame
     ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
     ViewportFrame.BorderSizePixel = 0
     ViewportFrame.BackgroundTransparency = 0.1
+    ViewportFrame.AnchorPoint = Vector2.new(0.5, 0) -- Center horizontally
+    ViewportFrame.Position = UDim2.new(0.5, 0, 0, 0) -- Align to the top-center of the frame
 
     -- Add rounded corners
     local Corner = Instance.new("UICorner")
@@ -855,7 +857,6 @@ local function CreateCharacterViewport()
 
         -- Rotate the character to face the camera
         humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position) * CFrame.Angles(0, math.pi, 0) -- Rotate 180 degrees to face the camera
-
     else
         warn("HumanoidRootPart not found in cloned character.")
     end
@@ -875,7 +876,37 @@ for i,v in game.CoreGui.Orion:GetChildren() do
 end
 
 local viewport, animator = CreateCharacterViewport()
-viewport.Parent = fram
+
+-- Assuming 'fram' is the parent frame where the UI should be added
+local fram = -- (Your existing frame setup)
+
+-- Create the viewport and animator
+local viewport, animator = CreateCharacterViewport()
+
+-- Create a container frame for the viewport and buttons
+local containerFrame = Instance.new("Frame")
+containerFrame.Size = UDim2.new(1, 0, 1, 0) -- Full size of the parent frame
+containerFrame.BackgroundTransparency = 1 -- Make container invisible
+containerFrame.Parent = fram
+
+-- Add UIListLayout to stack elements vertically
+local layout = Instance.new("UIListLayout")
+layout.FillDirection = Enum.FillDirection.Vertical -- Stack elements vertically
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center -- Center horizontally
+layout.VerticalAlignment = Enum.VerticalAlignment.Top -- Align at the top
+layout.Padding = UDim.new(0, 10) -- Space between elements
+layout.Parent = containerFrame
+
+-- Add the viewport to the container frame
+viewport.Parent = containerFrame
+
+-- Create a button and add it under the viewport
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 100, 0, 50) -- Set button size
+button.Text = "Action"
+button.Parent = containerFrame -- Add the button under the viewport
+
+-- Additional buttons can be added similarly below the viewport
 
 local mtp = nil
 local movename = testtab:AddTextbox({
