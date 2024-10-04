@@ -645,7 +645,7 @@ local reload = ScriptsTab:AddButton({
                 local cf = char.HumanoidRootPart.CFrame
       		inter.Client.Disabled = true
                 task.wait()
-                inter.Client.Disabled = true
+                inter.Client.Disabled = false
                 char.HumanoidRootPart.CFrame = cf
   	end    
 })
