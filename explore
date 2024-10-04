@@ -829,6 +829,7 @@ local function CreateCharacterViewport()
     local Camera = Instance.new("Camera")
     Camera.CFrame = CFrame.new(Vector3.new(0, 0, 7), Vector3.new(0,0, 0)) -- Camera is fixed
     ViewportFrame.CurrentCamera = Camera
+    local cameraPosition = Camera.CFrame.Position
 
     -- Create a WorldModel for rendering the character
     local WorldModel = Instance.new("WorldModel")
