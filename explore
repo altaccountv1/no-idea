@@ -810,12 +810,11 @@ local testtab = Window:MakeTab({
 	PremiumOnly = false
 })
 
--- Create the ViewportFrame
 local function CreateCharacterViewport()
     -- Create a ViewportFrame
     local ViewportFrame = Instance.new("ViewportFrame")
-    ViewportFrame.Size = UDim2.new(0, 150, 0,150) -- Set size to 75x75 pixels
-    ViewportFrame.Position = UDim2.new(0.5, -37.5, 0.5, -37.5) -- Center the frame
+    ViewportFrame.Size = UDim2.new(0, 150, 0, 150) -- Set size to 150x150 pixels
+    ViewportFrame.Position = UDim2.new(0.5, -75, 0.5, -75) -- Center the frame
     ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
     ViewportFrame.BorderSizePixel = 0
     ViewportFrame.BackgroundTransparency = 0.1
@@ -837,8 +836,7 @@ local function CreateCharacterViewport()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
 
-    -- Temporarily set Archivable to false to avoid freezing issues
-    local originalArchivable = false
+    -- Temporarily set Archivable to true to allow cloning
     character.Archivable = true
 
     -- Clone the character
@@ -858,13 +856,13 @@ local function CreateCharacterViewport()
         game:GetService("RunService").RenderStepped:Connect(function()
             if clonedCharacter and clonedCharacter:FindFirstChild("HumanoidRootPart") then
                 -- Set the camera position to focus on the character
-                Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 1.5, 5), humanoidRootPart.Position)
+                Camera.CFrame = CFrame.new(humanoidRootPart.Position + Vector3.new(0, 2, 7), humanoidRootPart.Position)
 
                 -- Ensure the character always faces the camera
                 local cameraPosition = Camera.CFrame.Position
                 local lookAtCFrame = CFrame.new(humanoidRootPart.Position, cameraPosition)
 
-                -- Update the character's orientation to face the camera
+                -- Rotate the character to face the camera
                 humanoidRootPart.CFrame = lookAtCFrame * CFrame.Angles(0, math.pi, 0) -- Rotate 180 degrees to face the camera directly
             end
         end)
@@ -872,9 +870,10 @@ local function CreateCharacterViewport()
         warn("HumanoidRootPart not found in cloned character.")
     end
 
-    -- Return the ViewportFrame
-    return ViewportFrame
+    -- Return the ViewportFrame and the character's Animator
+    return ViewportFrame, clonedCharacter.Humanoid.Animator
 end
+
 
 local fram
 
@@ -886,7 +885,8 @@ for i,v in game.CoreGui.Orion:GetChildren() do
     end
 end
 
-CreateCharacterViewport().Parent = fram
+local viewport, animator = CreateCharacterViewport()
+viewport.Parent = fra
 
 local Creators = Abouttab:AddSection({
 	Name = "Creators"
