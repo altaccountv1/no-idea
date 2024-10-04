@@ -912,12 +912,12 @@ local playanim = testtab:AddButton({
 	Image = "rbxassetid://4483345998",
 	Time = 5
 })
-        elseif moves:FineFirstChild(mtp) and victimanims == false then
+        elseif moves:FindFirstChild(mtp) and victimanims == false then
              local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Anim)
              track:Play()
              track.Looped = true
              track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value)
-        elseif moves:FineFirstChild(mtp) and victimanims == true then
+        elseif moves:FindFirstChild(mtp) and victimanims == true then
              local track = animator:LoadAnimation(moves:FindFirstChild(mtp).VictimAnim)
              track:Play()
              track.Looped = true
