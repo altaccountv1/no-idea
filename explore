@@ -435,7 +435,7 @@ local ValueButton = StyleTab:AddButton({
 	Time = 5
 })
 		elseif styleobj:FindFirstChild(ValueName) and styleobj:FindFirstChild(ValueName):IsA("Animation") then
-			styleobj[NameText].AnimationId = NewValue
+			styleobj[ValueName].AnimationId = NewValue
 			OrionLib:MakeNotification({
 	Name = "Animation Change",
 	Content = "Animation successfully changed.",
