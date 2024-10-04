@@ -643,9 +643,9 @@ local reload = ScriptsTab:AddButton({
 	Name = "Reload Character",
 	Callback = function()
                 local cf = char.HumanoidRootPart.CFrame
-      		interf.Client.Disabled = true
+      		inter.Client.Disabled = true
                 task.wait()
-                interf.Client.Disabled = true
+                inter.Client.Disabled = true
                 char.HumanoidRootPart.CFrame = cf
   	end    
 })
