@@ -916,12 +916,14 @@ local playanim = testtab:AddButton({
              local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Anim)
              track:Play()
              track.Looped = true
-             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value)
+             if not mtp:match("H_") then
+             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value) end
         elseif moves:FindFirstChild(mtp) and victimanims == true then
-             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).VictimAnim1)
+             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Victim1)
              track:Play()
              track.Looped = true
-             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value)
+             if not mtp:match("H_") then
+             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value) end
         end
     end    
 })
