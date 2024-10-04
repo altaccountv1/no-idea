@@ -876,11 +876,11 @@ for i,v in game.CoreGui.Orion:GetChildren() do
 end
 
 -- Assuming 'fram' is the parent frame where the UI should be added
-local fram = -- (Your existing frame setup)
+ -- (Your existing frame setup)
 
 -- Create the viewport and animator
 local viewport, animator = CreateCharacterViewport()
-
+viewport.Parent = fram
 -- Additional buttons can be added similarly below the viewport
 
 local mtp = nil
