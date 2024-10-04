@@ -827,7 +827,7 @@ local function CreateCharacterViewport()
 
     -- Set up the camera for the viewport
     local Camera = Instance.new("Camera")
-    Camera.CFrame = CFrame.new(Vector3.new(0, 0, 7), Vector3.new(0,0, 0)) -- Camera is fixed
+    Camera.CFrame = CFrame.new(Vector3.new(0, 1.5, 7), Vector3.new(0,0, 0)) -- Camera is fixed
     ViewportFrame.CurrentCamera = Camera
     local cameraPosition = Camera.CFrame.Position
 
@@ -893,6 +893,15 @@ local movename = testtab:AddTextbox({
      
 })
 
+local victimanims = false
+
+local victim = testtab:AddToggle({
+	Name = "Show Victim Animations",
+        Default = false,
+	Callback = function(Value)
+        victimanims = Value
+  	end    
+})
 local playanim = testtab:AddButton({
     Name = "Play Animation",
     Callback = function() 
@@ -903,8 +912,13 @@ local playanim = testtab:AddButton({
 	Image = "rbxassetid://4483345998",
 	Time = 5
 })
-        else
+        elseif moves:FineFirstChild(mtp) and victimanims == false then
              local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Anim)
+             track:Play()
+             track.Looped = true
+             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value)
+        elseif moves:FineFirstChild(mtp) and victimanims == true then
+             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).VictimAnim)
              track:Play()
              track.Looped = true
              track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value)
