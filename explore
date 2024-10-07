@@ -650,6 +650,131 @@ local reload = ScriptsTab:AddButton({
   	end    
 })
 
+local testtab = Window:MakeTab({
+	Name = "Moves",
+	Icon = "",
+	PremiumOnly = false
+})
+
+local function CreateCharacterViewport()
+    -- Create a ViewportFrame
+    local ViewportFrame = Instance.new("ViewportFrame")
+    ViewportFrame.Size = UDim2.new(0, 425, 0, 150) -- Set size to 150x150 pixels
+    ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
+    ViewportFrame.BorderSizePixel = 0
+    ViewportFrame.BackgroundTransparency = 0.1
+    ViewportFrame.AnchorPoint = Vector2.new(0.5, 0) -- Center horizontally
+    ViewportFrame.Position = UDim2.new(0.5, 0, 0, 0) -- Align to the top-center of the frame
+
+    -- Add rounded corners
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 10)
+    Corner.Parent = ViewportFrame
+
+    -- Set up the camera for the viewport
+    local Camera = Instance.new("Camera")
+    Camera.CFrame = CFrame.new(Vector3.new(0, 1.5, 7), Vector3.new(0,0, 0)) -- Camera is fixed
+    ViewportFrame.CurrentCamera = Camera
+    local cameraPosition = Camera.CFrame.Position
+
+    -- Create a WorldModel for rendering the character
+    local WorldModel = Instance.new("WorldModel")
+    WorldModel.Parent = ViewportFrame
+    Camera.Parent = WorldModel
+
+    -- Clone the player's character
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    -- Temporarily set Archivable to true to allow cloning
+    character.Archivable = true
+
+    -- Clone the character
+    local clonedCharacter = character:Clone()
+    character.Archivable = false -- Restore original Archivable property
+
+    -- Check if HumanoidRootPart exists and set it as the PrimaryPart
+    local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart then
+        -- Reset position of the cloned character
+        clonedCharacter:SetPrimaryPartCFrame(CFrame.new(0, 0, 0)) 
+
+        -- Add the cloned character to the WorldModel
+        clonedCharacter.Parent = WorldModel 
+
+        -- Rotate the character to face the camera
+        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, cameraPosition)
+    else
+        warn("HumanoidRootPart not found in cloned character.")
+    end
+
+    -- Return the ViewportFrame and the character's Animator
+    return ViewportFrame, clonedCharacter.Humanoid.Animator
+end
+
+local fram
+
+for i,v in game.CoreGui.Orion:GetChildren() do
+    if v:FindFirstChild("TopBar") then
+        for i,p in v:GetChildren() do
+            if not p:FindFirstChildOfClass("Frame") then fram = p end
+        end
+    end
+end
+
+
+-- Create the viewport and animator
+local viewport, animator = CreateCharacterViewport()
+viewport.Parent = fram
+-- Additional buttons can be added similarly below the viewport
+
+local mtp = nil
+local movename = testtab:AddTextbox({
+	Name = "Move",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+        mtp = Value
+        end
+     
+})
+
+local victimanims = false
+
+local victim = testtab:AddToggle({
+	Name = "Show Victim Animations",
+        Default = false,
+	Callback = function(Value)
+        victimanims = Value
+  	end    
+})
+local playanim = testtab:AddButton({
+    Name = "Play Animation",
+    Callback = function() 
+        if not moves:FindFirstChild(mtp) then
+            OrionLib:MakeNotification({
+	Name = "Animation",
+	Content = "Move not found.",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+        elseif moves:FindFirstChild(mtp) and victimanims == false then
+             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Anim)
+             track:Play()
+             track.Looped = true
+             if not mtp:match("H_") then
+             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value) end
+        elseif moves:FindFirstChild(mtp) and victimanims == true then
+             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Victim1)
+             track:Play()
+             track.Looped = true
+             if not mtp:match("H_") then
+             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value) end
+        end
+    end    
+})
+
+
 task.spawn(function()
     while task.wait(300) do
         table.clear(useditems) -- clears table of summoned items
@@ -802,130 +927,6 @@ local Abouttab = Window:MakeTab({
 	Name = "About",
 	Icon = "",
 	PremiumOnly = false
-})
-
-local testtab = Window:MakeTab({
-	Name = "Moves",
-	Icon = "",
-	PremiumOnly = false
-})
-
-local function CreateCharacterViewport()
-    -- Create a ViewportFrame
-    local ViewportFrame = Instance.new("ViewportFrame")
-    ViewportFrame.Size = UDim2.new(0, 425, 0, 150) -- Set size to 150x150 pixels
-    ViewportFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32) -- Grey background
-    ViewportFrame.BorderSizePixel = 0
-    ViewportFrame.BackgroundTransparency = 0.1
-    ViewportFrame.AnchorPoint = Vector2.new(0.5, 0) -- Center horizontally
-    ViewportFrame.Position = UDim2.new(0.5, 0, 0, 0) -- Align to the top-center of the frame
-
-    -- Add rounded corners
-    local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 10)
-    Corner.Parent = ViewportFrame
-
-    -- Set up the camera for the viewport
-    local Camera = Instance.new("Camera")
-    Camera.CFrame = CFrame.new(Vector3.new(0, 1.5, 7), Vector3.new(0,0, 0)) -- Camera is fixed
-    ViewportFrame.CurrentCamera = Camera
-    local cameraPosition = Camera.CFrame.Position
-
-    -- Create a WorldModel for rendering the character
-    local WorldModel = Instance.new("WorldModel")
-    WorldModel.Parent = ViewportFrame
-    Camera.Parent = WorldModel
-
-    -- Clone the player's character
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-
-    -- Temporarily set Archivable to true to allow cloning
-    character.Archivable = true
-
-    -- Clone the character
-    local clonedCharacter = character:Clone()
-    character.Archivable = false -- Restore original Archivable property
-
-    -- Check if HumanoidRootPart exists and set it as the PrimaryPart
-    local humanoidRootPart = clonedCharacter:FindFirstChild("HumanoidRootPart")
-    if humanoidRootPart then
-        -- Reset position of the cloned character
-        clonedCharacter:SetPrimaryPartCFrame(CFrame.new(0, 0, 0)) 
-
-        -- Add the cloned character to the WorldModel
-        clonedCharacter.Parent = WorldModel 
-
-        -- Rotate the character to face the camera
-        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, cameraPosition)
-    else
-        warn("HumanoidRootPart not found in cloned character.")
-    end
-
-    -- Return the ViewportFrame and the character's Animator
-    return ViewportFrame, clonedCharacter.Humanoid.Animator
-end
-
-local fram
-
-for i,v in game.CoreGui.Orion:GetChildren() do
-    if v:FindFirstChild("TopBar") then
-        for i,p in v:GetChildren() do
-            if not p:FindFirstChildOfClass("Frame") then fram = p end
-        end
-    end
-end
-
-
--- Create the viewport and animator
-local viewport, animator = CreateCharacterViewport()
-viewport.Parent = fram
--- Additional buttons can be added similarly below the viewport
-
-local mtp = nil
-local movename = testtab:AddTextbox({
-	Name = "Move",
-	Default = "",
-	TextDisappear = false,
-	Callback = function(Value)
-        mtp = Value
-        end
-     
-})
-
-local victimanims = false
-
-local victim = testtab:AddToggle({
-	Name = "Show Victim Animations",
-        Default = false,
-	Callback = function(Value)
-        victimanims = Value
-  	end    
-})
-local playanim = testtab:AddButton({
-    Name = "Play Animation",
-    Callback = function() 
-        if not moves:FindFirstChild(mtp) then
-            OrionLib:MakeNotification({
-	Name = "Animation",
-	Content = "Move not found.",
-	Image = "rbxassetid://4483345998",
-	Time = 5
-})
-        elseif moves:FindFirstChild(mtp) and victimanims == false then
-             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Anim)
-             track:Play()
-             track.Looped = true
-             if not mtp:match("H_") then
-             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value) end
-        elseif moves:FindFirstChild(mtp) and victimanims == true then
-             local track = animator:LoadAnimation(moves:FindFirstChild(mtp).Victim1)
-             track:Play()
-             track.Looped = true
-             if not mtp:match("H_") then
-             track:AdjustSpeed(moves:FindFirstChild(mtp).AniSpeed.Value) end
-        end
-    end    
 })
 
 local Creators = Abouttab:AddSection({
