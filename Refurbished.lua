@@ -501,10 +501,16 @@ end
 game:GetService("RunService").RenderStepped:Connect(function()
 	UpdateStyle()
 end)
- 
+
+local onpc = game.UserInputService.KeyboardEnabled
+local console = game.UserInputService.GamepadEnabled
+local kb
+
+if onpc then kb = "L" else kb = "R3" end
+	
 game.UserInputService.InputBegan:Connect(function(key)
 	if game.UserInputService:GetFocusedTextBox() == nil then
-		if key.KeyCode == Enum.KeyCode.ButtonR3 then
+		if key.KeyCode == Enum.KeyCode[kb] then
 			if DragonText == "Dragon" then
 				DragonText = "Legend"
 				DragonColor = Color3.new(1,1,1)
@@ -592,5 +598,5 @@ end
 
 sendNotification("Mod loaded", Color3.fromRGB(0, 200, 0))
 task.wait(3)
-sendNotification("Press [R3] to switch between legend/dragon styles", Color3.fromRGB(255, 255, 255))
+sendNotification("Press "..[kb].." to switch between legend/dragon styles", Color3.fromRGB(255, 255, 255))
 
