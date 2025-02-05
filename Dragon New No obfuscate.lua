@@ -679,6 +679,12 @@ game:GetService("RunService").RenderStepped:Connect(function()
 	UpdateStyle()
 	AutoSlap()
 	Hacts()
+	if RDS.Value == true then
+            if not status:FindFirstChild("Invulnerable") then
+                local invul = Instance.new("Folder",status)
+                invul.Name = "Invulnerable"
+	    end
+        end
 end)
 
 -- Red Dragon Spirit --
@@ -884,7 +890,7 @@ RDS.Changed:Connect(function()
 			anim:Destroy()
 		elseif _G.DragonConfigurations.Moveset == "DE" then
 			ChangeMoveset(Dragon, RDSCombo)
-			local id = "http://www.roblox.com/asset/?id=10714360164"
+			local id = moves.H_FinishingProne.Anim.AnimationId
 			local anim = Instance.new("Animation")
 			anim.AnimationId = id
 			local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
