@@ -196,6 +196,53 @@ local DEMoveset = {
 	{name = "2Strike5", Type = "StringValue", value = "龍Strike5"}
 }
 
+local CMoveset = {
+        {name = "Grab", Type = "StringValue", value = "Grab"},
+	{name = "Throw", Type = "StringValue", value = "T_BrawlerToss"},
+	{name = "GrabStrike", Type = "StringValue", value = "T_龍GParry"},
+	{name = "RedHeat", Type = "Folder", value = nil},
+	{name = "Idle", Type = "Animation", value = RPS.AIStyles.Dragon.StanceIdle.AnimationId},
+	{name = "Color", Type = "Color", value = Color3.fromRGB(250,5,10)},
+	{name = "Speed", Type = "NumberValue", value = 1.25},
+	{name = "Pummel", Type = "StringValue", value = "T_龍GParry"},
+	{name = "VisualName", Type = "StringValue", value = "Dragon"},
+	{name = "Taunt", Type = "StringValue", value = "Taunt"},
+
+	{name = "Rush1", Type = "StringValue", value = "BAttack1"},
+	{name = "Rush2", Type = "StringValue", value = "BAttack2"},
+	{name = "Rush3", Type = "StringValue", value = "BAttack3"},
+	{name = "Rush4", Type = "StringValue", value = "BAttack4"},
+
+	{name = "Strike1", Type = "StringValue", value = "龍Strike1"},
+	{name = "Strike2", Type = "StringValue", value = "BStrike2"},
+	{name = "Strike3", Type = "StringValue", value = "BStrike3"},
+	{name = "Strike4", Type = "StringValue", value = "BStrike5"},
+	{name = "Strike5", Type = "StringValue", value = "龍Strike5"},
+
+	{name = "2Strike2", Type = "StringValue", value = "龍2Strike1"},
+	{name = "2Strike3", Type = "StringValue", value = "龍2Strike2"},
+	{name = "2Strike4", Type = "StringValue", value = "龍2Strike3"},
+	{name = "2Strike5", Type = "StringValue", value = "龍2Strike4"},
+
+	{name = "BlockStrike", Type = "StringValue", value = "GuruStumble"},
+	{name = "StanceStrike", Type = "StringValue", value = "CounterHook"},
+	{name = "H_Fallen", Type = "StringValue", value = "H_FallenStomp"},
+	{name = "H_FallenDown", Type = "StringValue", value = "H_FallenKick"},
+	{name = "H_TwoHandeds", Type = "StringValue", value = "H_SelfDestruct"},
+	{name = "H_GrabStanding3", Type = "StringValue", value = "H_Entangle"},
+	{name = "H_Running4", Type = "StringValue", value = "H_Terror"},
+	{name = "H_EvadedL", Type = "StringValue", value = "H_FastFootworkLeft"},
+	{name = "H_EvadedR", Type = "StringValue", value = "H_SpinCounterLeft"},
+	{name = "H_EvadedF", Type = "StringValue", value = "H_FastFootworkFront"},
+	{name = "H_CounterSoloAllFront", Type = "StringValue", value = "H_TSpinCounterFront"},
+	{name = "H_CounterSoloAllBack", Type = "StringValue", value = "H_TSpinCounterBack"},
+	{name = "H_CounterSoloAllLeft", Type = "StringValue", value = "H_TSpinCounterLeft"},
+	{name = "H_CounterSoloAllRight", Type = "StringValue", value = "H_TSpinCounterRight"},
+	{name = "H_CounterSolo", Type = "StringValue", value = "H_Escape"},
+	{name = "H_Distanced", Type = "StringValue", value = "H_FastFootworkBack"},
+	{name = "H_FullHeat", Type = "StringValue", value = "H_GUltimateEssence"}
+}
+
 local RDSAnims = {
 	{move = "龍Attack1", value = moves.BAttack2.Anim.AnimationId},
 	{move = "龍Attack2", value = moves.BAttack1.Anim.AnimationId},
@@ -231,7 +278,33 @@ local Y0Anims = {
 	{move = "BStrike5", value = moves["龍2Strike1"].Anim.AnimationId},
 	{move = "龍Strike5", value = moves.BStrike1.TurnAnim.AnimationId}
 }
+local CMoveConfig = {
+	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
+	{move = "BAttack2", property = "HitboxLocations", value = moves["龍Attack2"].HitboxLocations.Value},
+	{move = "BAttack3", property = "HitboxLocations", value = moves["龍Attack3"].HitboxLocations.Value},
+	{move = "BAttack4", property = "HitboxLocations", value = moves["龍Attack4"].HitboxLocations.Value},
+	{move = "BAttack1", property = "ComboAt", value = moves["龍Attack1"].ComboAt.Value},
+	{move = "BAttack2", property = "ComboAt", value = moves["龍Attack2"].ComboAt.Value},
+	{move = "BAttack3", property = "ComboAt", value = moves["龍Attack3"].ComboAt.Value},
+	{move = "BAttack4", property = "ComboAt", value = moves["龍Attack4"].ComboAt.Value},
+	{move = "BStrike3", property = "ComboAt", value = moves.BStrike2.ComboAt.Value - 0.05}
+}
 
+local Y0Anims = {
+	{move = "BAttack1", value = moves["龍Attack1"].Anim.AnimationId},
+	{move = "BAttack2", value = moves["龍Attack2"].Anim.AnimationId},
+	{move = "BAttack3", value = moves["龍Attack3"].Anim.AnimationId},
+	{move = "BAttack4", value = moves["龍Attack4"].Anim.AnimationId},
+	{move = "龍Strike1", value = "rbxassetid://13731752257"},
+	{move = "BStrike5", value = moves["龍2Strike1"].Anim.AnimationId},
+	{move = "龍Strike5", value = moves.BStrike1.TurnAnim.AnimationId}
+}
+local CAnims = {
+	{move = "BAttack1", value = moves["龍Attack1"].Anim.AnimationId},
+	{move = "BAttack2", value = moves["龍Attack2"].Anim.AnimationId},
+	{move = "BAttack3", value = moves["龍Attack3"].Anim.AnimationId},
+	{move = "BAttack4", value = moves["龍Attack4"].Anim.AnimationId}
+}
 local DEAnims = {
 	{move = "BStrike2", property = "Anim", value = "rbxassetid://13785068836"},
 	{move = "B2Strike3", property = "Anim", value = "rbxassetid://13785070193"},
@@ -350,6 +423,10 @@ elseif _G.DragonConfigurations.Moveset == "DE" then
 	ChangeConfig(DEMoveConfig)
 	ChangeMoveset(Dragon, DEMoveset)
 	ChangeAnims(DEAnims)
+elseif _G.DragonConfigurations.Moveset == "Classic" then
+	ChangeMoveset(Dragon, CMoveset)
+	ChangeConfig(CMoveConfig)
+	ChangeAnims(CAnims)
 end
 
 Beast.Strike2.Value = "DashAttack"
@@ -369,12 +446,14 @@ if not IsInPvp() then
 	moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
 end
 
-moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
-moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
-moves.ShuckyDrop.SF.Value = 0.1
-moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
-moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
-moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
+if _G.DragonConfigurations.Moveset ~= "Classic" then
+    moves.ShuckyDrop.AniSpeed.Value = moves.GuruStumble.AniSpeed.Value
+    moves.ShuckyDrop.MoveForward.Value = moves.GuruStumble.MoveForward.Value
+    moves.ShuckyDrop.SF.Value = 0.1
+    moves.ShuckyDrop.Anim.AnimationId = moves.GuruStumble.Anim.AnimationId
+    moves.BGetup.Anim.AnimationId = moves.RSweep.Anim.AnimationId
+    moves.BGetup.HitboxLocations.Value = moves.RSweep.HitboxLocations.Value
+end
 moves.Taunt.Name = "FakeTaunt" moves.DragonTaunt.Name = "Taunt"
 
 local feelingheat = Instance.new("BoolValue")
