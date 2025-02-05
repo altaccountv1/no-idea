@@ -594,7 +594,7 @@ function Hacts()
 				Anim.Priority = Enum.AnimationPriority.Action4
 				Anim:AdjustSpeed(1)
 				Anim:Play()
-				local Anim2 = heatthing.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.VictimAnim)
+				local Anim2 = heatthing.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Victim1)
 				Anim2.Priority = Enum.AnimationPriority.Action4
 				Anim2:AdjustSpeed(1)
 				Anim2:Play()
@@ -613,7 +613,7 @@ function Hacts()
 				Anim.Priority = Enum.AnimationPriority.Action4
 				Anim:AdjustSpeed(1)
 				Anim:Play()
-				local Anim2 = heatthing.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.VictimAnim)
+				local Anim2 = heatthing.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Victim1)
 				Anim2.Priority = Enum.AnimationPriority.Action4
 				Anim2:AdjustSpeed(1)
 				Anim2:Play()
