@@ -585,7 +585,7 @@ function Hacts()
 	if plr.Character:FindFirstChild("Heated") and plr.Character.Heated:FindFirstChild("MoveName") then
 		if status.Style.Value == "Brawler" then
 			local heatthing = plr.Character:FindFirstChild("Heated")
-			for i,v in heatthing:GetDescendants() do print(v.Name) end
+			for i,v in heatthing:GetDescendants() do print(v.Name, v.ClassName, v.Value) end
 			local whatHact = heatthing:WaitForChild("MoveName")
 			if whatHact.Value == "Ultimate Essence" and debounce == false and not char:FindFirstChild("BeingHeated") then
 				debounce = true
