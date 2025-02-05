@@ -594,6 +594,10 @@ function Hacts()
 				Anim.Priority = Enum.AnimationPriority.Action4
 				Anim:AdjustSpeed(1)
 				Anim:Play()
+				local Anim2 = heatthing.Heating.Value.Parent.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.VictimAnim)
+				Anim2.Priority = Enum.AnimationPriority.Action4
+				Anim2:AdjustSpeed(1)
+				Anim2:Play()
 				if _G.DragonConfigurations.VoiceMod == true then
 					playSound(soundr) -- ora doushita??
 				end
@@ -601,6 +605,7 @@ function Hacts()
 				PlaySound("MassiveSlap") -- slap slap slap 
 				task.wait(2)
 				Anim:Destroy()
+				Anim2:Destroy
 			elseif whatHact.Value == "Essence of Fast Footwork [Back]" and debounce == false and status.Style.Value == "Brawler" and not char:FindFirstChild("BeingHeated") then
 				debounce = true
 				Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
@@ -608,6 +613,10 @@ function Hacts()
 				Anim.Priority = Enum.AnimationPriority.Action4
 				Anim:AdjustSpeed(1)
 				Anim:Play()
+				local Anim2 = heatthing.Heating.Value.Parent.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.VictimAnim)
+				Anim2.Priority = Enum.AnimationPriority.Action4
+				Anim2:AdjustSpeed(1)
+				Anim2:Play()
 				task.wait(0.1)
 				PlaySound("Slap")
 				task.wait(0.45)
@@ -617,6 +626,7 @@ function Hacts()
 				task.wait(0.9)
 				PlaySound("MassiveSlap")
 				Anim:Destroy()
+				Anim2:Destroy()
 			elseif whatHact.Value == "Guru Spin Counter [Left]" and debounce == false and status.Style.Value == "Brawler" and not char:FindFirstChild("BeingHeated") then
 				Main.HeatMove.TextLabel.Text = "Essence of Fast Footwork [Right]"
 			end
