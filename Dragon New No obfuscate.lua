@@ -605,7 +605,7 @@ function Hacts()
 				PlaySound("MassiveSlap") -- slap slap slap 
 				task.wait(2)
 				Anim:Destroy()
-				Anim2:Destroy
+				Anim2:Destroy()
 			elseif whatHact.Value == "Essence of Fast Footwork [Back]" and debounce == false and status.Style.Value == "Brawler" and not char:FindFirstChild("BeingHeated") then
 				debounce = true
 				Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
