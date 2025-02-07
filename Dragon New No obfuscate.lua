@@ -811,7 +811,7 @@ local MoveAniSpeed = {
 	{Move = "BStrike5", NewAniSpeed = moves["BStrike5"].AniSpeed.Value + 0.1, OldAniSpeed = moves["BStrike5"].AniSpeed.Value},
 	{Move = "龍Strike5", NewAniSpeed = moves["龍Strike5"].AniSpeed.Value + 0.05, OldAniSpeed = moves["龍Strike5"].AniSpeed.Value},
 	{Move = "龍2Strike2", NewAniSpeed = moves["龍2Strike2"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike2"].AniSpeed.Value},
-	{Move = "龍2Strike4", NewAniSpeed = moves["龍2Strike3"].AniSpeed.Value + 0.15, OldAniSpeed = moves["龍2Strike4"].AniSpeed.Value},
+	{Move = "龍2Strike3", NewAniSpeed = moves["龍2Strike3"].AniSpeed.Value + 0.15, OldAniSpeed = moves["龍2Strike3"].AniSpeed.Value},
 	{Move = "龍2Strike4", NewAniSpeed = moves["龍2Strike4"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike4"].AniSpeed.Value}
 	
 }
