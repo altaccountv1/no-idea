@@ -839,8 +839,10 @@ end
 FastMoves.Changed:Connect(function()
 	if FastMoves.Value == true then
 		ChangeSpeed("Fast", MoveSpeed)
+		ChangeAniSpeed("Fast", AniSpeed)
 	elseif FastMoves.Value == false then
 		ChangeSpeed("Slow", MoveSpeed)
+		ChangeAniSpeed("Slow", AniSpeed)
 	end
 end)
 
