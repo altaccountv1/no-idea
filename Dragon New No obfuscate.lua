@@ -794,11 +794,12 @@ local MoveSpeed = {
 	{Move = "BAttack1", NewComboAt = moves["BAttack1"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack1"].ComboAt.Value},
 	{Move = "BAttack2", NewComboAt = moves["BAttack2"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack2"].ComboAt.Value},
 	{Move = "BAttack3", NewComboAt = moves["BAttack3"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack3"].ComboAt.Value},
-	{Move = "BAttack4", NewComboAt = moves["BAttack4"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack4"].ComboAt.Value},
+	{Move = "BAttack4", NewComboAt = moves["BAttack4"].ComboAt.Value - 0, OldComboAt = moves["BAttack4"].ComboAt.Value},
 	{Move = "BStrike2", NewComboAt = moves["BStrike2"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike2"].ComboAt.Value},
 	{Move = "BStrike3", NewComboAt = moves["BStrike3"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike3"].ComboAt.Value},
-	{Move = "BStrike5", NewComboAt = moves["BStrike5"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike5"].ComboAt.Value},
+	{Move = "BStrike5", NewComboAt = moves["BStrike5"].ComboAt.Value - 0.1, OldComboAt = moves["BStrike5"].ComboAt.Value},
 	{Move = "龍Strike5", NewComboAt = moves["龍Strike5"].ComboAt.Value - 0.05, OldComboAt = moves["龍Strike5"].ComboAt.Value}
+	
 }
 local MoveAniSpeed = {
 	{Move = "BAttack1", NewAniSpeed = moves["BAttack1"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack1"].AniSpeed.Value},
@@ -807,8 +808,9 @@ local MoveAniSpeed = {
 	{Move = "BAttack4", NewAniSpeed = moves["BAttack4"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack4"].AniSpeed.Value},
 	{Move = "BStrike2", NewAniSpeed = moves["BStrike2"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike2"].AniSpeed.Value},
 	{Move = "BStrike3", NewAniSpeed = moves["BStrike3"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike3"].AniSpeed.Value},
-	{Move = "BStrike5", NewAniSpeed = moves["BStrike5"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike5"].AniSpeed.Value},
-	{Move = "龍Strike5", NewAniSpeed = moves["龍Strike5"].AniSpeed.Value + 0.05, OldAniSpeed = moves["龍Strike5"].AniSpeed.Value}
+	{Move = "BStrike5", NewAniSpeed = moves["BStrike5"].AniSpeed.Value + 0.1, OldAniSpeed = moves["BStrike5"].AniSpeed.Value},
+	{Move = "龍Strike5", NewAniSpeed = moves["龍Strike5"].AniSpeed.Value + 0.05, OldAniSpeed = moves["龍Strike5"].AniSpeed.Value},
+	{Move = "龍2Strike4", NewAniSpeed = moves["龍2Strike4"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike4"].AniSpeed.Value}
 }
 function ChangeSpeed(Type, Table)
 	for i,mv in moves:GetChildren() do
