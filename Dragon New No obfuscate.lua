@@ -800,11 +800,11 @@ local MoveSpeed = {
 	{Move = "BStrike5", NewComboAt = moves["BStrike5"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike5"].ComboAt.Value},
 	{Move = "龍Strike5", NewComboAt = moves["龍Strike5"].ComboAt.Value - 0.05, OldComboAt = moves["龍Strike5"].ComboAt.Value}
 }
-local AniSpeed = {
+local MoveAniSpeed = {
 	{Move = "BAttack1", NewAniSpeed = moves["BAttack1"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack1"].AniSpeed.Value},
 	{Move = "BAttack2", NewAniSpeed = moves["BAttack2"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack2"].AniSpeed.Value},
-	{Move = "BAttack3", NewAniSpeed = moves["BAttack1"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack3"].AniSpeed.Value},
-	{Move = "BAttack4", NewAniSpeed = moves["BAttack1"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack4"].AniSpeed.Value},
+	{Move = "BAttack3", NewAniSpeed = moves["BAttack3"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack3"].AniSpeed.Value},
+	{Move = "BAttack4", NewAniSpeed = moves["BAttack4"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack4"].AniSpeed.Value},
 	{Move = "BStrike2", NewAniSpeed = moves["BStrike2"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike2"].AniSpeed.Value},
 	{Move = "BStrike3", NewAniSpeed = moves["BStrike3"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike3"].AniSpeed.Value},
 	{Move = "BStrike5", NewAniSpeed = moves["BStrike5"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike5"].AniSpeed.Value},
@@ -839,10 +839,10 @@ end
 FastMoves.Changed:Connect(function()
 	if FastMoves.Value == true then
 		ChangeSpeed("Fast", MoveSpeed)
-		ChangeAniSpeed("Fast", AniSpeed)
+		ChangeAniSpeed("Fast", MoveAniSpeed)
 	elseif FastMoves.Value == false then
 		ChangeSpeed("Slow", MoveSpeed)
-		ChangeAniSpeed("Slow", AniSpeed)
+		ChangeAniSpeed("Slow", MoveAniSpeed)
 	end
 end)
 
