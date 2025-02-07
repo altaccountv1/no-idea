@@ -162,7 +162,7 @@ local Y0Moveset = {
 
 	{name = "BlockStrike", Type = "StringValue", value = "ShuckyDrop"},
 	{name = "StanceStrike", Type = "StringValue", value = "CounterHook"},
-	{name = "H_Fallen", Type = "StringValue", value = "H_FallenStomp"},
+	{name = "H_Fallen", Type = "StringValue", value = "H_FinishingSupine"},
 	{name = "H_FallenDown", Type = "StringValue", value = "H_FallenGrate"},
 	{name = "H_TwoHandeds", Type = "StringValue", value = "H_SelfDestruct"},
 	{name = "H_GrabStanding3", Type = "StringValue", value = "H_Entangle"},
