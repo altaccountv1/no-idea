@@ -691,6 +691,7 @@ function Hacts()
 				Anim.Priority = Enum.AnimationPriority.Action4
 				Anim:AdjustSpeed(1)
 				Anim:Play()
+				playSound(Rep.Sounds.Teleport)
 				local Anim2 = heatthing.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Victim1)
 				Anim2.Priority = Enum.AnimationPriority.Action4
 				Anim2:AdjustSpeed(1)
