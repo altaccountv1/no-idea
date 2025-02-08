@@ -37,7 +37,6 @@ local function PlaySound(sound)
 	end)
 end
 
-char.Head:FindFirstChild("HeavyYell"):Destroy()
 function isInBattle()
 	return (plr:FindFirstChild("InBattle") and true or false)
 end
