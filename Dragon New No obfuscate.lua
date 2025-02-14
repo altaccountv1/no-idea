@@ -673,61 +673,67 @@ end
 
 local debounce = false
 
-function Hacts()
-	if plr.Character:FindFirstChild("Heated") and plr.Character.Heated:FindFirstChild("MoveName") then
-		if status.Style.Value == "Brawler" then
-			local heatthing = plr.Character:FindFirstChild("Heated")
-			local whatHact = heatthing:WaitForChild("MoveName")
-			if whatHact.Value == "Ultimate Essence" and debounce == false and not char:FindFirstChild("BeingHeated") then
-				debounce = true
-				local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
-				local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
-				Anim.Priority = Enum.AnimationPriority.Action4
-				Anim:AdjustSpeed(1)
-				Anim:Play()
-				local Anim2 = heatthing.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Victim1)
-				Anim2.Priority = Enum.AnimationPriority.Action4
-				Anim2:AdjustSpeed(1)
-				Anim2:Play()
-				if _G.DragonConfigurations.VoiceMod == true then
-					playSound(soundr) -- ora doushita??
-				end
-				task.wait(1)
-				PlaySound("MassiveSlap") -- slap slap slap 
-				task.wait(2)
-				Anim:Destroy()
-				Anim2:Destroy()
-			elseif whatHact.Value == "Essence of Fast Footwork [Back]" and debounce == false and status.Style.Value == "Brawler" and not char:FindFirstChild("BeingHeated") then
-				debounce = true
-				Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
-				local Anim = Char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
-				Anim.Priority = Enum.AnimationPriority.Action4
-				Anim:AdjustSpeed(1)
-				Anim:Play()
-				playSound(Rep.Sounds.Teleport)
-				local Anim2 = heatthing.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Victim1)
-				Anim2.Priority = Enum.AnimationPriority.Action4
-				Anim2:AdjustSpeed(1)
-				Anim2:Play()
-				task.wait(0.1)
-				PlaySound("Slap")
-				task.wait(0.45)
-				PlaySound("Slap")
-				task.wait(0.45)
-				PlaySound("Slap")
-				task.wait(0.9)
-				PlaySound("MassiveSlap")
-				Anim:Destroy()
-				Anim2:Destroy()
-			elseif whatHact.Value == "Guru Spin Counter [Left]" and debounce == false and status.Style.Value == "Brawler" and not char:FindFirstChild("BeingHeated") then
-				Main.HeatMove.TextLabel.Text = "Essence of Fast Footwork [Right]"
+local function Hacts()
+	local heated = plr.Character:FindFirstChild("Heated")
+	if heated and heated:FindFirstChild("MoveName") and status.Style.Value == "Brawler" then
+		local whatHact = heated.MoveName
+		local char = plr.Character
+
+		if debounce or char:FindFirstChild("BeingHeated") then return end -- Prevent multiple activations
+		debounce = true
+
+		if whatHact.Value == "Ultimate Essence" then
+			local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
+			local anim = char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
+			local anim2 = heated.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Victim1)
+
+			anim.Priority = Enum.AnimationPriority.Action4
+			anim2.Priority = Enum.AnimationPriority.Action4
+			anim:Play()
+			anim2:Play()
+
+			if _G.DragonConfigurations.VoiceMod then
+				playSound(soundr)
 			end
+
+			task.delay(1, function() PlaySound("MassiveSlap") end)
+			task.delay(2, function() anim:Destroy(); anim2:Stop(); anim2:Destroy() end)
+
+		elseif whatHact.Value == "Essence of Fast Footwork [Back]" then
+			Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
+			local anim = char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
+			local anim2 = heated.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Victim1)
+
+			anim.Priority = Enum.AnimationPriority.Action4
+			anim2.Priority = Enum.AnimationPriority.Action4
+			anim:Play()
+			anim2:Play()
+
+			playSound(Rep.Sounds.Teleport)
+
+			-- Scheduled sound effects instead of blocking execution
+			local slapTimes = {0.1, 0.55, 1.0, 1.9}
+			for _, t in ipairs(slapTimes) do
+				task.delay(t, function() PlaySound("Slap") end)
+			end
+
+			task.delay(2, function()
+				PlaySound("MassiveSlap")
+				anim:Destroy()
+				anim2:Destroy()
+			end)
+
+		elseif whatHact.Value == "Guru Spin Counter [Left]" then
+			Main.HeatMove.TextLabel.Text = "Essence of Fast Footwork [Right]"
 		end
 	end
+
+	-- Reset debounce if heating effect is removed
 	if not plr.Character:FindFirstChild("Heated") then
 		debounce = false
 	end
 end
+
 
 -- Aura, Idle Stance, Hact Renames, No Heat Action Label
 local DragonText = "Dragon"
