@@ -1,7 +1,9 @@
 local DragonText = "Dragon"
 local DragonColor = Color3.fromRGB(250, 5, 10)
 local DragonSequence = ColorSequence.new({ColorSequenceKeypoint.new(0, DragonColor), ColorSequenceKeypoint.new(1, DragonColor)})
- 
+
+local kb = "L"
+
 local plr = game.Players.LocalPlayer
 local pgui = plr.PlayerGui
 local interf = pgui.Interface
