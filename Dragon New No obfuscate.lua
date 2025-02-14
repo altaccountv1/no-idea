@@ -15,6 +15,7 @@ local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 local char = plr.Character
 local RPS = game.ReplicatedStorage
 local sounds = RPS.Sounds
+local debug = true
 local Forcefield = RPS.Invulnerable:Clone()
 Forcefield.Parent = status
 local UserInputService = game:GetService("UserInputService")
@@ -99,6 +100,12 @@ if alreadyRunning then
 	task.wait(2)
 	Notify("If you have an error, report it to me.", "HeatDepleted", Color3.fromRGB(255,255,255), "RobotoMono")
 	return
+end
+
+if debug then 
+    Notify("Dragon Style is being debugged right now", "HeatDepleted", Color3.fromRGB(255,255,255), nil)
+    task.wait(1.5)
+    Notify("Some features may not work, but I am working on it", "HeatDepleted", Color3.fromRGB(255,255,255), nil)
 end
 
 alreadyRunning = Instance.new("BoolValue")
@@ -623,34 +630,41 @@ local function Stun(enemy)
 end
 
 local function AutoSlap()
-	if RDS.Value == true then
-		if not IsInPvp() then
-			for i,enemy in pairs(game.Workspace.Bots.AI:GetDescendants()) do
-				if enemy:IsA("MeshPart") and enemy.Name == "HumanoidRootPart" and enemy.Parent.LastTarget.Value == plr.Character.HumanoidRootPart then
-					if enemy.Parent.AttackBegan.Value == true then
-						enemy.Parent.AttackBegan.Value = false
+	if not RDS.Value then return end -- Skip execution if RDS is false
+
+	if not IsInPvp() then
+		for _, enemy in ipairs(game.Workspace.Bots.AI:GetChildren()) do
+			local root = enemy:FindFirstChild("HumanoidRootPart")
+			local lastTarget = enemy:FindFirstChild("LastTarget")
+			local attackBegan = enemy:FindFirstChild("AttackBegan")
+			local tookAim = enemy:FindFirstChild("TookAim")
+
+			if root and lastTarget and attackBegan and tookAim then
+				if lastTarget.Value == plr.Character.HumanoidRootPart then
+					if attackBegan.Value then
+						attackBegan.Value = false
 						thing.Value = false
-						Slap(enemy)
+						Slap(root)
+					elseif tookAim.Value then
+						tookAim.Value = false
+						task.delay(0.6, function()
+							thing.Value = false
+							Slap(root)
+						end)
 					end
-					if enemy.Parent.TookAim.Value == true then
-						enemy.Parent.TookAim.Value = false
-						wait(0.6)
-						thing.Value = false                 
-						Slap(enemy)                         
-					end                                     
-				end                                         
-			end                                             
-		end                                                 
-		if IsInPvp() then                                   
-			for i,opp in game.Players:GetPlayers() do       
-				if opp ~= plr then                           
-					if opp.Status.AttackBegan.Value == true then
-						opp.Status.AttackBegan.Value = false
-						thing.Value = false                 
-						Slap(opp.Character.HumanoidRootPart)
-						Slap(opp.Character.HumanoidRootPart)
-						Slap(opp.Character.HumanoidRootPart)
-					end
+				end
+			end
+		end
+	else
+		for _, opp in ipairs(game.Players:GetPlayers()) do
+			if opp ~= plr then
+				local oppStatus = opp:FindFirstChild("Status")
+				local attackBegan = oppStatus and oppStatus:FindFirstChild("AttackBegan")
+
+				if attackBegan and attackBegan.Value then
+					attackBegan.Value = false
+					thing.Value = false
+					Slap(opp.Character.HumanoidRootPart)
 				end
 			end
 		end
