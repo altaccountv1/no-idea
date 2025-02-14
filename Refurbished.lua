@@ -573,7 +573,7 @@ end)
 status.AttackBegan.Changed:Connect(function()
 	if status.AttackBegan.Value == true then
 		if status.CurrentMove.Value.Name == "TigerDrop" then
-			tigerDropsSession += 1
+			tigerDropsSession = tigerDropsSession + 1
 			if tigerDropsSession % 10 == 0 then
 				sendNotification("Tiger Drops (this session): [" .. tigerDropsSession .. "]", Color3.fromRGB(0, 200, 0))
 				if tigerDropsSession == 100 then
@@ -598,5 +598,4 @@ end
 
 sendNotification("Mod loaded", Color3.fromRGB(0, 200, 0))
 task.wait(3)
-sendNotification("Press "..[kb].." to switch between legend/dragon styles", Color3.fromRGB(255, 255, 255))
-
+sendNotification("Press ["..kb.."] to switch between legend/dragon styles", Color3.fromRGB(255, 255, 255))
