@@ -441,7 +441,7 @@ Beast.H_Fallen.Value = "H_FallenBeatdown"
 
 ChangeAnims(RDSAnims)
 
-moves["H_FastFootworkBack"].Closest.Value = '40'
+moves["H_FastFootworkBack"].Closest.Value = '75'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 wn.Name = "Within"
 wn.Value = '15'	
@@ -953,39 +953,68 @@ local function makeAttachments(target)
 	return topAttachment, bottomAttachment
 end
 
-local trail = makeTrail()
-local top, bot = makeAttachments(char)
-trail.Attachment0 = top
-trail.Attachment1 = bot
-trail.Parent = char.UpperTorso
-trail.Enabled = false
-local plr = game:GetService("Players").LocalPlayer
-local pgui = plr.PlayerGui
-local interf = pgui.Interface
+local TweenService = game:GetService("TweenService")
+
+function getLocked()
+    return char.LockedOn.Value
+end
+
+function createTrail(startPos, endPos, color)
+    local trail = RPS.TPTrail:Clone()
+    trail.Parent = game.Workspace.Ignore
+
+    local distance = (startPos - endPos).Magnitude
+    trail.Size = Vector3.new(trail.Size.X, trail.Size.Y, distance)
+    trail.CFrame = CFrame.new(startPos, endPos) * CFrame.new(0, 0, -distance / 2)
+
+    if color then
+        trail.Gradient.Color3 = color
+        trail.Gradient2.Color3 = color
+    end
+
+    local duration = distance * 0.005
+    TweenService:Create(trail, TweenInfo.new(duration, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+        CFrame = CFrame.new(endPos, 2 * endPos - startPos),
+        Size = trail.Size * Vector3.new(1, 1, 0)
+    }):Play()
+
+    task.delay(duration, function()
+        trail:Destroy()
+    end)
+end
 
 local function teleportToLocked(target)
 	local user = game.Players.LocalPlayer
 	local char = user.Character or user.CharacterAdded:Wait()
-
 	local root = char.HumanoidRootPart
-
 	local lock = char.LockedOn
 	local val = target or lock.Value
+
 	if val and val:IsDescendantOf(workspace) and not val.Parent:FindFirstChild("ImaDea") then
-		local anim = Instance.new("Animation") anim.AnimationId = Dragon.EvadeF.AnimationId local atrack = char.Humanoid:LoadAnimation(anim)
+		-- Play teleport animation
+		local anim = Instance.new("Animation")
+		anim.AnimationId = Dragon.EvadeF.AnimationId
+		local atrack = char.Humanoid:LoadAnimation(anim)
 		atrack:AdjustSpeed(2)
 		atrack.Priority = Enum.AnimationPriority.Action4
 		atrack:Play()
+
 		play_ingamesound("Teleport")
-		trail.Enabled = true
+
+		-- Create teleport trail
+		local startPos = root.Position
+		local endPos = val.Position - (val.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3)
+		createTrail(startPos, endPos, Color3.fromRGB(255, 0, 0)) -- Red color trail
+
+		-- Wait before teleporting
 		task.wait(0.1)
-		root.CFrame = CFrame.new(val.Position - (val.CFrame.LookVector * Vector3.new(1, 0, 1).Unit * 3), val.Position)
-		task.wait(0.1)
-		trail.Enabled = false
+		root.CFrame = CFrame.new(endPos, val.Position)
+
 		return true    
 	end
 	return false
 end
+
 
 local TPDebounce = false
 local DebounceDuration = 0.5
@@ -1119,7 +1148,7 @@ end
 
 status.Style.Changed:Connect(function()
 	if status.Style.Value == "Brawler" then
-		moves["H_FastFootworkBack"].Closest.Value = '40'
+		moves["H_FastFootworkBack"].Closest.Value = '75'
 		if not moves["H_FastFootworkBack"]:FindFirstChild("Within") then
 			wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 			wn.Name = "Within"
