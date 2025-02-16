@@ -1037,13 +1037,13 @@ status.FFC.Evading.Changed:Connect(Teleport)
 
 task.spawn(function()
     while RDS.Value == true do
-        fillHeat(6)
+        task.wait() fillHeat(6)
     end
 end)
 
 task.spawn(function()
     while not isInBattle() do
-        RDS.Value = false
+        task.wait() RDS.Value = false
     end
 end)
 
