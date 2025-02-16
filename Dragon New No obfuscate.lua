@@ -1068,7 +1068,7 @@ RDS.Changed:Connect(function()
 			anim:Destroy()
 		elseif _G.DragonConfigurations.Moveset == "DE" then
 			ChangeMoveset(Dragon, RDSCombo)
-			local id = moves.H_FinishingProne.Anim.AnimationId
+			local id = moves.H_FallenProne.Anim.AnimationId
 			local anim = Instance.new("Animation")
 			anim.AnimationId = id
 			local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
@@ -1106,7 +1106,7 @@ RDS.Changed:Connect(function()
 			anim:Destroy()
 		elseif _G.DragonConfigurations.Moveset == "DE" then
 			ChangeMoveset(Dragon, RDSCombo)
-			local id = "http://www.roblox.com/asset/?id=10714360164"
+			local id = moves.H_FallenProne.Anim.AnimationId
 			local anim = Instance.new("Animation")
 			anim.AnimationId = id
 			local track = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
