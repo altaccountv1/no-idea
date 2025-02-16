@@ -1037,6 +1037,12 @@ end
 
 status.FFC.Evading.Changed:Connect(Teleport)
 
+task.spawn(function()
+    while RDS.Value == true do
+        fillHeat(6)
+    end
+end)
+
 RDS.Changed:Connect(function()
 	if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 		if _G.DragonConfigurations.VoiceMod == true then
