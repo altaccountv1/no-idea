@@ -1075,9 +1075,9 @@ RDS.Changed:Connect(function()
 			track.Priority = Enum.AnimationPriority.Action4
 			track.Looped = false
 			track:Play()
-			track:AdjustSpeed(2)
+			track:AdjustSpeed(1)
 			char.HumanoidRootPart.Anchored = true
-			task.wait(1.5)
+			task.wait(1.25)
 			char.HumanoidRootPart.Anchored = false
 			track:Destroy()
 			anim:Destroy()
@@ -1113,9 +1113,9 @@ RDS.Changed:Connect(function()
 			track.Priority = Enum.AnimationPriority.Action4
 			track.Looped = false
 			track:Play()
-			track:AdjustSpeed(2)
+			track:AdjustSpeed(1)
 			char.HumanoidRootPart.Anchored = true
-			task.wait(1.5)
+			task.wait(1.25)
 			char.HumanoidRootPart.Anchored = false
 			track:Destroy()
 			anim:Destroy()
