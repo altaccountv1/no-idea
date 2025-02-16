@@ -440,6 +440,7 @@ Beast.Strike4.Value = "BEvadeStrikeForward"
 Beast.H_Fallen.Value = "H_FallenBeatdown"
 
 ChangeAnims(RDSAnims)
+Dragon.SuperEvadeB.AnimationId = beast.EvadeB.AnimationId
 
 moves["H_FastFootworkBack"].Closest.Value = '75'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
