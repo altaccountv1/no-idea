@@ -1041,6 +1041,12 @@ task.spawn(function()
     end
 end)
 
+task.spawn(function()
+    while not isInBattle() do
+        RDS.Value = false
+    end
+end)
+
 RDS.Changed:Connect(function()
 	if RDS.Value == true and not status:FindFirstChild("ANGRY") then
 		if _G.DragonConfigurations.VoiceMod == true then
