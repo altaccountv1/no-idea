@@ -586,8 +586,6 @@ end
 local function HealthChanged()
 	if InCriticalHp() then
 		RDS.Value = true
-	elseif not InCriticalHp() then
-		RDS.Value = false
 	end
 end
 
