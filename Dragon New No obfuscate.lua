@@ -1037,7 +1037,7 @@ end
 status.FFC.Evading.Changed:Connect(Teleport)
 
 task.spawn(function()
-    while RDS.Value and status.Heat.Value < 100 do
+    while RDS.Value and status:FindFirstChild("Heat") and status.Heat.Value < 100 do
         fillHeat(6)
         task.wait(0.25)
     end
@@ -1046,12 +1046,15 @@ end)
 task.spawn(function()
     while RDS.Value do
         if not isInBattle() then
-            RDS.Value = false
-            break -- Exit loop when RDS is set to false
+            if RDS then  -- Ensure RDS still exists
+                RDS.Value = false
+            end
+            break  -- Exit the loop
         end
         task.wait(1)
     end
 end)
+
 
 
 RDS.Changed:Connect(function()
