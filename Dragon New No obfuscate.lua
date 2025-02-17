@@ -1043,8 +1043,8 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    while not isInBattle() do
-        RDS.Value = false
+    while not isInBattle() and RDS.Value == true do
+        task.wait(1) RDS.Value = false
     end
 end)
 
