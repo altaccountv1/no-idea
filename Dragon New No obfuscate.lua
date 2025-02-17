@@ -1037,16 +1037,22 @@ end
 status.FFC.Evading.Changed:Connect(Teleport)
 
 task.spawn(function()
-    while RDS.Value == true and status.Heat.Value ~= 100 do
-        task.wait(0.25) fillHeat(6)
+    while RDS.Value and status.Heat.Value < 100 do
+        fillHeat(6)
+        task.wait(0.25)
     end
 end)
 
 task.spawn(function()
-    while not isInBattle() and RDS.Value == true do
-        task.wait(1) RDS.Value = false
+    while RDS.Value do
+        if not isInBattle() then
+            RDS.Value = false
+            break -- Exit loop when RDS is set to false
+        end
+        task.wait(1)
     end
 end)
+
 
 RDS.Changed:Connect(function()
 	if RDS.Value == true and not status:FindFirstChild("ANGRY") then
