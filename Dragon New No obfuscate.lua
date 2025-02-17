@@ -1044,17 +1044,18 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    while RDS.Value do
-        if not isInBattle() then
-            if RDS then  -- Ensure RDS still exists
-                RDS.Value = false
-            end
-            break  -- Exit the loop
+    while true do
+        if InCriticalHp() then
+            RDS.Value = true -- Activate RDS
         end
-        task.wait(1)
+        
+        if RDS.Value and not isInBattle() then
+            RDS.Value = false -- Disable RDS when exiting battle
+        end
+        
+        task.wait(1) -- Prevents lag & ensures checks run every second
     end
 end)
-
 
 
 RDS.Changed:Connect(function()
