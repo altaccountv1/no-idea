@@ -18,11 +18,11 @@ local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
 local debug = false
 
-if _G.DragonConfigurations.Experiments then
+if _G.DragonConfigurations.Experiments == true then
     local experiment = "sumo slap tp "
     if not hookmetamethod and not getnamecallmethod then Notify("Your executor does not support this experiment.", "buzz", Color3.new(1,0,0),nil) return end
     local TweenService = game:GetService("TweenService")
-    Notify("Enabling experiment: "..experiment,nil,Color3.new(1,1,1),nil)
+    Notify("Enabling experiment: Sumo Slap Teleport",nil,Color3.new(1,1,1),nil)
     function getLocked()
         return char.LockedOn.Value
     end
