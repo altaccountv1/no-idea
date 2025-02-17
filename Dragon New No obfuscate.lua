@@ -18,10 +18,9 @@ local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
 local debug = false
 
-
 if _G.Experiments then
     local experiment = "sumo slap tp "
-    if not hookmetamethod and not getnamecallmethod then return Notify("Your executor does not support this experiment.", "buzz", Color3.new(1,0,0),nil) end
+    if not hookmetamethod and not getnamecallmethod then Notify("Your executor does not support this experiment.", "buzz", Color3.new(1,0,0),nil) return end
     local TweenService = game:GetService("TweenService")
     Notify("Enabling experiment: "..experiment,nil,Color3.new(1,1,1),nil)
     function getLocked()
@@ -907,16 +906,6 @@ Heat.Changed:Connect(function()
 	end
 end)
 
-FastMoves.Changed:Connect(function()
-	if FastMoves.Value == true then
-		ChangeSpeed("Fast", MoveSpeed)
-		ChangeAniSpeed("Fast", MoveAniSpeed)
-	elseif FastMoves.Value == false then
-		ChangeSpeed("Slow", MoveSpeed)
-		ChangeAniSpeed("Slow", MoveAniSpeed)
-	end
-end)
-
 local MoveSpeed = {
 	{Move = "BAttack1", NewComboAt = moves["BAttack1"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack1"].ComboAt.Value},
 	{Move = "BAttack2", NewComboAt = moves["BAttack2"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack2"].ComboAt.Value},
@@ -942,6 +931,16 @@ local MoveAniSpeed = {
 	{Move = "龍2Strike4", NewAniSpeed = moves["龍2Strike4"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike4"].AniSpeed.Value}
 	
 }
+
+FastMoves.Changed:Connect(function()
+	if FastMoves.Value == true then
+		ChangeSpeed("Fast", MoveSpeed)
+		ChangeAniSpeed("Fast", MoveAniSpeed)
+	elseif FastMoves.Value == false then
+		ChangeSpeed("Slow", MoveSpeed)
+		ChangeAniSpeed("Slow", MoveAniSpeed)
+	end
+end)
 
 local cc = Instance.new("ColorCorrectionEffect", game.Lighting)
 cc.Name = "dragon tint"
