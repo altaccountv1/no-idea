@@ -18,6 +18,26 @@ local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
 local debug = false
 
+local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
+	local Text1 = string.upper(Text)
+	if Sound then
+		pgui.Notify:Fire(Text,Sound)
+	else
+		pgui.Notify:Fire(Text)
+	end
+	if Color then
+		for i,v in pairs(pgui.NotifyUI.Awards:GetChildren()) do
+			if v.Name == "XPEx" and v.Text == Text1 then
+				v.Text = Text
+				v.TextColor3 = Color
+				if Fonts then
+					v.Font = Enum.Font[Fonts]
+				end
+			end
+		end
+	end
+end
+
 if _G.DragonConfigurations.Experiments == true then
     local experiment = "sumo slap tp "
     if not hookmetamethod and not getnamecallmethod then Notify("Your executor does not support this experiment.", "buzz", Color3.new(1,0,0),nil) return end
@@ -171,26 +191,6 @@ function IsInPvp()
 		return true
 	else
 		return false
-	end
-end
-
-local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
-	local Text1 = string.upper(Text)
-	if Sound then
-		pgui.Notify:Fire(Text,Sound)
-	else
-		pgui.Notify:Fire(Text)
-	end
-	if Color then
-		for i,v in pairs(pgui.NotifyUI.Awards:GetChildren()) do
-			if v.Name == "XPEx" and v.Text == Text1 then
-				v.Text = Text
-				v.TextColor3 = Color
-				if Fonts then
-					v.Font = Enum.Font[Fonts]
-				end
-			end
-		end
 	end
 end
 
