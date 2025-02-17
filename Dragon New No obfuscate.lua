@@ -16,7 +16,7 @@ local menu = pgui.MenuUI.Menu
 local abil = menu.Abilities.Frame.Frame.Frame
 local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
-local debug = true
+local debug = false
 local Forcefield = RPS.Invulnerable:Clone()
 Forcefield.Parent = status
 
