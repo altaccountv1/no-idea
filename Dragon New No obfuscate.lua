@@ -17,6 +17,109 @@ local abil = menu.Abilities.Frame.Frame.Frame
 local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
 local debug = false
+
+
+if _G.Experiments then
+    local experiment = "sumo slap tp "
+    if not hookmetamethod and not getnamecallmethod then return Notify("Your executor does not support this experiment.", "buzz", Color3.new(1,0,0),nil) end
+    local TweenService = game:GetService("TweenService")
+    Notify("Enabling experiment: "..experiment,nil,Color3.new(1,1,1),nil)
+    function getLocked()
+        return char.LockedOn.Value
+    end
+
+    function createTrail(startPos, endPos, color)
+        local trail = RPS.TPTrail:Clone()
+        trail.Parent = game.Workspace.Ignore
+
+        local distance = (startPos - endPos).Magnitude
+        trail.Size = Vector3.new(trail.Size.X, trail.Size.Y, distance)
+        trail.CFrame = CFrame.new(startPos, endPos) * CFrame.new(0, 0, -distance / 2)
+
+        if color then
+            trail.Gradient.Color3 = color
+            trail.Gradient2.Color3 = color
+        end
+
+        local duration = distance * 0.0005
+        TweenService:Create(
+            trail,
+            TweenInfo.new(duration, Enum.EasingStyle.Linear, Enum.EasingDirection.In),
+            {
+                CFrame = CFrame.new(endPos, 2 * endPos - startPos),
+                Size = trail.Size * Vector3.new(1, 1, 0)
+            }
+        ):Play()
+
+        task.delay(
+            duration,
+            function()
+                trail:Destroy()
+            end
+        )
+    end
+
+    function SumoSlap(args)
+        local target = getLocked()
+        local hrp = char.HumanoidRootPart
+        local distanceAway = (hrp.Position - target.Position).Magnitude
+        local distance = math.clamp(distanceAway * 0.5, 3, 10)
+
+        local offset = target.CFrame.LookVector * distance
+        local newPosition = target.Position + offset
+        local newCF = CFrame.new(newPosition, target.Position)
+        args[1][2] = moves.H_FastFootworkBack
+        args[1][3] = {
+            {
+                [1] = target,
+                [2] = 10.49982091806829,
+                [3] = false,
+                [4] = newPosition
+            }
+        }
+        args[1][4] = newCF
+
+        ME:FireServer(unpack(args))
+        createTrail(hrp.Position, target.Position, Color3.new(1, 0, 0))
+    end
+
+    function checkArgs(args)
+        if
+            typeof(args[1]) == "table" and args[1][1] == "heatmove" and args[1][2] == moves.H_FastFootworkBack and
+                args[1][5] == "Brawler" and
+                plr.Status.Heat.Value >= 75
+         then
+            SumoSlap(args)
+        elseif typeof(args[1]) == "table" and args[1][1] == "repsound" and args[1][2] == "Teleport" then
+            args[1][2] = "nuhuh"
+        elseif typeof(args[1]) == "table" and args[1][1] == "tpeffect" then
+            args[1][1] = "nuhuh"
+        end
+        return args
+    end
+
+    local processingEvent = false
+
+    local originalNamecall
+    originalNamecall =
+        hookmetamethod(game,"__namecall", function(self, ...)
+            local method = getnamecallmethod()
+            local args = {...}
+
+            if self == ME and method:lower() == "fireserver" and typeof(args[1]) == "table" then
+                if processingEvent then
+                    return originalNamecall(self, unpack(args)) -- Avoid reprocessing modified events
+                end
+
+                processingEvent = true
+                args = checkArgs(args)
+                processingEvent = false
+            end
+            return originalNamecall(self, unpack(args))
+        end)
+end
+
+
 local Forcefield = RPS.Invulnerable:Clone()
 Forcefield.Parent = status
 
