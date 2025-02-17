@@ -3,26 +3,24 @@ local pgui = plr.PlayerGui
 local interf = pgui.Interface
 local bt = interf.Battle
 local main = bt.Main
-local moves = game.ReplicatedStorage.Moves
-local styles = game.ReplicatedStorage.Styles
+local char = plr.Character
+
+local RPS = game.ReplicatedStorage
+local moves = RPS.Moves
+local sounds = RPS.Sounds
+local styles = RPS.Styles
 local Dragon = styles.Brawler
-local rush = styles.Rush
-local beast = styles.Beast
+
 local status = plr.Status
 local menu = pgui.MenuUI.Menu 
 local abil = menu.Abilities.Frame.Frame.Frame
 local abilFolder = game.ReplicatedStorage.Abilities.Brawler
-local char = plr.Character
-local RPS = game.ReplicatedStorage
-local sounds = RPS.Sounds
+
 local debug = true
 local Forcefield = RPS.Invulnerable:Clone()
 Forcefield.Parent = status
-local UserInputService = game:GetService("UserInputService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
-local ME = ReplicatedStorage.Events.ME
+local ME = RPS.Events.ME
 
 local function PlaySound(sound)
 	local soundclone = Instance.new("Sound")
@@ -94,6 +92,76 @@ local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz,
 	end
 end
 
+function UseHeatAction(HeatAction, Style, Bots)
+	local args = {
+		[1] = {
+			[1] = "heatmove",
+			[2] = game:GetService("ReplicatedStorage").Moves[HeatAction],
+			[3] = {
+
+			},
+			[4] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,
+			[5] = Style
+		}
+	}
+
+	for i,v in pairs(Bots) do
+		table.insert(args[1][3], {
+			[1] = v,
+			[2] = 10.49982091806829,
+			[3] = false,
+			[4] = Vector3.new(0.854888916015625, -0.499908447265625, -3.08367919921875)
+		})
+	end
+
+	ME:FireServer(unpack(args))
+end
+
+local function play_ingamesound(sfxname)
+	local v = sounds:FindFirstChild(sfxname)
+	local sfx = Instance.new("Sound", nil)
+	local id = v.Value
+
+	sfx.SoundId = id
+
+	for i,v in pairs(v:GetChildren()) do
+		sfx[v.Name] = v.Value
+	end
+
+	game.SoundService:PlayLocalSound(sfx)
+	task.delay(15, function()
+		sfx:Destroy()
+	end)
+end
+
+local function playsound(id)
+	local sfx = Instance.new("Sound", workspace)
+	sfx.SoundId = "rbxassetid://"..tostring(id)
+
+	game:GetService("SoundService"):PlayLocalSound(sfx)
+
+	spawn(function()
+		task.wait(sfx.TimeLength)
+		sfx:Destroy()
+	end)
+end
+
+local function playSound(sound)
+    local soundclone = Instance.new("Sound")
+    soundclone.Parent = char.Head
+    soundclone.Name = sound.Name
+    soundclone.SoundId = sound.Value
+    if not sound.Name:find("taunt") then
+        soundclone.Volume = 0.35
+    elseif sound.Name:find("taunt") then
+        soundclone.Volume = 0.5
+    end
+    soundclone:Play()
+    soundclone.Ended:Connect(function()
+        game:GetService("Debris"):AddItem(soundclone)
+    end)
+end
+
 local alreadyRunning = status:FindFirstChild("Dragon Style")
 if alreadyRunning then
 	Notify("Dragon Style is already loaded", "buzz", Color3.fromRGB(255,255,255), "RobotoMono")
@@ -112,31 +180,6 @@ alreadyRunning = Instance.new("BoolValue")
 alreadyRunning.Parent = status
 alreadyRunning.Value = true
 alreadyRunning.Name = "Dragon Style"
-
-local Beast = styles.Beast
-local Rush = styles.Rush
-local DEF = Dragon.EvadeF.AnimationId
-local DEB = Dragon.EvadeB.AnimationId
-local DEL = Dragon.EvadeL.AnimationId
-local DER = Dragon.EvadeR.AnimationId
-
-for i,v in Rush:GetChildren() do
-	if v:IsA("Animation") then
-		if string.find(v.Name, "Evade") and string.find(v.Name, "F") then
-			v.AnimationId = DEF
-		elseif string.find(v.Name, "Evade") and string.find(v.Name, "B") then
-			v.AnimationId = DEB
-		elseif string.find(v.Name, "Evade") and string.find(v.Name, "L") then
-			v.AnimationId = DEL
-		elseif string.find(v.Name, "Evade") and string.find(v.Name, "R") then
-			v.AnimationId = DER
-		end
-	end
-end
-Dragon.WalkF:Clone().Parent = Rush
-Dragon.WalkB:Clone().Parent = Rush
-Dragon.WalkL:Clone().Parent = Rush
-Dragon.WalkR:Clone().Parent = Rush
 
 local Y0Moveset = {
 	{name = "Grab", Type = "StringValue", value = "Grab"},
@@ -339,6 +382,67 @@ local DEMoveConfig = {
 	{move = "BAttack4", property = "ComboAt", value = moves["BAttack1"].ComboAt.Value}
 }
 
+local RDSCombo = {
+	{name = "Rush1", value="龍Attack1", Type="StringValue"},
+	{name = "Rush2", value="龍Attack2", Type="StringValue"},
+	{name = "Rush3", value="龍Attack1", Type="StringValue"},
+	{name = "Rush4", value="龍Attack2", Type="StringValue"},
+	{name = "Rush5", value="龍Attack1", Type="StringValue"},
+	{name = "Rush6", value="龍Attack2", Type="StringValue"},
+	{name = "Rush7", value="龍Attack1", Type="StringValue"},
+	{name = "Rush8", value="龍Attack2", Type="StringValue"},
+	{name = "Rush9", value="龍Attack1", Type="StringValue"},
+	{name = "Rush10", value="龍Attack4", Type="StringValue"},
+	{name = "Strike1", value ="龍Strike5", Type="StringValue"},
+	{name = "Strike6", Type = "StringValue", value = "龍Strike5"},
+	{name = "Strike7", Type = "StringValue", value = "B2Strike1"},
+	{name = "Strike8", Type = "StringValue", value = "B2Strike2"},
+	{name = "Strike9", Type = "StringValue", value = "龍2Strike4"}
+}
+local NCombo = {
+	{name = "Rush1", value = "BAttack1", Type = "StringValue"},
+	{name = "Rush2", value = "BAttack2", Type = "StringValue"},
+	{name = "Rush3", value = "BAttack3", Type = "StringValue"},
+	{name = "Rush4", value = "BAttack4", Type = "StringValue"},
+	{name = "Rush5", value = nil, Type = "Destroy"},
+	{name = "Rush6", value = nil, Type = "Destroy"},
+	{name = "Rush7", value = nil, Type = "Destroy"},
+	{name = "Rush8", value = nil, Type = "Destroy"},
+	{name = "Rush9", value = nil, Type = "Destroy"},
+	{name = "Rush10", value = nil, Type = "Destroy"},
+	{name = "Strike1", Type = "StringValue", value = "龍Strike1"},
+	{name = "Strike6", Type = "Destroy", value = "龍Strike5"},
+	{name = "Strike7", Type = "Destroy", value = "B2Strike1"},
+	{name = "Strike8", Type = "Destroy", value = "B2Strike2"},
+	{name = "Strike9", Type = "Destroy", value = "龍2Strike4"}
+}
+
+local MoveSpeed = {
+	{Move = "BAttack1", NewComboAt = moves["BAttack1"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack1"].ComboAt.Value},
+	{Move = "BAttack2", NewComboAt = moves["BAttack2"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack2"].ComboAt.Value},
+	{Move = "BAttack3", NewComboAt = moves["BAttack3"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack3"].ComboAt.Value},
+	{Move = "BAttack4", NewComboAt = moves["BAttack4"].ComboAt.Value - 0, OldComboAt = moves["BAttack4"].ComboAt.Value},
+	{Move = "BStrike2", NewComboAt = moves["BStrike2"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike2"].ComboAt.Value},
+	{Move = "BStrike3", NewComboAt = moves["BStrike3"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike3"].ComboAt.Value},
+	{Move = "BStrike5", NewComboAt = moves["BStrike5"].ComboAt.Value - 0.1, OldComboAt = moves["BStrike5"].ComboAt.Value},
+	{Move = "龍Strike5", NewComboAt = moves["龍Strike5"].ComboAt.Value - 0.05, OldComboAt = moves["龍Strike5"].ComboAt.Value}
+	
+}
+local MoveAniSpeed = {
+	{Move = "BAttack1", NewAniSpeed = moves["BAttack1"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack1"].AniSpeed.Value},
+	{Move = "BAttack2", NewAniSpeed = moves["BAttack2"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack2"].AniSpeed.Value},
+	{Move = "BAttack3", NewAniSpeed = moves["BAttack3"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack3"].AniSpeed.Value},
+	{Move = "BAttack4", NewAniSpeed = moves["BAttack4"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack4"].AniSpeed.Value},
+	{Move = "BStrike2", NewAniSpeed = moves["BStrike2"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike2"].AniSpeed.Value},
+	{Move = "BStrike3", NewAniSpeed = moves["BStrike3"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike3"].AniSpeed.Value},
+	{Move = "BStrike5", NewAniSpeed = moves["BStrike5"].AniSpeed.Value + 0.1, OldAniSpeed = moves["BStrike5"].AniSpeed.Value},
+	{Move = "龍Strike5", NewAniSpeed = moves["龍Strike5"].AniSpeed.Value + 0.05, OldAniSpeed = moves["龍Strike5"].AniSpeed.Value},
+	{Move = "龍2Strike2", NewAniSpeed = moves["龍2Strike2"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike2"].AniSpeed.Value},
+	{Move = "龍2Strike3", NewAniSpeed = moves["龍2Strike3"].AniSpeed.Value + 0.15, OldAniSpeed = moves["龍2Strike3"].AniSpeed.Value},
+	{Move = "龍2Strike4", NewAniSpeed = moves["龍2Strike4"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike4"].AniSpeed.Value}
+	
+}
+
 local function ChangeConfig(Table)
 	for i,mv in ipairs(moves:GetChildren()) do
 		for i,data in ipairs(Table) do
@@ -385,40 +489,32 @@ function ChangeMoveset(Style, Table)
 	end
 end
 
-local RDSCombo = {
-	{name = "Rush1", value="龍Attack1", Type="StringValue"},
-	{name = "Rush2", value="龍Attack2", Type="StringValue"},
-	{name = "Rush3", value="龍Attack1", Type="StringValue"},
-	{name = "Rush4", value="龍Attack2", Type="StringValue"},
-	{name = "Rush5", value="龍Attack1", Type="StringValue"},
-	{name = "Rush6", value="龍Attack2", Type="StringValue"},
-	{name = "Rush7", value="龍Attack1", Type="StringValue"},
-	{name = "Rush8", value="龍Attack2", Type="StringValue"},
-	{name = "Rush9", value="龍Attack1", Type="StringValue"},
-	{name = "Rush10", value="龍Attack4", Type="StringValue"},
-	{name = "Strike1", value ="龍Strike5", Type="StringValue"},
-	{name = "Strike6", Type = "StringValue", value = "龍Strike5"},
-	{name = "Strike7", Type = "StringValue", value = "B2Strike1"},
-	{name = "Strike8", Type = "StringValue", value = "B2Strike2"},
-	{name = "Strike9", Type = "StringValue", value = "龍2Strike4"}
-}
-local NCombo = {
-	{name = "Rush1", value = "BAttack1", Type = "StringValue"},
-	{name = "Rush2", value = "BAttack2", Type = "StringValue"},
-	{name = "Rush3", value = "BAttack3", Type = "StringValue"},
-	{name = "Rush4", value = "BAttack4", Type = "StringValue"},
-	{name = "Rush5", value = nil, Type = "Destroy"},
-	{name = "Rush6", value = nil, Type = "Destroy"},
-	{name = "Rush7", value = nil, Type = "Destroy"},
-	{name = "Rush8", value = nil, Type = "Destroy"},
-	{name = "Rush9", value = nil, Type = "Destroy"},
-	{name = "Rush10", value = nil, Type = "Destroy"},
-	{name = "Strike1", Type = "StringValue", value = "龍Strike1"},
-	{name = "Strike6", Type = "Destroy", value = "龍Strike5"},
-	{name = "Strike7", Type = "Destroy", value = "B2Strike1"},
-	{name = "Strike8", Type = "Destroy", value = "B2Strike2"},
-	{name = "Strike9", Type = "Destroy", value = "龍2Strike4"}
-}
+function ChangeSpeed(Type, Table)
+	for i,mv in moves:GetChildren() do
+		for i,data in Table do
+			if mv.Name == data.Move then
+				if Type == "Fast" then
+					mv.ComboAt.Value = data.NewComboAt
+				elseif Type == "Slow" then
+					mv.ComboAt.Value = data.OldComboAt
+				end
+			end
+		end
+	end
+end
+function ChangeAniSpeed(Type, Table)
+	for i,mv in moves:GetChildren() do
+		for i,data in Table do
+			if mv.Name == data.Move then
+				if Type == "Fast" then
+					mv.AniSpeed.Value = data.NewAniSpeed
+				elseif Type == "Slow" then
+					mv.AniSpeed.Value = data.OldAniSpeed
+				end
+			end
+		end
+	end
+end
 
 if _G.DragonConfigurations.Moveset == "Y0" then
 	ChangeMoveset(Dragon,Y0Moveset)
@@ -435,12 +531,9 @@ elseif _G.DragonConfigurations.Moveset == "Classic" then
 	ChangeAnims(CAnims)
 end
 
-Beast.Strike2.Value = "DashAttack"
-Beast.Strike4.Value = "BEvadeStrikeForward"
-Beast.H_Fallen.Value = "H_FallenBeatdown"
 
 ChangeAnims(RDSAnims)
-Dragon.SuperEvadeB.AnimationId = beast.EvadeB.AnimationId
+Dragon.SuperEvadeB.AnimationId = styles.Beast.EvadeB.AnimationId
 
 moves["H_FastFootworkBack"].Closest.Value = '75'
 wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
@@ -463,80 +556,7 @@ if _G.DragonConfigurations.Moveset ~= "Classic" then
 end
 moves.Taunt.Name = "FakeTaunt" moves.DragonTaunt.Name = "Taunt"
 
-local feelingheat = Instance.new("BoolValue")
-feelingheat.Value = false
 thing = Instance.new("BoolValue")
-local Event = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ME")
-
-function UseHeatAction(HeatAction, Style, Bots)
-	local args = {
-		[1] = {
-			[1] = "heatmove",
-			[2] = game:GetService("ReplicatedStorage").Moves[HeatAction],
-			[3] = {
-
-			},
-			[4] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,
-			[5] = Style
-		}
-	}
-
-	for i,v in pairs(Bots) do
-		table.insert(args[1][3], {
-			[1] = v,
-			[2] = 10.49982091806829,
-			[3] = false,
-			[4] = Vector3.new(0.854888916015625, -0.499908447265625, -3.08367919921875)
-		})
-	end
-
-	game:GetService("ReplicatedStorage").Events.ME:FireServer(unpack(args))
-end
-
-local function play_ingamesound(sfxname)
-	local v = game.ReplicatedStorage.Sounds:FindFirstChild(sfxname)
-	local sfx = Instance.new("Sound", nil)
-	local id = v.Value
-
-	sfx.SoundId = id
-
-	for i,v in pairs(v:GetChildren()) do
-		sfx[v.Name] = v.Value
-	end
-
-	game.SoundService:PlayLocalSound(sfx)
-	task.delay(15, function()
-		sfx:Destroy()
-	end)
-end
-
-local function playsound(id)
-	local sfx = Instance.new("Sound", workspace)
-	sfx.SoundId = "rbxassetid://"..tostring(id)
-
-	game:GetService("SoundService"):PlayLocalSound(sfx)
-
-	spawn(function()
-		task.wait(sfx.TimeLength)
-		sfx:Destroy()
-	end)
-end
-
-local function playSound(sound)
-    local soundclone = Instance.new("Sound")
-    soundclone.Parent = char.Head
-    soundclone.Name = sound.Name
-    soundclone.SoundId = sound.Value
-    if not sound.Name:find("taunt") then
-        soundclone.Volume = 0.35
-    elseif sound.Name:find("taunt") then
-        soundclone.Volume = 0.5
-    end
-    soundclone:Play()
-    soundclone.Ended:Connect(function()
-        game:GetService("Debris"):AddItem(soundclone)
-    end)
-end
 
 -- Ultimate Essence and Essence of Sumo Slapping --
 
@@ -607,7 +627,7 @@ local function Slap(enemy)
 	}
 	if thing.Value == false then
 		thing.Value = true
-		Event:FireServer(A_1)
+		ME:FireServer(A_1)
 	end
 end
 
@@ -625,7 +645,7 @@ local function Stun(enemy)
 	}
 	if thing.Value == false then
 		thing.Value = true
-		Event:FireServer(A_1)
+		ME:FireServer(A_1)
 	end
 end
 
@@ -810,57 +830,6 @@ Heat.Changed:Connect(function()
 	end
 end)
 
-local MoveSpeed = {
-	{Move = "BAttack1", NewComboAt = moves["BAttack1"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack1"].ComboAt.Value},
-	{Move = "BAttack2", NewComboAt = moves["BAttack2"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack2"].ComboAt.Value},
-	{Move = "BAttack3", NewComboAt = moves["BAttack3"].ComboAt.Value - 0.05, OldComboAt = moves["BAttack3"].ComboAt.Value},
-	{Move = "BAttack4", NewComboAt = moves["BAttack4"].ComboAt.Value - 0, OldComboAt = moves["BAttack4"].ComboAt.Value},
-	{Move = "BStrike2", NewComboAt = moves["BStrike2"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike2"].ComboAt.Value},
-	{Move = "BStrike3", NewComboAt = moves["BStrike3"].ComboAt.Value - 0.05, OldComboAt = moves["BStrike3"].ComboAt.Value},
-	{Move = "BStrike5", NewComboAt = moves["BStrike5"].ComboAt.Value - 0.1, OldComboAt = moves["BStrike5"].ComboAt.Value},
-	{Move = "龍Strike5", NewComboAt = moves["龍Strike5"].ComboAt.Value - 0.05, OldComboAt = moves["龍Strike5"].ComboAt.Value}
-	
-}
-local MoveAniSpeed = {
-	{Move = "BAttack1", NewAniSpeed = moves["BAttack1"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack1"].AniSpeed.Value},
-	{Move = "BAttack2", NewAniSpeed = moves["BAttack2"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack2"].AniSpeed.Value},
-	{Move = "BAttack3", NewAniSpeed = moves["BAttack3"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack3"].AniSpeed.Value},
-	{Move = "BAttack4", NewAniSpeed = moves["BAttack4"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BAttack4"].AniSpeed.Value},
-	{Move = "BStrike2", NewAniSpeed = moves["BStrike2"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike2"].AniSpeed.Value},
-	{Move = "BStrike3", NewAniSpeed = moves["BStrike3"].AniSpeed.Value + 0.05, OldAniSpeed = moves["BStrike3"].AniSpeed.Value},
-	{Move = "BStrike5", NewAniSpeed = moves["BStrike5"].AniSpeed.Value + 0.1, OldAniSpeed = moves["BStrike5"].AniSpeed.Value},
-	{Move = "龍Strike5", NewAniSpeed = moves["龍Strike5"].AniSpeed.Value + 0.05, OldAniSpeed = moves["龍Strike5"].AniSpeed.Value},
-	{Move = "龍2Strike2", NewAniSpeed = moves["龍2Strike2"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike2"].AniSpeed.Value},
-	{Move = "龍2Strike3", NewAniSpeed = moves["龍2Strike3"].AniSpeed.Value + 0.15, OldAniSpeed = moves["龍2Strike3"].AniSpeed.Value},
-	{Move = "龍2Strike4", NewAniSpeed = moves["龍2Strike4"].AniSpeed.Value + 0.1, OldAniSpeed = moves["龍2Strike4"].AniSpeed.Value}
-	
-}
-function ChangeSpeed(Type, Table)
-	for i,mv in moves:GetChildren() do
-		for i,data in Table do
-			if mv.Name == data.Move then
-				if Type == "Fast" then
-					mv.ComboAt.Value = data.NewComboAt
-				elseif Type == "Slow" then
-					mv.ComboAt.Value = data.OldComboAt
-				end
-			end
-		end
-	end
-end
-function ChangeAniSpeed(Type, Table)
-	for i,mv in moves:GetChildren() do
-		for i,data in Table do
-			if mv.Name == data.Move then
-				if Type == "Fast" then
-					mv.AniSpeed.Value = data.NewAniSpeed
-				elseif Type == "Slow" then
-					mv.AniSpeed.Value = data.OldAniSpeed
-				end
-			end
-		end
-	end
-end
 FastMoves.Changed:Connect(function()
 	if FastMoves.Value == true then
 		ChangeSpeed("Fast", MoveSpeed)
@@ -900,58 +869,6 @@ status.ChildAdded:Connect(function(v)
 		RDS.Value = true
 	end
 end)
-
-local settings = {
-	Brightness = 128,
-
-	Color = ColorSequence.new(Color3.new(1)),
-
-	Texture = "rbxassetid://5699911427",
-
-	LightEmission = 1,
-
-	LightInfluence = 1,
-
-	Transparency = NumberSequence.new(
-		{
-			NumberSequenceKeypoint.new(0, 0, 0),
-			NumberSequenceKeypoint.new(0.4, 0, 0),
-			NumberSequenceKeypoint.new(1, 1, 1)
-		}
-	),
-
-	Name = "Dragon Trail",
-
-	Lifetime = 1,
-
-	MaxLength = 0,
-
-	MinLength = 0.1,
-
-	WidthScale = NumberSequence.new({
-		NumberSequenceKeypoint.new(0, 1, 1),
-		NumberSequenceKeypoint.new(1, 0, 0),
-	})
-}
-
-local function makeTrail()
-	local trail = Instance.new("Trail", char.UpperTorso)
-	for i,v in settings do
-		trail[i] = v
-	end
-	return trail
-end
-
-local function makeAttachments(target)
-	-- Target is a part
-	local topAttachment = Instance.new("Attachment", target.UpperTorso)
-	topAttachment.Position = Vector3.new(0, target.UpperTorso.Size.Y * 1.25, 0)
-	topAttachment.Name = "TAttach"
-	local bottomAttachment = Instance.new("Attachment", target.LowerTorso)
-	bottomAttachment.Position = Vector3.new(0, target.LowerTorso.Size.Y * -1.25, 0)
-	bottomAttachment.Name = "BAttach"
-	return topAttachment, bottomAttachment
-end
 
 local TweenService = game:GetService("TweenService")
 
@@ -1251,8 +1168,8 @@ if _G.DragonConfigurations.VoiceMod == true then
     loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"))();
 end
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Brawler.Filled.Title.Text = "Dragon"
-menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Rush.Filled.Title.Text = "Rush"
-menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Beast.Filled.Title.Text = "Beast"
+menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Rush.Filled.Title.Text = "Frenzy"
+menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Beast.Filled.Title.Text = "Brute"
 --Ability Names--
 local list = {
 	["Counter Hook"] = "Komaki Tiger Drop",
