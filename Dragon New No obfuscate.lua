@@ -576,6 +576,7 @@ local function depleteHeat(howmany)
 	end
 end
 
+local RDS
 if not status:FindFirstChild("RedDragonSpirit") then
 	RDS = Instance.new("BoolValue", status)
 	RDS.Value = false 
