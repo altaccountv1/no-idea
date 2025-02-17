@@ -18,6 +18,8 @@ local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
 local debug = false
 
+local ME = RPS.Events.ME
+
 local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
 	local Text1 = string.upper(Text)
 	if Sound then
