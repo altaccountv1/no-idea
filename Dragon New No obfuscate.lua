@@ -18,7 +18,7 @@ local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
 local debug = false
 
-if _G.Experiments then
+if _G.DragonConfigurations.Experiments then
     local experiment = "sumo slap tp "
     if not hookmetamethod and not getnamecallmethod then Notify("Your executor does not support this experiment.", "buzz", Color3.new(1,0,0),nil) return end
     local TweenService = game:GetService("TweenService")
