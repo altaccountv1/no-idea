@@ -44,11 +44,11 @@ if _G.DragonConfigurations.Experiments == true then
     local experiment = "sumo slap tp "
     if not hookmetamethod and not getnamecallmethod then Notify("Your executor does not support this experiment.", "buzz", Color3.new(1,0,0),nil) return end
     local TweenService = game:GetService("TweenService")
-    Notify("Enabling experiment: Sumo Slap Teleport",nil,Color3.new(1,1,1),nil)
+    Notify("Enabling experiment: Sumo Slap Teleport and Tiger Drop Immunity",nil,Color3.new(1,1,1),nil)
     function getLocked()
         return char.LockedOn.Value
     end
-
+    moves["龍TigerDrop"].ScrewYou:Destroy()
     function createTrail(startPos, endPos, color)
         local trail = RPS.TPTrail:Clone()
         trail.Parent = game.Workspace.Ignore
