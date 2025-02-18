@@ -100,7 +100,7 @@ if _G.DragonConfigurations.Experiments == true then
         }
         args[1][4] = newCF
 
-        ME:FireServer(unpack(args))
+        ME:FireServer(unpack(args)) task.wait(0.07)
         createTrail(hrp.Position, target.Position, Color3.new(1, 0, 0))
     end
 
