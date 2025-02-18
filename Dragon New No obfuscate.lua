@@ -62,7 +62,7 @@ if _G.DragonConfigurations.Experiments == true then
             trail.Gradient2.Color3 = color
         end
 
-        local duration = distance * 0.0007
+        local duration = distance * 0.001
         TweenService:Create(
             trail,
             TweenInfo.new(duration, Enum.EasingStyle.Linear, Enum.EasingDirection.In),
