@@ -1269,6 +1269,7 @@ if _G.DragonConfigurations.CustomMorphSkin == true and _G.DragonConfigurations.M
 end
 
 if _G.DragonConfigurations.VoiceMod == true then
+    _G.VoiceCharacter = "Kiryu"
     loadstring(game:HttpGet("https://pastebin.com/raw/ihQaV3N6"))();
 end
 menu.Abilities.Frame.Frame.Frame.Tabs.Tabs.Brawler.Filled.Title.Text = "Dragon"
