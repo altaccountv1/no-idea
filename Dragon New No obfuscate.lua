@@ -670,7 +670,7 @@ end
 
 local function depleteHeat(howmany)
 	for i = 1, howmany do
-		ME:FireServer(A_2)
+		ME:FireServer(unpack(A_2))
 	end
 end
 
@@ -1188,6 +1188,227 @@ if _G.DragonConfigurations.MorphMod == true then
 	_G.Morph = "Legendary Dragon"          
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/aAAAakakrvmv192/R2FMods/main/charmorphmod.lua"))();
 end
+
+if _G.DragonConfigurations.FeelTheHeat == true then
+local enemyHPFrame = pgui.EInterface.EnemyHP
+local hpTextLabel = enemyHPFrame.BG.Meter.HPTxt
+local enemyValue = enemyHPFrame.Enemy -- ObjectValue that changes
+
+
+
+
+local function getEnemy()
+    for _, v in workspace.Bots.AI:GetChildren() do
+        if v:FindFirstChild("MyArena") and v.MyArena.Value == status.MyArena.Value then
+            local bossMarker = v:FindFirstChild("Boss")
+            if bossMarker and bossMarker:IsA("Folder") then
+                return v
+            end
+        end
+    end
+end
+
+local qter = plr.PlayerGui.Interface.QTEr
+local notifier = plr.PlayerGui.Notify
+local canRun = false
+
+if getsenv then
+    canRun = true
+else
+    notifier:Fire("Your executor needs getsenv() to run Feel the Heat.", "buzz")
+    canRun = false
+end
+
+if canRun == false then return end
+local senv = getsenv(qter)
+
+local function startMash(time, hits, button)
+    senv.QTEMashStart(time, hits, button)
+end
+
+local bossList = {}
+
+local dStorage = {}
+local rStorage = {}
+local bStorage = {}
+
+local dhStorage = {}
+local rhStorage = {}
+local bhStorage = {}
+
+local mashHits = 0
+
+local function getStorage(style)
+    if style.Name == "Brawler" then
+        return dStorage
+    elseif style.Name == "Rush" then
+        return rStorage
+    elseif style.Name == "Beast" then
+        return bStorage
+    end
+end
+
+-- Helper function to determine if the move is H_ or T_ prefixed
+local function isHTMove(moveName)
+    return moveName:sub(1, 2) == "H_" or moveName:sub(1, 2) == "T_"
+end
+
+local function wipeMoves(style)
+    local storage = getStorage(style)
+    if not storage then return end
+    for _, v in ipairs(style:GetChildren()) do
+        if v:IsA("StringValue") then
+            if isHTMove(v.Name) then
+                if style.Name == "Brawler" then
+                    dhStorage[v.Name] = v.Value
+                elseif style.Name == "Rush" then
+                    rhStorage[v.Name] = v.Value
+                elseif style.Name == "Beast" then
+                    bhStorage[v.Name] = v.Value
+                end
+            else
+                storage[v.Name] = v.Value
+                v.Value = "Slapper"
+            end
+        end
+    end
+end
+
+local function giveMoves(style)
+    local storage = getStorage(style)
+    if not storage then return end
+    for _, v in ipairs(style:GetChildren()) do
+        if v:IsA("StringValue") then
+            if isHTMove(v.Name) then
+                if style.Name == "Brawler" then
+                    v.Value = dhStorage[v.Name] or v.Value
+                elseif style.Name == "Rush" then
+                    v.Value = rhStorage[v.Name] or v.Value
+                elseif style.Name == "Beast" then
+                    v.Value = bhStorage[v.Name] or v.Value
+                end
+            elseif storage[v.Name] then
+                v.Value = storage[v.Name]
+            end
+        end
+    end
+end
+
+
+local function fillEveryThree()
+    if mashHits % 3 == 0 and mashHits > 0 then
+        fillHeat(1)
+    end
+end
+
+task.spawn(function()
+    while task.wait(0.1) do
+game:GetService("Players").LocalPlayer.PlayerGui.Interface.QTE.PromptG.MashPrompt.Visible = false
+        fillEveryThree()
+    end
+end)
+
+local oldPulsate = senv.PulsateMash
+
+senv.PulsateMash = function(...)
+    mashHits = mashHits + 1
+    return oldPulsate(...)
+end
+
+
+local function feelTheHeat(boss)
+    if not boss or bossList[boss.Name] then return end
+    bossList[boss.Name] = true
+    repeat task.wait() until not doingHact() and not boss:FindFirstChild("Ragdolled") and not char:FindFirstChild("Ragdolled") 
+    task.wait(0.75)
+    local bossHRP = boss:FindFirstChild("HumanoidRootPart") or boss:FindFirstChild("HRP") 
+    Stun(bossHRP)
+    print(bossHRP)
+    local hrp = char.HumanoidRootPart
+    hrp.Anchored = true
+
+    local charging = styles.Beast.Block
+    local cTrack = char.Humanoid:LoadAnimation(charging)
+    local rage = Instance.new("Animation") rage.AnimationId = "http://www.roblox.com/asset/?id=10478338114"
+    
+    local rTrack = char.Humanoid:LoadAnimation(rage)
+    cTrack.Priority = Enum.AnimationPriority.Action3
+    rTrack.Priority = Enum.AnimationPriority.Action3
+
+    depleteHeat(13)
+    Notify("Feel the Heat!", nil, Color3.fromRGB(30, 30, 255), nil)
+    wipeMoves(styles.Brawler)
+    wipeMoves(styles.Rush)
+    wipeMoves(styles.Beast)
+
+    cTrack:Play()
+    RPS.Invulnerable:Clone().Parent = status
+    task.wait(0.5)
+
+    task.delay(0.5, function()
+        playSound(fetchRandom(RPS.Voices.Kiryu.Rage))
+    end)
+
+    startMash(10, 20, nil)
+
+    repeat task.wait() until not senv.var10_upvr
+
+    cTrack:Stop()
+    cTrack:Destroy()
+    rTrack:Play() rTrack:AdjustSpeed(1.5) rTrack.Looped = false
+    task.wait(1.25)
+    rTrack:Stop()
+    rTrack:Destroy()
+    hrp.Anchored = false
+    if status:FindFirstChild("Invulnerable") then
+        status.Invulnerable:Destroy()
+    end
+    giveMoves(styles.Brawler)
+    giveMoves(styles.Rush)
+    giveMoves(styles.Beast) mashHits = 0
+end
+
+local inBattle = Instance.new("BoolValue")
+
+plr.ChildAdded:Connect(function(child)
+    if child.Name == "InBattle" then inBattle.Value = true end
+end)
+
+plr.ChildRemoved:Connect(function(child)
+    if child.Name == "InBattle" then inBattle.Value = false end
+end)
+
+local lastBossName = nil  -- Track the last known boss name
+
+local function checkBossHP()
+    local enemy = getEnemy()
+    if enemy and enemy:FindFirstChild("Boss") and isInBattle() then
+        local bossMarker = enemy:FindFirstChild("Boss")
+        if not bossMarker or not bossMarker:IsA("Folder") then return end 
+
+        local text = hpTextLabel.Text
+        local currenthp, maxhp = string.match(text, "(%d+)%/(%d+)")
+        if currenthp and maxhp then
+            currenthp = tonumber(currenthp)
+            maxhp = tonumber(maxhp)
+            if currenthp <= 300 and not bossList[enemy.Name] then
+                feelTheHeat(enemy)
+            end
+        end
+    end
+end
+
+
+inBattle.Changed:Connect(function()
+    if not inBattle.Value then
+        bossList = {}
+        mashHits = 0
+    end
+end)
+
+hpTextLabel:GetPropertyChangedSignal("Text"):Connect(checkBossHP)
+end
+--enemyValue.Changed:Connect(checkBossHP)
 
 status.Style.Changed:Connect(function()
 	if status.Style.Value == "Brawler" then
