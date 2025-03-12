@@ -1406,14 +1406,6 @@ end)
 hpTextLabel:GetPropertyChangedSignal("Text"):Connect(checkBossHP)
 end
 --enemyValue.Changed:Connect(checkBossHP)
-local oldPrint = print
-print = function(...)
-    local args = {...}
-    if tostring(args[1]) == "not even coplanar" then
-        return
-    end
-    oldPrint(...)
-end
 
 status.Style.Changed:Connect(function()
 	if status.Style.Value == "Brawler" then
