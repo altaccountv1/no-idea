@@ -1194,9 +1194,6 @@ local enemyHPFrame = pgui.EInterface.EnemyHP
 local hpTextLabel = enemyHPFrame.BG.Meter.HPTxt
 local enemyValue = enemyHPFrame.Enemy -- ObjectValue that changes
 
-
-
-
 local function getEnemy()
     for _, v in workspace.Bots.AI:GetChildren() do
         if v:FindFirstChild("MyArena") and v.MyArena.Value == status.MyArena.Value then
@@ -1296,7 +1293,7 @@ end
 
 
 local function fillEveryThree()
-    if mashHits % 3 == 0 and mashHits > 0 then
+    if mashHits % 5 == 0 and mashHits > 0 then
         fillHeat(1)
     end
 end
@@ -1382,7 +1379,7 @@ local lastBossName = nil  -- Track the last known boss name
 
 local function checkBossHP()
     local enemy = getEnemy()
-    if enemy and enemy:FindFirstChild("Boss") and isInBattle() then
+    if enemy and enemy:FindFirstChild("Boss") and isInBattle() and enemyValue.Value == enemy then
         local bossMarker = enemy:FindFirstChild("Boss")
         if not bossMarker or not bossMarker:IsA("Folder") then return end 
 
