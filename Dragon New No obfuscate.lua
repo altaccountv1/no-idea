@@ -1320,7 +1320,7 @@ local function feelTheHeat(boss)
     task.wait(0.75)
     local bossHRP = boss:FindFirstChild("HumanoidRootPart") or boss:FindFirstChild("HRP") 
     Stun(bossHRP)
-    print(bossHRP)
+    print(bossHRP, bossHRP.Parent.Name)
     local hrp = char.HumanoidRootPart
     hrp.Anchored = true
 
