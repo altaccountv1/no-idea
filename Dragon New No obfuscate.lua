@@ -239,10 +239,10 @@ local function play_ingamesound(sfxname)
 end
 
 local function playsound(id)
-	local sfx = Instance.new("Sound", workspace)
+	local sfx = Instance.new("Sound", char.Head)
 	sfx.SoundId = "rbxassetid://"..tostring(id)
-
-	game:GetService("SoundService"):PlayLocalSound(sfx)
+        sfx.Volume = 1
+	sfx:Play()
 
 	spawn(function()
 		task.wait(sfx.TimeLength)
