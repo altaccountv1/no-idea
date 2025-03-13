@@ -1152,7 +1152,7 @@ RDS.Changed:Connect(function()
 			track:Play()
 			track:AdjustSpeed(1)
 			char.HumanoidRootPart.Anchored = true
-			task.wait(1.25)
+			task.wait(1.25) track:Stop()
 			char.HumanoidRootPart.Anchored = false
 			track:Destroy()
 			anim:Destroy()
