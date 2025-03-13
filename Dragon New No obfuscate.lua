@@ -1334,7 +1334,7 @@ local function feelTheHeat(boss)
 
     depleteHeat(13)
     Notify("Feel the Heat!", nil, Color3.fromRGB(30, 30, 255), nil)
-    
+    playsound(122181379530597) 
     wipeMoves(styles.Brawler)
     wipeMoves(styles.Rush)
     wipeMoves(styles.Beast)
@@ -1350,10 +1350,11 @@ local function feelTheHeat(boss)
     startMash(10, 20, nil)
 
     repeat task.wait() until not senv.var10_upvr
-
+		
     cTrack:Stop()
     cTrack:Destroy()
-    rTrack:Play() rTrack:AdjustSpeed(1.5) rTrack.Looped = false
+    rTrack:Play() rTrack:AdjustSpeed(1.5) rTrack.Looped = false 
+    playsound(89744139895177)
     task.wait(1.25)
     rTrack:Stop()
     rTrack:Destroy()
