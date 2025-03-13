@@ -1317,7 +1317,7 @@ local function feelTheHeat(boss)
     if not boss or bossList[boss.Name] then return end
     bossList[boss.Name] = true
     repeat task.wait() until not doingHact() and not boss:FindFirstChild("Ragdolled") and not char:FindFirstChild("Ragdolled") 
-    task.wait(0.75)
+    task.wait(0.9)
     local bossHRP = boss:FindFirstChild("HumanoidRootPart") or boss:FindFirstChild("HRP") 
     Stun(bossHRP)
     print(bossHRP, bossHRP.Parent.Name)
@@ -1334,6 +1334,7 @@ local function feelTheHeat(boss)
 
     depleteHeat(13)
     Notify("Feel the Heat!", nil, Color3.fromRGB(30, 30, 255), nil)
+    
     wipeMoves(styles.Brawler)
     wipeMoves(styles.Rush)
     wipeMoves(styles.Beast)
