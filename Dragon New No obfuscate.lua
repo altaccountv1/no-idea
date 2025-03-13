@@ -5,6 +5,8 @@ local bt = interf.Battle
 local main = bt.Main
 local char = plr.Character
 
+local fthActive = false
+
 local RPS = game.ReplicatedStorage
 local moves = RPS.Moves
 local sounds = RPS.Sounds
@@ -241,7 +243,7 @@ end
 local function playsound(id)
 	local sfx = Instance.new("Sound", char.Head)
 	sfx.SoundId = "rbxassetid://"..tostring(id)
-        sfx.Volume = 1
+        sfx.Volume = 2
 	sfx:Play()
 
 	spawn(function()
@@ -781,6 +783,7 @@ local function Hacts()
 		debounce = true
 
 		if whatHact.Value == "Ultimate Essence" then
+                            if not fthActive then 
 			local soundr = Rep.Voices.Kiryu.Taunt["taunt2 (2)"]
 			local anim = char.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Anim)
 			local anim2 = heated.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_UltimateEssence.Victim1)
@@ -796,7 +799,23 @@ local function Hacts()
 
 			task.delay(1, function() PlaySound("MassiveSlap") end)
 			task.delay(2, function() anim:Destroy(); anim2:Stop(); anim2:Destroy() end)
+                            else
+                                   local soundr = Rep.Voices.Kiryu.Rage["extremeheatmode2"]
+                                   local dk = Instance.new("Animation") dk.AnimationId = "rbxassetid://12747380309"
+			local anim = char.Humanoid:LoadAnimation(dk)
+			local anim2 = heated.Heating.Value.Humanoid:LoadAnimation(Rep.Anims.Fear)
 
+			anim.Priority = Enum.AnimationPriority.Action4
+			anim2.Priority = Enum.AnimationPriority.Action4
+			anim:Play() anim:AdjustSpeed(1.1)
+			anim2:Play()
+
+			if _G.DragonConfigurations.VoiceMod then
+				playSound(soundr)
+			end
+
+			task.delay(2, function() anim:Destroy(); anim2:Stop(); anim2:Destroy() end)
+                            end
 		elseif whatHact.Value == "Essence of Fast Footwork [Back]" then
 			Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
 			local anim = char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
@@ -1245,7 +1264,6 @@ local function getStorage(style)
     end
 end
 
--- Helper function to determine if the move is H_ or T_ prefixed
 local function isHTMove(moveName)
     return moveName:sub(1, 2) == "H_" or moveName:sub(1, 2) == "T_"
 end
@@ -1317,8 +1335,9 @@ local function feelTheHeat(boss)
     if not boss or bossList[boss.Name] then return end
     bossList[boss.Name] = true
     repeat task.wait() until not doingHact() and not boss:FindFirstChild("Ragdolled") and not char:FindFirstChild("Ragdolled") 
-    task.wait(0.9)
-    local bossHRP = boss:FindFirstChild("HumanoidRootPart") or boss:FindFirstChild("HRP") 
+    task.wait(0.75)
+    local bossHRP = boss:FindFirstChild("HumanoidRootPart") or boss:FindFirstChild("HRP") fthActive = true 
+    thing.Value = false
     Stun(bossHRP)
     print(bossHRP, bossHRP.Parent.Name)
     local hrp = char.HumanoidRootPart
@@ -1354,17 +1373,20 @@ local function feelTheHeat(boss)
     cTrack:Stop()
     cTrack:Destroy()
     rTrack:Play() rTrack:AdjustSpeed(1.5) rTrack.Looped = false 
-    playsound(89744139895177)
-    task.wait(1.25)
+    playsound(74136410959637)
+    task.wait(0.75)
     rTrack:Stop()
-    rTrack:Destroy()
+    rTrack:Destroy() UseHeatAction("H_GUltimateEssence","Brawler",{bossHRP})
     hrp.Anchored = false
     if status:FindFirstChild("Invulnerable") then
         status.Invulnerable:Destroy()
     end
-    giveMoves(styles.Brawler)
-    giveMoves(styles.Rush)
-    giveMoves(styles.Beast) mashHits = 0
+    task.delay(0.5, function()
+        giveMoves(styles.Brawler)
+        giveMoves(styles.Rush)
+        giveMoves(styles.Beast) mashHits = 0 fthActive = false
+    end)
+
 end
 
 local inBattle = Instance.new("BoolValue")
@@ -1376,8 +1398,6 @@ end)
 plr.ChildRemoved:Connect(function(child)
     if child.Name == "InBattle" then inBattle.Value = false end
 end)
-
-local lastBossName = nil  -- Track the last known boss name
 
 local function checkBossHP()
     local enemy = getEnemy()
