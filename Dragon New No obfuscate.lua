@@ -1232,10 +1232,10 @@ if require then canRun = true end
 
 if not canRun then return Notify("Your executor needs require() for this.", "buzz") end
 
-local function qtesound(sound)
+local function qtesound(sound, volume)
 	local sfx = Instance.new("Sound", char.Head)
 	sfx.SoundId = sound.Value
-            sfx.Volume = sound.Volume.Value 
+            sfx.Volume = volume or sound.Volume.Value 
 	sfx:Play()
 
 	spawn(function()
