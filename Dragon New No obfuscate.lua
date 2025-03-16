@@ -1,3 +1,12 @@
+_G.DragonConfigurations = {
+  Moveset = "Y0", -- Y0 or DE
+  MorphMod = true, -- true or false
+  VoiceMod = true, -- true or false
+  CustomMorphSkin = false, -- true or false
+  Experiments = true,
+  FeelTheHeat = true
+}
+
 local plr = game.Players.LocalPlayer
 local pgui = plr.PlayerGui
 local interf = pgui.Interface
@@ -13,6 +22,8 @@ local sounds = RPS.Sounds
 local styles = RPS.Styles
 local Dragon = styles.Brawler
 
+local oldanim = moves.BRCounter2.Anim.AnimationId
+
 local status = plr.Status
 local menu = pgui.MenuUI.Menu 
 local abil = menu.Abilities.Frame.Frame.Frame
@@ -22,7 +33,7 @@ local debug = false
 
 local ME = RPS.Events.ME
 
-local function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
+function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong, HeatDepleted
 	local Text1 = string.upper(Text)
 	if Sound then
 		pgui.Notify:Fire(Text,Sound)
@@ -148,7 +159,7 @@ Forcefield.Parent = status
 
 local ME = RPS.Events.ME
 
-local function PlaySound(sound)
+function PlaySound(sound)
 	local soundclone = Instance.new("Sound")
 	soundclone.Parent = char.Head
 	soundclone.Name = sound
@@ -223,7 +234,7 @@ function UseHeatAction(HeatAction, Style, Bots)
 	ME:FireServer(unpack(args))
 end
 
-local function play_ingamesound(sfxname)
+function play_ingamesound(sfxname)
 	local v = sounds:FindFirstChild(sfxname)
 	local sfx = Instance.new("Sound", nil)
 	local id = v.Value
@@ -240,7 +251,7 @@ local function play_ingamesound(sfxname)
 	end)
 end
 
-local function playsound(id, volume)
+function playsound(id, volume)
 	local sfx = Instance.new("Sound", char.Head)
 	sfx.SoundId = "rbxassetid://"..tostring(id)
             sfx.Volume = volume or 2
@@ -252,7 +263,7 @@ local function playsound(id, volume)
 	end)
 end
 
-local function playSound(sound)
+function playSound(sound)
     local soundclone = Instance.new("Sound")
     soundclone.Parent = char.Head
     soundclone.Name = sound.Name
@@ -316,7 +327,7 @@ local Y0Moveset = {
 	{name = "2Strike5", Type = "StringValue", value = "龍2Strike4"},
 
 	{name = "BlockStrike", Type = "StringValue", value = "ShuckyDrop"},
-	{name = "StanceStrike", Type = "StringValue", value = "CounterHook"},
+	{name = "StanceStrike", Type = "StringValue", value = "BRCounter2"},
 	{name = "H_Fallen", Type = "StringValue", value = "H_FallenSupine"},
 	{name = "H_FallenDown", Type = "StringValue", value = "H_FallenGrate"},
 	{name = "H_TwoHandeds", Type = "StringValue", value = "H_SelfDestruct"},
@@ -380,7 +391,7 @@ local CMoveset = {
 	{name = "2Strike5", Type = "StringValue", value = "龍2Strike4"},
 
 	{name = "BlockStrike", Type = "StringValue", value = "GuruStumble"},
-	{name = "StanceStrike", Type = "StringValue", value = "CounterHook"},
+	{name = "StanceStrike", Type = "StringValue", value = "TigerDrop"},
 	{name = "H_Fallen", Type = "StringValue", value = "H_FallenSupine"},
 	{name = "H_FallenDown", Type = "StringValue", value = "H_FallenKick"},
 	{name = "H_TwoHandeds", Type = "StringValue", value = "H_SelfDestruct"},
@@ -523,7 +534,7 @@ local NCombo = {
 	{name = "Strike9", Type = "Destroy", value = "龍2Strike4"}
 }
 
-local function ChangeConfig(Table)
+function ChangeConfig(Table)
 	for i,mv in ipairs(moves:GetChildren()) do
 		for i,data in ipairs(Table) do
 			if mv.Name == data.move then
@@ -622,8 +633,7 @@ wn.Value = '15'
 if not IsInPvp() then
 	moves.BRCounter2.Name = "FakeBRCounter2"
 	moves["龍TigerDrop"].Name = "BRCounter2"
-	moves["BRCounter2"].AniSpeed.Value = 0.75
-	moves.CounterHook.Anim.AnimationId = "rbxassetid://12120052426"
+	moves["BRCounter2"].AniSpeed.Value = 0.85
 end
 
 if _G.DragonConfigurations.Moveset ~= "Classic" then
@@ -645,7 +655,7 @@ local Rep = game.ReplicatedStorage
 local Char = Player.Character
 local Main = Player.PlayerGui.Interface.Battle.Main
 
-local function fetchRandom(instance)
+function fetchRandom(instance)
 	local instancechildren = instance:GetChildren()
 	local random = instancechildren[math.random(1, #instancechildren)]
 	return random
@@ -664,13 +674,13 @@ local A_2 = {
 	}
 }
 
-local function fillHeat(howmany)
+function fillHeat(howmany)
 	for i = 1, howmany do
 		ME:FireServer(A_1)
 	end
 end
 
-local function depleteHeat(howmany)
+function depleteHeat(howmany)
 	for i = 1, howmany do
 		ME:FireServer(unpack(A_2))
 	end
@@ -685,7 +695,7 @@ else
 	RDS = status.RedDragonSpirit
 end
 
-local function HealthChanged()
+function HealthChanged()
 	if InCriticalHp() then
 		RDS.Value = true
 	end
@@ -693,7 +703,7 @@ end
 
 plr.Status.Health.Changed:Connect(HealthChanged)
 
-local function Slap(enemy)
+function Slap(enemy)
 	local A_1 = {
 		[1] = "damage", 
 		[3] = enemy, 
@@ -711,7 +721,7 @@ local function Slap(enemy)
 	end
 end
 
-local function Stun(enemy)
+function Stun(enemy)
 	local A_1 = {
 		[1] = "damage", 
 		[3] = enemy, 
@@ -729,7 +739,7 @@ local function Stun(enemy)
 	end
 end
 
-local function AutoSlap()
+function AutoSlap()
 	if not RDS.Value then return end -- Skip execution if RDS is false
 
 	if not IsInPvp() then
@@ -773,7 +783,7 @@ end
 
 local debounce = false
 
-local function Hacts()
+function Hacts()
 	local heated = plr.Character:FindFirstChild("Heated")
 	if heated and heated:FindFirstChild("MoveName") and status.Style.Value == "Brawler" then
 		local whatHact = heated.MoveName
@@ -860,7 +870,7 @@ DragonColor = Color3.fromRGB(250,5,10)
 local DSeq = ColorSequence.new({ColorSequenceKeypoint.new(0, DragonColor), ColorSequenceKeypoint.new(1, DragonColor)})
 local NoTrail = ColorSequence.new({ColorSequenceKeypoint.new(0, styles.Blade.Color.Value), ColorSequenceKeypoint.new(1, styles.Blade.Color.Value)})
 
-local function UpdateStyle()
+function UpdateStyle()
 	if status.Style.Value == "Brawler" then
 		Dragon.Color.Value = DragonColor
 		char.HumanoidRootPart.Fire_Main.Color = DSeq
@@ -974,7 +984,7 @@ local ts1 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, En
 
 local ts2 = tweenService:Create(cc, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Contrast = 0, TintColor = Color3.new(1,1,1)})
 
-local function Animation()
+function Animation()
 	ts1:Play()
 	ts1.Completed:Once(function()
 		ts2:Play()
@@ -1023,7 +1033,7 @@ function createTrail(startPos, endPos, color)
     end)
 end
 
-local function teleportToLocked(target)
+function teleportToLocked(target)
 	local user = game.Players.LocalPlayer
 	local char = user.Character or user.CharacterAdded:Wait()
 	local root = char.HumanoidRootPart
@@ -1195,8 +1205,11 @@ task.wait()
 interf.Client.Disabled = false
 char.HumanoidRootPart.CFrame = oldcframe
 
-moves.BRCounter2.Anim.AnimationId = "rbxassetid://12338275115"
-moves.CounterHook.Anim.AnimationId = "rbxassetid://12338275115"
+if not IsInPvp() then
+    moves.BRCounter2.Anim.AnimationId = "rbxassetid://11464955887"
+else
+    moves.BRCounter2.Anim.AnimationId = oldanim
+end
 moves.HueDrop.Anim.AnimationId = moves.TigerDrop.Anim.AnimationId
 local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
 local styleToChangeTo = "堂島の龍" -- is Dragon Style
@@ -1213,7 +1226,7 @@ local enemyHPFrame = pgui.EInterface.EnemyHP
 local hpTextLabel = enemyHPFrame.BG.Meter.HPTxt
 local enemyValue = enemyHPFrame.Enemy -- ObjectValue that changes
 
-local function getEnemy()
+function getEnemy()
     for _, v in workspace.Bots.AI:GetChildren() do
         if v:FindFirstChild("MyArena") and v.MyArena.Value == status.MyArena.Value then
             local bossMarker = v:FindFirstChild("Boss")
@@ -1232,10 +1245,11 @@ if require then canRun = true end
 
 if not canRun then return Notify("Your executor needs require() for this.", "buzz") end
 
-local function qtesound(sound, volume)
+function qtesound(sound, volume)
 	local sfx = Instance.new("Sound", char.Head)
 	sfx.SoundId = sound.Value
-            sfx.Volume = volume or sound.Volume.Value 
+            sfx.Volume = volume or sound.Volume.Value - 2
+            sfx.PlaybackSpeed = sound.PlaybackSpeed.Value
 	sfx:Play()
 
 	spawn(function()
@@ -1485,7 +1499,7 @@ function QTEMashStart(arg1, arg2, arg3) -- Line 218
 	]]
 	var10_upvw = true
 	getb(arg3)
-	qtesound(script.Appear,1 )
+	qtesound(script.Appear,1)
 	QTE_upvr.PromptG.MashPrompt.Visible = not var2_upvw
 	QTE_upvr.ImageTransparency = 1
 	QTE_upvr.Left.ImageLabel.ImageTransparency = 1
@@ -1509,19 +1523,25 @@ function QTEMashStart(arg1, arg2, arg3) -- Line 218
 	end
 end
 
-require(game.ReplicatedFirst.Ambassador).HookEvent("QTE", function(arg1) -- Line 249
-	--[[ Upvalues[3]:
-		[1]: var8_upvw (read and write)
-		[2]: var9_upvw (read and write)
-		[3]: var10_upvw (read and write)
-	]]
-	if var8_upvw and (var9_upvw == nil or var10_upvw) then
-		var9_upvw = arg1
-		if var10_upvw and var9_upvw == var8_upvw then
-			PulsateMash()
-		end
-	end
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local AmbassadorModule
+
+repeat
+    pcall(function()
+        AmbassadorModule = require(ReplicatedFirst:WaitForChild("Ambassador"))
+    end)
+    task.wait(0.1)
+until AmbassadorModule
+
+AmbassadorModule.HookEvent("QTE", function(arg1)
+    if var8_upvw and (var9_upvw == nil or var10_upvw) then
+        var9_upvw = arg1
+        if var10_upvw and var9_upvw == var8_upvw then
+            PulsateMash()
+        end
+    end
 end)
+
 
 function checkpc() -- Line 256
 	--[[ Upvalues[2]:
@@ -1541,7 +1561,7 @@ Device_upvr.Changed:connect(function() -- Line 264
 end)
 checkpc()
 
-local function startMash(time, hits, button)
+function startMash(time, hits, button)
     QTEMashStart(time, hits, button)
 end
 
@@ -1557,7 +1577,7 @@ local bhStorage = {}
 
 local mashHits = 0
 
-local function getStorage(style)
+function getStorage(style)
     if style.Name == "Brawler" then
         return dStorage
     elseif style.Name == "Rush" then
@@ -1567,11 +1587,11 @@ local function getStorage(style)
     end
 end
 
-local function isHTMove(moveName)
+function isHTMove(moveName)
     return moveName:sub(1, 2) == "H_" or moveName:sub(1, 2) == "T_"
 end
 
-local function wipeMoves(style)
+function wipeMoves(style)
     local storage = getStorage(style)
     if not storage then return end
     for _, v in ipairs(style:GetChildren()) do
@@ -1592,7 +1612,7 @@ local function wipeMoves(style)
     end
 end
 
-local function giveMoves(style)
+function giveMoves(style)
     local storage = getStorage(style)
     if not storage then return end
     for _, v in ipairs(style:GetChildren()) do
@@ -1613,9 +1633,9 @@ local function giveMoves(style)
 end
 
 
-local function fillEveryThree()
-    if mashHits % 5 == 0 and mashHits > 0 then
-        fillHeat(1)
+function fillEveryThree()
+    if mashHits % 3 == 0 and mashHits > 0 then
+        fillHeat(1) mashHits = 0
     end
 end
 
@@ -1634,7 +1654,7 @@ PulsateMash = function(...)
 end
 
 
-local function feelTheHeat(boss)
+function feelTheHeat(boss)
     if not boss or bossList[boss.Name] then return end
     bossList[boss.Name] = true
     repeat task.wait() until not doingHact() and not boss:FindFirstChild("Ragdolled") and not char:FindFirstChild("Ragdolled") 
@@ -1669,7 +1689,7 @@ local function feelTheHeat(boss)
         playSound(fetchRandom(RPS.Voices.Kiryu.Rage))
     end)
 
-    startMash(10, 20, nil)
+    startMash(8, 18, nil)
 		
     cTrack:Stop()
     cTrack:Destroy()
@@ -1700,7 +1720,7 @@ plr.ChildRemoved:Connect(function(child)
     if child.Name == "InBattle" then inBattle.Value = false end
 end)
 
-local function checkBossHP()
+function checkBossHP()
     local enemy = getEnemy()
     if enemy and enemy:FindFirstChild("Boss") and isInBattle() and enemyValue.Value == enemy then
         local bossMarker = enemy:FindFirstChild("Boss")
@@ -1767,9 +1787,7 @@ end)
 
 status.AttackBegan.Changed:Connect(function() 
 	if status.AttackBegan.Value == true then 
-		if status.CurrentMove.Value.Name == "CounterHook" or status.CurrentMove.Value.Name == "BRCounter2" and _G.DragonConfigurations.VoiceMod == true then
-			playSound(RPS.Voices.Kiryu.HeatAction["heataction1 (2)"])
-		elseif status.CurrentMove.Value.Name == "龍Attack4" then
+		if status.CurrentMove.Value.Name == "龍Attack4" then
 			if char.LockedOn.Value and status.Heat.Value >= 75 and (char.HumanoidRootPart.CFrame.Position - char.LockedOn.Value.CFrame.Position).Magnitude <= 15 then
 				UseHeatAction("H_Fisticuffs","Brawler",{char.LockedOn.Value})
 				local con
