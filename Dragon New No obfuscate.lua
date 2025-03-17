@@ -1,12 +1,3 @@
-_G.DragonConfigurations = {
-  Moveset = "Y0", -- Y0 or DE
-  MorphMod = true, -- true or false
-  VoiceMod = true, -- true or false
-  CustomMorphSkin = false, -- true or false
-  Experiments = true,
-  FeelTheHeat = true
-}
-
 local plr = game.Players.LocalPlayer
 local pgui = plr.PlayerGui
 local interf = pgui.Interface
@@ -1701,7 +1692,7 @@ function feelTheHeat(boss)
     if status:FindFirstChild("Invulnerable") then
         status.Invulnerable:Destroy()
     end
-    rTrack.Ended:Wait()
+    rTrack.Ended:Wait() task.wait(0.5)
     giveMoves(styles.Brawler)
     giveMoves(styles.Rush)
     giveMoves(styles.Beast) mashHits = 0 fthActive = false
