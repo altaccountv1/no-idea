@@ -382,7 +382,7 @@ local CMoveset = {
 	{name = "2Strike5", Type = "StringValue", value = "龍2Strike4"},
 
 	{name = "BlockStrike", Type = "StringValue", value = "GuruStumble"},
-	{name = "StanceStrike", Type = "StringValue", value = "TigerDrop"},
+	{name = "StanceStrike", Type = "StringValue", value = "BRCounter2"},
 	{name = "H_Fallen", Type = "StringValue", value = "H_FallenSupine"},
 	{name = "H_FallenDown", Type = "StringValue", value = "H_FallenKick"},
 	{name = "H_TwoHandeds", Type = "StringValue", value = "H_SelfDestruct"},
