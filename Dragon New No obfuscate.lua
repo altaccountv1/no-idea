@@ -1644,7 +1644,41 @@ PulsateMash = function(...)
     return oldPulsate(...)
 end
 
+local fList = {
+    "Hue", "Vulcan"
+}
+local kList = {
+    "Parker", "Silent Stranger", "Mikey", "Sensei Jeff Jefferson"
+}
+local bList = {
+    "Derek", "The Foreman", "Gorillaman"
+}
+	
+function doFinisher(enemy)
+    local whichHact
+    local enemyName = enemy.Name
+    local finisher 
+    --[[
+    Choose finisher by name
+    Hue, Vulcan for current finisher
+    Parker, Silent Stranger, Mikey for kicking
+    Derek, Foreman, Gorillaman for brute finisher
 
+    --]]
+    
+    if table.find(fList, enemyName) then
+        whichHact = "H_GUltimateEssence"
+	finisher = "Ult"
+    elseif table.find(kList, enemyName) then
+
+	finisher = "Kicks"
+    elseif table.find(bList, enemyName) then
+
+	finisher = "Heavy"
+    end
+    print(finisher)
+end
+	
 function feelTheHeat(boss)
     if not boss or bossList[boss.Name] then return end
     bossList[boss.Name] = true
@@ -1688,11 +1722,12 @@ function feelTheHeat(boss)
     playsound(74136410959637)
     task.wait(0.75)
     UseHeatAction("H_GUltimateEssence","Brawler",{bossHRP})
+    doFinisher(boss)
     hrp.Anchored = false
     if status:FindFirstChild("Invulnerable") then
         status.Invulnerable:Destroy()
     end
-    rTrack.Ended:Wait() task.wait(0.5)
+    rTrack.Ended:Wait() task.wait(2)
     giveMoves(styles.Brawler)
     giveMoves(styles.Rush)
     giveMoves(styles.Beast) mashHits = 0 fthActive = false
