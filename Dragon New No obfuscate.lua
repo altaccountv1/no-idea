@@ -888,6 +888,8 @@ function UpdateStyle()
 			main.HeatMove.TextLabel.Text = "Komaki Shot Stopper"
 		elseif main.HeatMove.TextLabel.Text == "Ultimate Essence" then
 			main.HeatMove.TextLabel.Text = "Ultimate Essence "
+                       elseif main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" then
+                                   main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping" 
 		end
 	end
 	main.Heat.noheattho.Text = "Heat Actions Disabled"
@@ -902,16 +904,15 @@ function UpdateStyle()
 	end
 end
 
-game:GetService("RunService").RenderStepped:Connect(function()
+game:GetService("RunService").Stepped:Connect(function()
 	UpdateStyle()
-	AutoSlap()
-	Hacts()
+	AutoSlap() Hacts()
 	if RDS.Value == true then
-            if not status:FindFirstChild("Invulnerable") then
-                local invul = Instance.new("Folder",status)
-                invul.Name = "Invulnerable"
+                if not status:FindFirstChild("Invulnerable") then
+                    local invul = Instance.new("Folder",status)
+                    invul.Name = "Invulnerable"
 	    end
-        end
+            end
 end)
 
 -- Red Dragon Spirit --
@@ -1244,65 +1245,66 @@ function qtesound(sound, volume)
 	end)
 end
 
-local TweenService_upvr = game:GetService("TweenService")
-local var2_upvw = true
+local TweenService = game:GetService("TweenService")
+local isPc = true
 local Parent = game.Players.LocalPlayer.PlayerGui.Interface
-local QTE_upvr = Parent.QTE
-local script = Parent.QTEr print(script.Name, script.Parent)
+local qteUI = Parent.QTE
+local script = Parent.QTEr
 local mButtons = game:GetService("Players").LocalPlayer.PlayerGui.MobileUI.MobileFrame.Right.Buttons
 -- ButtonA, ButtonX, ButtonY, ButtonB
-local ButtonImages_upvr = Parent.ButtonImages print(ButtonImages_upvr) 
-local tbl_upvr = {'E', 'Q', "M1", "M2"}
-local tbl_upvr_3 = {"ButtonA", "ButtonB", "ButtonX", "ButtonY"}
-local var8_upvw
-local var9_upvw
-local var10_upvw = false
-local var11_upvw = 0
-local var12_upvw = 0
-local Device_upvr = Parent.Parent.Device
-local tbl_upvr_2 = {}
-local RunService_upvr = game:GetService("RunService")
-local Events_upvr = game.ReplicatedStorage.Events
-tbl_upvr_2.Flicker = TweenService_upvr:Create(QTE_upvr.Glow, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 999999, true), {
+local buttonImages = Parent.ButtonImages
+ 
+local keyButtons = {'E', 'Q', "M1", "M2"}
+local mcButtons = {"ButtonA", "ButtonB", "ButtonX", "ButtonY"}
+local chosenInput
+local whichInput
+local mashActive = false
+local mashCounter = 0
+local sentData = 0
+local device = Parent.Parent.Device
+local tweens = {}
+local events = game.ReplicatedStorage.Events
+
+tweens.Flicker = TweenService:Create(qteUI.Glow, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 999999, true), {
 	ImageTransparency = 0.5;
 })
-tbl_upvr_2.InputFadeOut = TweenService_upvr:Create(QTE_upvr.PromptG, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
+tweens.InputFadeOut = TweenService:Create(qteUI.PromptG, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
 	GroupTransparency = 1;
 })
-tbl_upvr_2.RingFadeOut = TweenService_upvr:Create(QTE_upvr, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
+tweens.RingFadeOut = TweenService:Create(qteUI, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
 	ImageTransparency = 1;
 })
-tbl_upvr_2.ProgressRingFadeOutLeft = TweenService_upvr:Create(QTE_upvr.Left.ImageLabel, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
+tweens.ProgressRingFadeOutLeft = TweenService:Create(qteUI.Left.ImageLabel, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
 	ImageTransparency = 1;
 })
-tbl_upvr_2.ProgressRingFadeOutRight = TweenService_upvr:Create(QTE_upvr.Right.ImageLabel, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
+tweens.ProgressRingFadeOutRight = TweenService:Create(qteUI.Right.ImageLabel, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
 	ImageTransparency = 1;
 })
-tbl_upvr_2.Shockwave = TweenService_upvr:Create(QTE_upvr.Shockwave, TweenInfo.new(0.5, Enum.EasingStyle.Linear), {
+tweens.Shockwave = TweenService:Create(qteUI.Shockwave, TweenInfo.new(0.5, Enum.EasingStyle.Linear), {
 	Size = UDim2.new(20, 0, 20, 0);
 	ImageTransparency = 1;
 })
-tbl_upvr_2.PromptShrink = TweenService_upvr:Create(QTE_upvr.PromptG.Prompt, TweenInfo.new(0.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+tweens.PromptShrink = TweenService:Create(qteUI.PromptG.Prompt, TweenInfo.new(0.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
 	Size = UDim2.new(0.25, 0, 0.25, 0);
 })
-tbl_upvr_2.PromptGrow = TweenService_upvr:Create(QTE_upvr.PromptG.Prompt, TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+tweens.PromptGrow = TweenService:Create(qteUI.PromptG.Prompt, TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
 	Size = UDim2.new(0.8, 0, 0.8, 0);
 })
-tbl_upvr_2.PromptGlowFadeOut = TweenService_upvr:Create(QTE_upvr.PromptG.Prompt.Glow, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
+tweens.PromptGlowFadeOut = TweenService:Create(qteUI.PromptG.Prompt.Glow, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
 	ImageTransparency = 1;
 })
-tbl_upvr_2.SuccessGlowOut = TweenService_upvr:Create(QTE_upvr.SuccessGlow, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
+tweens.SuccessGlowOut = TweenService:Create(qteUI.SuccessGlow, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
 	ImageTransparency = 1;
 	Size = UDim2.new(2, 0, 2, 0);
 })
-tbl_upvr_2.InputGreyOut = TweenService_upvr:Create(QTE_upvr.PromptG.Prompt.Input, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
+tweens.InputGreyOut = TweenService:Create(qteUI.PromptG.Prompt.Input, TweenInfo.new(0.4, Enum.EasingStyle.Linear), {
 	ImageColor3 = Color3.new(0.5, 0.5, 0.5);
 })
 spawn(function() -- Line 42
 	--[[ Upvalues[1]:
-		[1]: ButtonImages_upvr (readonly)
+		[1]: buttonImages (readonly)
 	]]
-	local children = ButtonImages_upvr:GetChildren()
+	local children = buttonImages:GetChildren()
 	for i = 1, #children do
 		local clone = script.btn:clone()
 		clone.Parent = script.Parent
@@ -1312,188 +1314,188 @@ spawn(function() -- Line 42
 end)
 function getb(arg1) -- Line 54
 	--[[ Upvalues[6]:
-		[1]: tbl_upvr_3 (readonly)
-		[2]: var2_upvw (read and write)
-		[3]: tbl_upvr (readonly)
-		[4]: QTE_upvr (readonly)
-		[5]: ButtonImages_upvr (readonly)
-		[6]: var8_upvw (read and write)
+		[1]: mcButtons (readonly)
+		[2]: isPc (read and write)
+		[3]: keyButtons (readonly)
+		[4]: qteUI (readonly)
+		[5]: buttonImages (readonly)
+		[6]: chosenInput (read and write)
 	]]
             local randint
 	if arg1 == nil then
 		randint = math.random(1, 4)
 	end
-	local var35 = tbl_upvr_3[randint]
-	if var2_upvw then
-		var35 = tbl_upvr[randint]
+	local buttonIndex = mcButtons[randint]
+	if isPc then
+		buttonIndex = keyButtons[randint]
 	end
-	QTE_upvr.PromptG.Prompt.Input.Image = "rbxassetid://"..ButtonImages_upvr[var35].Value
-	var8_upvw = randint
+	qteUI.PromptG.Prompt.Input.Image = "rbxassetid://"..buttonImages[buttonIndex].Value
+	chosenInput = randint
 end
-local new_upvr = NumberSequenceKeypoint.new
+local newKeypoint = NumberSequenceKeypoint.new
 function fill(arg1) -- Line 62
 	--[[ Upvalues[2]:
-		[1]: QTE_upvr (readonly)
-		[2]: new_upvr (readonly)
+		[1]: qteUI (readonly)
+		[2]: newKeypoint (readonly)
 	]]
 	local clamped = math.clamp(arg1 * 360, 0, 360)
-	local ImageLabel = QTE_upvr.Left.ImageLabel
-	local var39 = QTE_upvr
-	local ImageLabel_2 = var39.Right.ImageLabel
+	local ImageLabel = qteUI.Left.ImageLabel
+	local visibleFlag = false
+	local ImageLabel2 = qteUI.Right.ImageLabel
 	if 0.5 > arg1 then
-		var39 = false
+		visibleFlag = false
 	else
-		var39 = true
+		visibleFlag = true
 	end
-	ImageLabel.Parent.Visible = var39
+	ImageLabel.Parent.Visible = visibleFlag
 	ImageLabel.UIGradient.Rotation = math.clamp(clamped, 180, 360)
-	ImageLabel_2.UIGradient.Rotation = math.clamp(clamped, 0, 180)
-	local NumberSequence_new_result1 = NumberSequence.new({new_upvr(0, 0), new_upvr(0.5, 0), new_upvr(0.501, 1), new_upvr(1, 1)})
+	ImageLabel2.UIGradient.Rotation = math.clamp(clamped, 0, 180)
+	local NumberSequence_new_result1 = NumberSequence.new({newKeypoint(0, 0), newKeypoint(0.5, 0), newKeypoint(0.501, 1), newKeypoint(1, 1)})
 	ImageLabel.UIGradient.Transparency = NumberSequence_new_result1
-	ImageLabel_2.UIGradient.Transparency = NumberSequence_new_result1
+	ImageLabel2.UIGradient.Transparency = NumberSequence_new_result1
 end
 function QTEStart() -- Line 75
 	--[[ Upvalues[3]:
-		[1]: Sound_upvr (readonly)
-		[2]: QTE_upvr (readonly)
-		[3]: tbl_upvr_2 (readonly)
+		[1]: script (readonly)
+		[2]: qteUI (readonly)
+		[3]: tweens (readonly)
 	]]
 	qtesound(script.Appear, 1)
-	QTE_upvr.Visible = true
-	tbl_upvr_2.Shockwave:Play()
-	tbl_upvr_2.Flicker:Play()
+	qteUI.Visible = true
+	tweens.Shockwave:Play()
+	tweens.Flicker:Play()
 end
 function QTEEnd() -- Line 83
 	--[[ Upvalues[6]:
-		[1]: var10_upvw (read and write)
-		[2]: var9_upvw (read and write)
-		[3]: var8_upvw (read and write)
-		[4]: var11_upvw (read and write)
-		[5]: QTE_upvr (readonly)
-		[6]: tbl_upvr_2 (readonly)
+		[1]: mashActive (read and write)
+		[2]: whichInput (read and write)
+		[3]: chosenInput (read and write)
+		[4]: mashCounter (read and write)
+		[5]: qteUI (readonly)
+		[6]: tweens (readonly)
 	]]
-	var10_upvw = false
-	var9_upvw = nil
-	var8_upvw = nil
-	var11_upvw = 0
-	QTE_upvr.Glow.ImageTransparency = 1
-	tbl_upvr_2.RingFadeOut:Play()
-	tbl_upvr_2.ProgressRingFadeOutLeft:Play()
-	tbl_upvr_2.ProgressRingFadeOutRight:Play()
-	tbl_upvr_2.InputFadeOut:Play()
-	tbl_upvr_2.Flicker:Cancel()
+	mashActive = false
+	whichInput = nil
+	chosenInput = nil
+	mashCounter = 0
+	qteUI.Glow.ImageTransparency = 1
+	tweens.RingFadeOut:Play()
+	tweens.ProgressRingFadeOutLeft:Play()
+	tweens.ProgressRingFadeOutRight:Play()
+	tweens.InputFadeOut:Play()
+	tweens.Flicker:Cancel()
 end
 function ResetQTE() -- Line 96
 	--[[ Upvalues[1]:
-		[1]: QTE_upvr (readonly)
+		[1]: qteUI (readonly)
 	]]
-	QTE_upvr.ImageTransparency = 0.5
-	QTE_upvr.Left.ImageLabel.ImageTransparency = 0
-	QTE_upvr.Right.ImageLabel.ImageTransparency = 0
-	QTE_upvr.PromptG.GroupTransparency = 0
-	QTE_upvr.PromptG.Prompt.Input.ImageColor3 = Color3.new(1, 1, 1)
-	QTE_upvr.PromptG.Prompt.Glow.Visible = false
-	QTE_upvr.PromptG.Prompt.Glow.ImageTransparency = 0
-	QTE_upvr.PromptG.Prompt.Size = UDim2.new(0.5, 0, 0.5, 0)
-	QTE_upvr.PromptG.Prompt.Position = UDim2.new(0.5, 0, 0.5, 0)
-	QTE_upvr.SuccessGlow.Visible = false
-	QTE_upvr.SuccessGlow.ImageTransparency = 0
-	QTE_upvr.SuccessGlow.Size = UDim2.new(1.5, 0, 1.5, 0)
-	QTE_upvr.PromptG.MashPrompt.Visible = false
-	QTE_upvr.Shockwave.ImageTransparency = 0.8
-	QTE_upvr.Shockwave.Size = UDim2.new(0, 0, 0, 0)
+	qteUI.ImageTransparency = 0.5
+	qteUI.Left.ImageLabel.ImageTransparency = 0
+	qteUI.Right.ImageLabel.ImageTransparency = 0
+	qteUI.PromptG.GroupTransparency = 0
+	qteUI.PromptG.Prompt.Input.ImageColor3 = Color3.new(1, 1, 1)
+	qteUI.PromptG.Prompt.Glow.Visible = false
+	qteUI.PromptG.Prompt.Glow.ImageTransparency = 0
+	qteUI.PromptG.Prompt.Size = UDim2.new(0.5, 0, 0.5, 0)
+	qteUI.PromptG.Prompt.Position = UDim2.new(0.5, 0, 0.5, 0)
+	qteUI.SuccessGlow.Visible = false
+	qteUI.SuccessGlow.ImageTransparency = 0
+	qteUI.SuccessGlow.Size = UDim2.new(1.5, 0, 1.5, 0)
+	qteUI.PromptG.MashPrompt.Visible = false
+	qteUI.Shockwave.ImageTransparency = 0.8
+	qteUI.Shockwave.Size = UDim2.new(0, 0, 0, 0)
 	fill(1)
 end
 
 function QTEFail() -- Line 143
 	--[[ Upvalues[2]:
-		[1]: Sound_upvr (readonly)
-		[2]: QTE_upvr (readonly)
+		[1]: script (readonly)
+		[2]: qteUI (readonly)
 	]]
 	qtesound(script.Fail,1 )
 	QTEEnd()
-	QTE_upvr.PromptG.Prompt.Input.ImageColor3 = Color3.new(0.5, 0.5, 0.5)
+	qteUI.PromptG.Prompt.Input.ImageColor3 = Color3.new(0.5, 0.5, 0.5)
 	task.wait(0.45)
-	QTE_upvr.Visible = false
+	qteUI.Visible = false
 	ResetQTE()
 end
 
 function PulsateMash() -- Line 172
 	--[[ Upvalues[3]:
-		[1]: var11_upvw (read and write)
-		[2]: QTE_upvr (readonly)
-		[3]: TweenService_upvr (readonly)
+		[1]: mashCounter (read and write)
+		[2]: qteUI (readonly)
+		[3]: TweenService (readonly)
 	]]
-	var11_upvw = var11_upvw + 1
-	local clone_2_upvr = QTE_upvr.Pulse:Clone()
-	clone_2_upvr.Visible = true
-	clone_2_upvr.Archivable = false
-	clone_2_upvr.Parent = QTE_upvr
-	TweenService_upvr:Create(clone_2_upvr, TweenInfo.new(0.1, Enum.EasingStyle.Linear), {
+	mashCounter = mashCounter + 1
+	local pulseClone = qteUI.Pulse:Clone()
+	pulseClone.Visible = true
+	pulseClone.Archivable = false
+	pulseClone.Parent = qteUI
+	TweenService:Create(pulseClone, TweenInfo.new(0.1, Enum.EasingStyle.Linear), {
 		Size = UDim2.new(1.5, 0, 1.2, 0);
 	}):Play()
 	delay(0.09, function() -- Line 183
 		--[[ Upvalues[1]:
-			[1]: clone_2_upvr (readonly)
+			[1]: pulseClone (readonly)
 		]]
-		clone_2_upvr:Destroy()
+		pulseClone:Destroy()
 	end)
 end
 function QTEMashInputDown() -- Line 186
 	--[[ Upvalues[1]:
-		[1]: QTE_upvr (readonly)
+		[1]: qteUI (readonly)
 	]]
-	QTE_upvr.PromptG.Prompt.Position = UDim2.new(0.5, 0, 0.5, 6)
+	qteUI.PromptG.Prompt.Position = UDim2.new(0.5, 0, 0.5, 6)
 end
 function QTEMashInputUp() -- Line 191
 	--[[ Upvalues[1]:
-		[1]: QTE_upvr (readonly)
+		[1]: qteUI (readonly)
 	]]
-	QTE_upvr.PromptG.Prompt.Position = UDim2.new(0.5, 0, 0.5, 0)
+	qteUI.PromptG.Prompt.Position = UDim2.new(0.5, 0, 0.5, 0)
 end
 function QTEMashSuccess() -- Line 195
 	--[[ Upvalues[5]:
-		[1]: Events_upvr (readonly)
-		[2]: var12_upvw (read and write)
-		[3]: Sound_upvr (readonly)
-		[4]: QTE_upvr (readonly)
-		[5]: tbl_upvr_2 (readonly)
+		[1]: events (readonly)
+		[2]: sentData (read and write)
+		[3]: script (readonly)
+		[4]: qteUI (readonly)
+		[5]: tweens (readonly)
 	]]
-	Events_upvr.QTE:FireServer(var12_upvw)
+	events.QTE:FireServer(sentData)
 	qtesound(script.Success, 1)
 	QTEEnd()
-	QTE_upvr.PromptG.Prompt.Glow.Visible = true
-	tbl_upvr_2.PromptGlowFadeOut:Play()
-	QTE_upvr.SuccessGlow.Visible = true
-	tbl_upvr_2.SuccessGlowOut:Play()
+	qteUI.PromptG.Prompt.Glow.Visible = true
+	tweens.PromptGlowFadeOut:Play()
+	qteUI.SuccessGlow.Visible = true
+	tweens.SuccessGlowOut:Play()
 	task.wait(0.45)
-	QTE_upvr.Visible = false
+	qteUI.Visible = false
 	ResetQTE()
 end
 function QTEMashFail() -- Line 212
 	--[[ Upvalues[1]:
-		[1]: Sound_upvr (readonly)
+		[1]: script (readonly)
 	]]
 	qtesound(script.Fail,1)
 	QTEFail()
 end
 function QTEMashStart(arg1, arg2, arg3) -- Line 218
 	--[[ Upvalues[5]:
-		[1]: var10_upvw (read and write)
-		[2]: Sound_upvr (readonly)
-		[3]: QTE_upvr (readonly)
-		[4]: var2_upvw (read and write)
-		[5]: var11_upvw (read and write)
+		[1]: mashActive (read and write)
+		[2]: script (readonly)
+		[3]: qteUI (readonly)
+		[4]: isPc (read and write)
+		[5]: mashCounter (read and write)
 	]]
-	var10_upvw = true
+	mashActive = true
 	getb(arg3)
 	qtesound(script.Appear,1)
-	QTE_upvr.PromptG.MashPrompt.Visible = not var2_upvw
-	QTE_upvr.ImageTransparency = 1
-	QTE_upvr.Left.ImageLabel.ImageTransparency = 1
-	QTE_upvr.Right.ImageLabel.ImageTransparency = 1
-	if not var2_upvw then
-		QTE_upvr.PromptG.Prompt.Size = UDim2.new(0.5, 0, 0.4, 0)
+	qteUI.PromptG.MashPrompt.Visible = not isPc
+	qteUI.ImageTransparency = 1
+	qteUI.Left.ImageLabel.ImageTransparency = 1
+	qteUI.Right.ImageLabel.ImageTransparency = 1
+	if not isPc then
+		qteUI.PromptG.Prompt.Size = UDim2.new(0.5, 0, 0.4, 0)
 	end
 	QTEStart()
 	wait(0.1)
@@ -1502,9 +1504,9 @@ function QTEMashStart(arg1, arg2, arg3) -- Line 218
 		QTEMashInputDown()
 		task.wait(0.05)
 		QTEMashInputUp()
-		if arg2 <= var11_upvw then break end
+		if arg2 <= mashCounter then break end
 	end
-	if arg2 <= var11_upvw then
+	if arg2 <= mashCounter then
 		QTEMashSuccess()
 	else
 		QTEMashFail()
@@ -1513,9 +1515,9 @@ end
 
 local hook = Instance.new("BindableEvent")
 hook.Event:Connect(function(arg1)
-    if var8_upvw and (var9_upvw == nil or var10_upvw) then
-        var9_upvw = arg1
-        if var10_upvw and var9_upvw == var8_upvw then
+    if chosenInput and (whichInput == nil or mashActive) then
+        whichInput = arg1
+        if mashActive and whichInput == chosenInput then
             PulsateMash()
         end
     end
@@ -1531,7 +1533,7 @@ uis.InputBegan:Connect(function(key, gp)
         hook:Fire(2)
         elseif (key.UserInputType == Enum.UserInputType.MouseButton1 or key.KeyCode == Enum.KeyCode.ButtonX) and fthActive then
         hook:Fire(3)
-        elseif (key.UserInputType == Enum.UserInputType.MouseButton1 or key.KeyCode == Enum.KeyCode.ButtonY) and fthActive then
+        elseif (key.UserInputType == Enum.UserInputType.MouseButton2 or key.KeyCode == Enum.KeyCode.ButtonY) and fthActive then
         hook:Fire(4)
     end
 end)
@@ -1559,17 +1561,17 @@ end)
 
 function checkpc() -- Line 256
 	--[[ Upvalues[2]:
-		[1]: Device_upvr (readonly)
-		[2]: var2_upvw (read and write)
+		[1]: device (readonly)
+		[2]: isPc (read and write)
 	]]
-	if Device_upvr.Value == "PC" then
-		var2_upvw = true
+	if device.Value == "PC" then
+		isPc = true
 	else
-		var2_upvw = false
+		isPc = false
 	end
 end
 
-Device_upvr.Changed:connect(function() -- Line 264
+device.Changed:connect(function() -- Line 264
 	wait()
 	checkpc()
 end)
