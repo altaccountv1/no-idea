@@ -904,16 +904,7 @@ function UpdateStyle()
 	end
 end
 
-game:GetService("RunService").Stepped:Connect(function()
-	UpdateStyle()
-	AutoSlap() Hacts()
-	if RDS.Value == true then
-                if not status:FindFirstChild("Invulnerable") then
-                    local invul = Instance.new("Folder",status)
-                    invul.Name = "Invulnerable"
-	    end
-            end
-end)
+
 
 -- Red Dragon Spirit --
 
@@ -1079,26 +1070,6 @@ end
 
 status.FFC.Evading.Changed:Connect(Teleport)
 
-task.spawn(function()
-    while RDS.Value and status:FindFirstChild("Heat") and status.Heat.Value < 100 do
-        fillHeat(6)
-        task.wait(0.25)
-    end
-end)
-
-task.spawn(function()
-    while true do
-        if InCriticalHp() then
-            RDS.Value = true -- Activate RDS
-        end
-        
-        if RDS.Value and not isInBattle() then
-            RDS.Value = false -- Disable RDS when exiting battle
-        end
-        
-        task.wait(1) -- Prevents lag & ensures checks run every second
-    end
-end)
 
 
 RDS.Changed:Connect(function()
@@ -1571,7 +1542,7 @@ function checkpc() -- Line 256
 	end
 end
 
-device.Changed:connect(function() -- Line 264
+device.Changed:connect(function() 
 	wait()
 	checkpc()
 end)
@@ -1650,18 +1621,15 @@ end
 
 
 function fillEveryThree()
+    if not fthActive then return end
     if mashHits % 3 == 0 and mashHits > 0 then
         fillHeat(1) mashHits = 0
-    end
+    end task.wait(0.1)
 end
 
-task.spawn(function()
-    while task.wait(0.1) do
-game:GetService("Players").LocalPlayer.PlayerGui.Interface.QTE.PromptG.MashPrompt.Visible = false
-        fillEveryThree()
-    end
+game:GetService("RunService").Stepped:Connect(function()
+    fillEveryThree() qteUI.PromptG.MashPrompt.Visible = false
 end)
-
 local oldPulsate = PulsateMash
 
 PulsateMash = function(...)
@@ -1693,13 +1661,13 @@ function doFinisher(enemy)
     
     if table.find(fList, enemyName) then
         whichHact = "H_GUltimateEssence"
-	finisher = "Ult"
+        finisher = "Ult"
     elseif table.find(kList, enemyName) then
 
-	finisher = "Kicks"
+        finisher = "Kicks"
     elseif table.find(bList, enemyName) then
 
-	finisher = "Heavy"
+        finisher = "Heavy"
     end
     print(finisher)
 end
@@ -1789,7 +1757,6 @@ function checkBossHP()
     end
 end
 
-
 inBattle.Changed:Connect(function()
     if not inBattle.Value then
         bossList = {}
@@ -1799,7 +1766,25 @@ end)
 
 hpTextLabel:GetPropertyChangedSignal("Text"):Connect(checkBossHP)
 end
---enemyValue.Changed:Connect(checkBossHP)
+
+game:GetService("RunService").Stepped:Connect(function()
+	UpdateStyle()
+	AutoSlap() Hacts()
+            if InCriticalHp() then
+                RDS.Value = true -- Activate RDS
+            end
+        
+            if RDS.Value and not isInBattle() then
+                RDS.Value = false -- Disable RDS when exiting battle
+            end
+
+	if RDS.Value == true then
+                if not status:FindFirstChild("Invulnerable") then
+                    local invul = Instance.new("Folder",status)
+                    invul.Name = "Invulnerable"
+	    end
+            end
+end)
 
 status.Style.Changed:Connect(function()
 	if status.Style.Value == "Brawler" then
