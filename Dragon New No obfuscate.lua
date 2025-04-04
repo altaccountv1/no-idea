@@ -1254,6 +1254,8 @@ local var2_upvw = true
 local Parent = game.Players.LocalPlayer.PlayerGui.Interface
 local QTE_upvr = Parent.QTE
 local script = Parent.QTEr print(script.Name, script.Parent)
+local mButtons = game:GetService("Players").LocalPlayer.PlayerGui.MobileUI.MobileFrame.Right.Buttons
+-- ButtonA, ButtonX, ButtonY, ButtonB
 local ButtonImages_upvr = Parent.ButtonImages print(ButtonImages_upvr) 
 local tbl_upvr = {'E', 'Q', "M1", "M2"}
 local tbl_upvr_3 = {"ButtonA", "ButtonB", "ButtonX", "ButtonY"}
@@ -1514,17 +1516,8 @@ function QTEMashStart(arg1, arg2, arg3) -- Line 218
 	end
 end
 
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
-local AmbassadorModule
-
-repeat
-    pcall(function()
-        AmbassadorModule = require(ReplicatedFirst:WaitForChild("Ambassador"))
-    end)
-    task.wait(0.1)
-until AmbassadorModule
-
-AmbassadorModule.HookEvent("QTE", function(arg1)
+local hook = Instance.new("BindableEvent")
+hook.Event:Connect(function(arg1)
     if var8_upvw and (var9_upvw == nil or var10_upvw) then
         var9_upvw = arg1
         if var10_upvw and var9_upvw == var8_upvw then
@@ -1533,6 +1526,41 @@ AmbassadorModule.HookEvent("QTE", function(arg1)
     end
 end)
 
+local uis = game:GetService("UserInputService")
+uis.InputBegan:Connect(function(key, gp)
+    if gp then return end
+
+    if (key.KeyCode == Enum.KeyCode.E or key.KeyCode == Enum.KeyCode.ButtonA) and fthActive then
+        hook:Fire(1)
+    elseif (key.KeyCode == Enum.KeyCode.Q or key.KeyCode == Enum.KeyCode.ButtonB) and fthActive then
+        hook:Fire(2)
+        elseif (key.UserInputType == Enum.UserInputType.MouseButton1 or key.KeyCode == Enum.KeyCode.ButtonX) and fthActive then
+        hook:Fire(3)
+        elseif (key.UserInputType == Enum.UserInputType.MouseButton1 or key.KeyCode == Enum.KeyCode.ButtonY) and fthActive then
+        hook:Fire(4)
+    end
+end)
+
+mButtons.ButtonA.Activated:Connect(function()
+    if fthActive then
+        hook:Fire(1)
+    end
+end)
+mButtons.ButtonB.Activated:Connect(function()
+    if fthActive then
+        hook:Fire(2)
+    end
+end)
+mButtons.ButtonX.Activated:Connect(function()
+    if fthActive then
+        hook:Fire(3)
+    end
+end)
+mButtons.ButtonY.Activated:Connect(function()
+    if fthActive then
+        hook:Fire(4)
+    end
+end)
 
 function checkpc() -- Line 256
 	--[[ Upvalues[2]:
