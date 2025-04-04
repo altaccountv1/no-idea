@@ -1230,11 +1230,6 @@ end
 
 local qter = plr.PlayerGui.Interface.QTEr
 local notifier = plr.PlayerGui.Notify
-local canRun = false
-
-if require then canRun = true end
-
-if not canRun then return Notify("Your executor needs require() for this.", "buzz") end
 
 function qtesound(sound, volume)
 	local sfx = Instance.new("Sound", char.Head)
