@@ -8,7 +8,7 @@ local char = plr.Character
 local fthActive = false
 
 local RPS = game.ReplicatedStorage
-local moves = RPS.Moves
+local moves = RPS.Moves or game.ReplicatedFirst.Moves
 local sounds = RPS.Sounds
 local styles = RPS.Styles
 local Dragon = styles.Brawler
