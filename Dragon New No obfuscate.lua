@@ -1624,7 +1624,7 @@ function fillEveryThree()
     if not fthActive then return end
     if mashHits % 3 == 0 and mashHits > 0 then
         fillHeat(1) mashHits = 0
-    end task.wait(0.1)
+    end
 end
 
 game:GetService("RunService").Stepped:Connect(function()
