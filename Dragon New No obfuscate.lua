@@ -313,9 +313,9 @@ local Y0Moveset = {
 	{name = "Strike5", Type = "StringValue", value = "龍Strike5"},
 
 	{name = "2Strike2", Type = "StringValue", value = "龍2Strike1"},
-	{name = "2Strike3", Type = "StringValue", value = "龍2Strike2"},
+	{name = "2Strike3", Type = "StringValue", value = "B2Strike2"},
 	{name = "2Strike4", Type = "StringValue", value = "龍2Strike3"},
-	{name = "2Strike5", Type = "StringValue", value = "龍2Strike4"},
+	{name = "2Strike5", Type = "StringValue", value = "B2Strike3"},
 
 	{name = "BlockStrike", Type = "StringValue", value = "ShuckyDrop"},
 	{name = "StanceStrike", Type = "StringValue", value = "BRCounter2"},
@@ -415,7 +415,7 @@ local Y0MoveConfig = {
 	{move = "BAttack2", property = "ComboAt", value = moves["龍Attack2"].ComboAt.Value},
 	{move = "BAttack3", property = "ComboAt", value = moves["龍Attack3"].ComboAt.Value},
 	{move = "BAttack4", property = "ComboAt", value = moves["龍Attack4"].ComboAt.Value},
-	{move = "龍Strike5", property = "HitboxLocations", value = '[["LeftFoot",2,[0,0,0]],["LeftLowerLeg",1.5,[0,0,0]],["LeftUpperLeg",1,[0,0,0]]]'},
+	{move = "龍Strike5", property = "HitboxLocations", value = moves.RDashAttack.HitboxLocations.Value},
 	{move = "BStrike2", property = "ComboAt", value = moves.BStrike2.ComboAt.Value - 0.15},
 	{move = "BStrike2", property = "MoveForward", value = moves.BStrike2.MoveForward.Value - 3},
 	{move = "BStrike3", property = "AniSpeed", value = moves.BStrike2.AniSpeed.Value + 0.05},
@@ -433,7 +433,7 @@ local Y0Anims = {
 	{move = "BAttack4", value = moves["龍Attack4"].Anim.AnimationId},
 	{move = "龍Strike1", value = "rbxassetid://13731752257"},
 	{move = "BStrike5", value = moves["龍2Strike1"].Anim.AnimationId},
-	{move = "龍Strike5", value = moves.BStrike1.TurnAnim.AnimationId}
+	{move = "龍Strike5", value = moves.RDashAttack.Anim.AnimationId}
 }
 local CMoveConfig = {
 	{move = "BAttack1", property = "HitboxLocations", value = moves["龍Attack1"].HitboxLocations.Value},
@@ -447,15 +447,6 @@ local CMoveConfig = {
 	{move = "BStrike3", property = "ComboAt", value = moves.BStrike2.ComboAt.Value - 0.05}
 }
 
-local Y0Anims = {
-	{move = "BAttack1", value = moves["龍Attack1"].Anim.AnimationId},
-	{move = "BAttack2", value = moves["龍Attack2"].Anim.AnimationId},
-	{move = "BAttack3", value = moves["龍Attack3"].Anim.AnimationId},
-	{move = "BAttack4", value = moves["龍Attack4"].Anim.AnimationId},
-	{move = "龍Strike1", value = "rbxassetid://13731752257"},
-	{move = "BStrike5", value = moves["龍2Strike1"].Anim.AnimationId},
-	{move = "龍Strike5", value = moves.BStrike1.TurnAnim.AnimationId}
-}
 local CAnims = {
 	{move = "BAttack1", value = moves["龍Attack1"].Anim.AnimationId},
 	{move = "BAttack2", value = moves["龍Attack2"].Anim.AnimationId},
@@ -903,8 +894,6 @@ function UpdateStyle()
 		plr:Kick("Do not try to disable credits.")
 	end
 end
-
-
 
 -- Red Dragon Spirit --
 
