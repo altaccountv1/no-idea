@@ -20,6 +20,10 @@ local menu = pgui.MenuUI.Menu
 local abil = menu.Abilities.Frame.Frame.Frame
 local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
+if _G.AuraSyncAddOn == true
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ducksy9340/R2FModding/refs/heads/main/AuraSyncer.lua"))();
+end
+
 local debug = false
 
 local ME = RPS.Events.ME
@@ -1897,3 +1901,4 @@ Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
+
