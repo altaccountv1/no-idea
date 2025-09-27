@@ -1616,7 +1616,7 @@ end
 function fillEveryThree()
     if not fthActive then return end
     if mashHits % 3 == 0 and mashHits > 0 then
-        fillHeat(1) mashHits = 0
+        fillHeat(2) mashHits = 0
     end
 end
 
@@ -1901,6 +1901,7 @@ Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
+
 
 
 
