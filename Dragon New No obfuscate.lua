@@ -24,7 +24,7 @@ if _G.DragonConfigurations.AuraSyncAddOn == true then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ducksy9340/R2FModding/refs/heads/main/AuraSyncer.lua"))();
 end
 
-local debug = false
+local debug = true
 
 local ME = RPS.Events.ME
 
@@ -283,7 +283,7 @@ if alreadyRunning then
 end
 
 if debug then 
-    Notify("Dragon Style is being debugged right now", "HeatDepleted", Color3.fromRGB(255,255,255), nil)
+    Notify("Dragon Style is being worked on right now", "HeatDepleted", Color3.fromRGB(255,255,255), nil)
     task.wait(1.5)
     Notify("Some features may not work, but I am working on it", "HeatDepleted", Color3.fromRGB(255,255,255), nil)
 end
@@ -1902,6 +1902,7 @@ Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
+
 
 
 
