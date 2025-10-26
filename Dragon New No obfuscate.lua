@@ -97,7 +97,7 @@ if _G.DragonConfigurations.Experiments == true then
         local offset = target.CFrame.LookVector * distance
         local newPosition = target.Position + offset
         local newCF = CFrame.new(newPosition, target.Position)
-        args[1][2] = moves.H_FastFootworkBack
+        args[1][2] = moves.H_Torment
         args[1][3] = {
             {
                 [1] = target,
@@ -114,7 +114,7 @@ if _G.DragonConfigurations.Experiments == true then
 
     function checkArgs(args)
         if
-            typeof(args[1]) == "table" and args[1][1] == "heatmove" and args[1][2] == moves.H_FastFootworkBack and
+            typeof(args[1]) == "table" and args[1][1] == "heatmove" and args[1][2] == moves.H_Torment and
                 args[1][5] == "Brawler" and
                 plr.Status.Heat.Value >= 75
          then
@@ -336,7 +336,7 @@ local Y0Moveset = {
 	{name = "H_CounterSoloAllLeft", Type = "StringValue", value = "H_TSpinCounterLeft"},
 	{name = "H_CounterSoloAllRight", Type = "StringValue", value = "H_TSpinCounterRight"},
 	{name = "H_CounterSolo", Type = "StringValue", value = "H_Escape"},
-	{name = "H_Distanced", Type = "StringValue", value = "H_FastFootworkBack"},
+	{name = "H_Distanced", Type = "StringValue", value = "H_Torment"},
 	{name = "H_FullHeat", Type = "StringValue", value = "H_GUltimateEssence"}
 }
 local DEMoveset = {
@@ -400,7 +400,7 @@ local CMoveset = {
 	{name = "H_CounterSoloAllLeft", Type = "StringValue", value = "H_TSpinCounterLeft"},
 	{name = "H_CounterSoloAllRight", Type = "StringValue", value = "H_TSpinCounterRight"},
 	{name = "H_CounterSolo", Type = "StringValue", value = "H_Escape"},
-	{name = "H_Distanced", Type = "StringValue", value = "H_FastFootworkBack"},
+	{name = "H_Distanced", Type = "StringValue", value = "H_Torment"},
 	{name = "H_FullHeat", Type = "StringValue", value = "H_GUltimateEssence"}
 }
 
@@ -612,8 +612,8 @@ end
 ChangeAnims(RDSAnims)
 Dragon.SuperEvadeB.AnimationId = styles.Beast.EvadeB.AnimationId
 
-moves["H_FastFootworkBack"].Closest.Value = '75'
-wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
+moves["H_TormentFootworkBack"].Closest.Value = '75'
+wn = Instance.new("StringValue", moves["H_TormentFootworkBack"])
 wn.Name = "Within"
 wn.Value = '15'	
 if not IsInPvp() then
@@ -812,7 +812,8 @@ function Hacts()
 
 			task.delay(2, function() anim:Destroy(); anim2:Stop(); anim2:Destroy() end)
                             end
-		elseif whatHact.Value == "Essence of Fast Footwork [Back]" then
+			-- "Essence of Fast Footwork [Back]
+		elseif whatHact.Value == "Essence of Torment" then
 			Main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping"
 			local anim = char.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Anim)
 			local anim2 = heated.Heating.Value.Humanoid:LoadAnimation(Rep.Moves.H_SumoSlap.Victim1)
@@ -883,8 +884,8 @@ function UpdateStyle()
 			main.HeatMove.TextLabel.Text = "Komaki Shot Stopper"
 		elseif main.HeatMove.TextLabel.Text == "Ultimate Essence" then
 			main.HeatMove.TextLabel.Text = "Ultimate Essence "
-                       elseif main.HeatMove.TextLabel.Text == "Essence of Fast Footwork [Back]" then
-                                   main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping" 
+        elseif main.HeatMove.TextLabel.Text == "Essence of Torment" then
+            main.HeatMove.TextLabel.Text = "Essence of Sumo Slapping" 
 		end
 	end
 	main.Heat.noheattho.Text = "Heat Actions Disabled"
@@ -1781,16 +1782,16 @@ end)
 
 status.Style.Changed:Connect(function()
 	if status.Style.Value == "Brawler" then
-		moves["H_FastFootworkBack"].Closest.Value = '75'
-		if not moves["H_FastFootworkBack"]:FindFirstChild("Within") then
-			wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
+		moves["H_Torment"].Closest.Value = '75'
+		if not moves["H_Torment"]:FindFirstChild("Within") then
+			wn = Instance.new("StringValue", moves["H_Torment"])
 			wn.Name = "Within"
 			wn.Value = '15'
 		end
 	elseif status.Style.Value == "Rush" then
-		if moves["H_FastFootworkBack"]:FindFirstChild("Within") then
-			moves["H_FastFootworkBack"]:FindFirstChild("Within"):Destroy()
-			moves["H_FastFootworkBack"].Closest.Value = '15'
+		if moves["H_Torment"]:FindFirstChild("Within") then
+			moves["H_Torment"]:FindFirstChild("Within"):Destroy()
+			moves["H_Torment"].Closest.Value = '15'
 		end
 	end
 end)
@@ -1901,6 +1902,7 @@ Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
+
 
 
 
