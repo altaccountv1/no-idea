@@ -612,8 +612,8 @@ end
 ChangeAnims(RDSAnims)
 Dragon.SuperEvadeB.AnimationId = styles.Beast.EvadeB.AnimationId
 
-moves["H_TormentFootworkBack"].Closest.Value = '75'
-wn = Instance.new("StringValue", moves["H_TormentFootworkBack"])
+moves["H_Torment"].Closest.Value = '75'
+wn = Instance.new("StringValue", moves["H_Torment"])
 wn.Name = "Within"
 wn.Value = '15'	
 if not IsInPvp() then
@@ -1902,6 +1902,7 @@ Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
+
 
 
 
