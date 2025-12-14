@@ -20,6 +20,14 @@ local menu = pgui.MenuUI.Menu
 local abil = menu.Abilities.Frame.Frame.Frame
 local abilFolder = game.ReplicatedStorage.Abilities.Brawler
 
+local alreadyRunning = status:FindFirstChild("Dragon Style")
+if alreadyRunning then
+	Notify("Dragon Style is already loaded", "buzz", Color3.fromRGB(255,255,255), "RobotoMono")
+	task.wait(2)
+	Notify("If you have an error, report it to me.", "HeatDepleted", Color3.fromRGB(255,255,255), "RobotoMono")
+	return
+end
+
 if _G.DragonConfigurations.AuraSyncAddOn == true then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ducksy9340/R2FModding/refs/heads/main/AuraSyncer.lua"))();
 end
@@ -47,6 +55,17 @@ function Notify(Text,Sound,Color,Fonts) --text function, sounds: tp, buzz, Gong,
 		end
 	end
 end
+
+plr.Chatted:Connect(function(message)
+	if message == "CopySLink" then
+		if setclipboard then
+			setclipboard("https://www.roblox.com/games/8170900938/Right-2-Fight-V0-4-0?privateServerLinkCode=19758439488827467697623615384054")
+			Notify("Shucky Dungeon Link copied!", nil, Color3.new(1,1,1), nil)
+		else
+			Notify("Your executor can't use your clipboard!", nil, Color3.new(1,1,1), nil)
+		end
+	end
+end)
 
 if _G.DragonConfigurations.Experiments == true then
     local experiment = "sumo slap tp "
@@ -272,14 +291,6 @@ function playSound(sound)
     soundclone.Ended:Connect(function()
         game:GetService("Debris"):AddItem(soundclone)
     end)
-end
-
-local alreadyRunning = status:FindFirstChild("Dragon Style")
-if alreadyRunning then
-	Notify("Dragon Style is already loaded", "buzz", Color3.fromRGB(255,255,255), "RobotoMono")
-	task.wait(2)
-	Notify("If you have an error, report it to me.", "HeatDepleted", Color3.fromRGB(255,255,255), "RobotoMono")
-	return
 end
 
 if debug then 
@@ -1902,6 +1913,7 @@ Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
+
 
 
 
