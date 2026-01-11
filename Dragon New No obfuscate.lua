@@ -1792,14 +1792,14 @@ game:GetService("RunService").Stepped:Connect(function()
 end)
 
 status.Style.Changed:Connect(function()
-	if status.Style.Value == "Brawler" then
+	if status.Style.Value == "Brawler" and not _G.DragonConfigurations.SumoSlapExp then
 		moves["H_FastFootworkBack"].Closest.Value = '75'
 		if not moves["H_FastFootworkBack"]:FindFirstChild("Within") then
 			wn = Instance.new("StringValue", moves["H_FastFootworkBack"])
 			wn.Name = "Within"
 			wn.Value = '15'
 		end
-	elseif status.Style.Value == "Rush" then
+	elseif status.Style.Value == "Rush" and not _G.DragonConfigurations.SumoSlapExp then
 		if moves["H_FastFootworkBack"]:FindFirstChild("Within") then
 			moves["H_FastFootworkBack"]:FindFirstChild("Within"):Destroy()
 			moves["H_FastFootworkBack"].Closest.Value = '15'
@@ -1913,6 +1913,7 @@ Notify("Dragon Style Loaded!",nil,Color3.fromRGB(3,161,252),"RobotoMono")
 Forcefield:Destroy()
 startsound.Ended:Wait()
 startsound:Destroy()
+
 
 
 
